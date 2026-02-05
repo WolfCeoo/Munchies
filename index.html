@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Munchies Delivery Service | Soshanguve Food Delivery</title>
+    
+    <meta name="description" content="Munchies Delivery Service Pty Ltd (2026/103543/07). Fast local food delivery in Soshanguve.">
+    <meta property="og:title" content="Munchies Delivery Service - Full of Taste">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1606131731446-5568d87113aa?q=80&w=1200">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        munchies: { 
+                            green: '#2ecc71',
+                            dark: '#0a111f' 
+                        }
+                    },
+                    fontFamily: {
+                        street: ['"Archivo Black"', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/airtable/0.11.6/airtable.min.js"></script>
+</head>
+<body class="bg-white text-slate-900 font-sans">
+
+    <header class="relative h-[90vh] flex items-center justify-center text-white overflow-hidden">
+        <div class="absolute inset-0">
+            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1920&auto=format&fit=crop" 
+                 alt="Soshanguve Street Food Grill" 
+                 class="w-full h-full object-cover brightness-[0.35] scale-105">
+            <div class="absolute inset-0 bg-gradient-to-t from-munchies-dark via-transparent to-black/40"></div>
+        </div>
+        
+        <div class="relative z-10 text-center px-6 max-w-5xl">
+            <img src="assets/munchies-logo.jpg" alt="Munchies Logo" class="mx-auto h-28 w-28 rounded-full border-4 border-munchies-green mb-8 shadow-2xl">
+            
+            <h1 class="font-street text-7xl md:text-9xl mb-2 tracking-tighter leading-none">
+                MUNCHIES
+            </h1>
+            <div class="bg-munchies-green text-munchies-dark inline-block px-6 py-2 rotate-[-2deg] mb-10">
+                <span class="font-street text-3xl md:text-5xl uppercase tracking-widest">Full of Taste</span>
+            </div>
+            
+            <p class="text-xl md:text-2xl font-semibold text-gray-200 mb-12 max-w-2xl mx-auto drop-shadow-lg">
+                Soshanguve's fastest route to Kotas, Mogodu, and Shisanyama.
+            </p>
+            
+            <a href="https://wa.me/27634025937" class="bg-white text-munchies-dark hover:bg-munchies-green hover:text-white text-xl font-extrabold px-14 py-6 rounded-2xl shadow-2xl inline-flex items-center gap-4 transition-all hover:scale-105">
+                <i data-lucide="message-circle" class="fill-current"></i> ORDER ON WHATSAPP
+            </a>
+        </div>
+    </header>
+
+    <section class="py-24 px-6 max-w-7xl mx-auto text-center">
+        <h2 class="text-5xl font-extrabold text-munchies-green mb-8">About Munchies Delivery Service</h2>
+        <p class="text-xl text-gray-700 leading-relaxed mb-16 max-w-5xl mx-auto">
+            Founded by Andile Mathe and Kabelo Matseke, Munchies Delivery Service Pty Ltd is a hyper-local food delivery platform serving Soshanguve and surrounding areas. We connect residents with authentic township vendors for fast, reliable delivery of kota, pap & steak, chicken stew, mogodu, and more.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-green-50 p-12 rounded-[2rem] flex flex-col items-center">
+                <i data-lucide="zap" class="w-16 h-16 text-munchies-green mb-6"></i>
+                <h3 class="text-2xl font-bold mb-4">Fast Delivery</h3>
+                <p class="text-gray-600 text-lg">Orders delivered in under 45 minutes within our service area.</p>
+            </div>
+            <div class="bg-green-50 p-12 rounded-[2rem] flex flex-col items-center">
+                <i data-lucide="users" class="w-16 h-16 text-munchies-green mb-6"></i>
+                <h3 class="text-2xl font-bold mb-4">Support Local</h3>
+                <p class="text-gray-600 text-lg">Partnering with township vendors to boost local economy and create jobs.</p>
+            </div>
+            <div class="bg-green-50 p-12 rounded-[2rem] flex flex-col items-center">
+                <i data-lucide="shield-check" class="w-16 h-16 text-munchies-green mb-6"></i>
+                <h3 class="text-2xl font-bold mb-4">Reliable Service</h3>
+                <p class="text-gray-600 text-lg">Safe, tracked deliveries with customer satisfaction guarantee.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-green-50 px-6">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-5xl font-extrabold text-munchies-green mb-20">How It Works</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div class="relative bg-white p-12 pt-16 rounded-[2rem] shadow-sm">
+                    <div class="absolute -top-8 left-1/2 -translate-x-1/2 w-16 h-16 bg-munchies-green text-white rounded-full flex items-center justify-center text-3xl font-bold">1</div>
+                    <h3 class="text-2xl font-bold mb-4">Browse Vendors</h3>
+                    <p class="text-gray-600 text-lg">Explore local vendors and menus in Soshanguve via our WhatsApp form.</p>
+                </div>
+                <div class="relative bg-white p-12 pt-16 rounded-[2rem] shadow-sm">
+                    <div class="absolute -top-8 left-1/2 -translate-x-1/2 w-16 h-16 bg-munchies-green text-white rounded-full flex items-center justify-center text-3xl font-bold">2</div>
+                    <h3 class="text-2xl font-bold mb-4">Place Order</h3>
+                    <p class="text-gray-600 text-lg">Submit your order details securely through our WhatsApp contact.</p>
+                </div>
+                <div class="relative bg-white p-12 pt-16 rounded-[2rem] shadow-sm">
+                    <div class="absolute -top-8 left-1/2 -translate-x-1/2 w-16 h-16 bg-munchies-green text-white rounded-full flex items-center justify-center text-3xl font-bold">3</div>
+                    <h3 class="text-2xl font-bold mb-4">Delivered Fast</h3>
+                    <p class="text-gray-600 text-lg">Our drivers deliver fresh and hot to your door in Soshanguve.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="vendors" class="py-24 px-6 max-w-7xl mx-auto">
+        <h2 class="font-street text-5xl text-center mb-16 italic tracking-tight">OUR PARTNERING VENDORS</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <a href="https://forms.fillout.com/t/9Sp16Jm6SCus?prefill_vendor=Soshanguve+Sizzle" class="group bg-white rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-all hover:-translate-y-2">
+                <img src="https://images.unsplash.com/photo-1606131731446-5568d87113aa?q=80&w=800&fit=crop" class="w-full h-52 object-cover" alt="Kota">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold">Soshanguve Sizzle</h3>
+                    <p id="soshanguve-sizzle-items" class="text-sm text-gray-400 italic mt-2">Loading menu...</p>
+                </div>
+            </a>
+            <a href="https://forms.fillout.com/t/9Sp16Jm6SCus?prefill_vendor=The+Block+H+Grill" class="group bg-white rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-all hover:-translate-y-2">
+                <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=800&fit=crop" class="w-full h-52 object-cover" alt="Grill">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold">The Block H Grill</h3>
+                    <p id="block-h-grill-items" class="text-sm text-gray-400 italic mt-2">Loading menu...</p>
+                </div>
+            </a>
+            <a href="https://forms.fillout.com/t/9Sp16Jm6SCus?prefill_vendor=Di+Pitseng" class="group bg-white rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-all hover:-translate-y-2">
+                <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?q=80&w=800&fit=crop" class="w-full h-52 object-cover" alt="Stew">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold">Di Pitseng</h3>
+                    <p id="di-pitseng-items" class="text-sm text-gray-400 italic mt-2">Loading menu...</p>
+                </div>
+            </a>
+            <a href="https://forms.fillout.com/t/9Sp16Jm6SCus?prefill_vendor=Kwasa+Grill" class="group bg-white rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-all hover:-translate-y-2">
+                <img src="https://images.unsplash.com/photo-1532635211-8ec15f2ce05c?q=80&w=800&fit=crop" class="w-full h-52 object-cover" alt="Traditional">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold">Kwasa Grill</h3>
+                    <p id="kwasa-grill-items" class="text-sm text-gray-400 italic mt-2">Loading menu...</p>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <section class="py-24 bg-gray-50 px-6">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="text-4xl font-extrabold text-munchies-green mb-8">Our Service Area</h2>
+            <p class="text-xl text-gray-600 mb-12">Proudly delivering to all Blocks in <strong>Soshanguve</strong> and surrounding townships.</p>
+            <div class="rounded-[2rem] overflow-hidden shadow-2xl border-8 border-white h-[450px]">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d115160.85406059286!2d28.01633516065416!3d-25.539207038760034!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1ebfdf4806a09637%3A0x89c57d76a7e0f2f1!2sSoshanguve!5e0!3m2!1sen!2sza!4v1715000000000!5m2!1sen!2sza" 
+                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-munchies-dark text-white py-20 px-6">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-16">
+            <div>
+                <h3 class="text-3xl font-bold mb-8">Munchies Delivery Service Pty Ltd</h3>
+                <div class="space-y-4 text-gray-400">
+                    <p>CIPC Registration Number: 2026/103543/07</p>
+                    <p>Enterprise Number: 2026/103543/07</p>
+                    <p class="mt-8 text-sm uppercase tracking-wider font-bold">Main Object: BUSINESS ACTIVITIES NOT RESTRICTED</p>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-2xl font-bold mb-8">Registered Office</h4>
+                <div class="space-y-2 text-gray-400">
+                    <p>2078 BLOCK H SOSHANGUVE - H</p>
+                    <p>SOSHANGUVE 0164</p>
+                    <p>PRETORIA, GAUTENG</p>
+                    <p>0152</p>
+                    <p class="mt-8 text-sm italic">Location of Records: SOSHANGUVE 64 BLOCK H, PRETORIA, GAUTENG 0152</p>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-2xl font-bold mb-8">Contact & Links</h4>
+                <div class="space-y-2 text-gray-400 mb-12">
+                    <p>Email: munchies.ds@gmail.com</p>
+                    <p>WhatsApp: 063 402 5937</p>
+                    <p>Phone: 082 870 8171</p>
+                </div>
+                <div class="flex gap-8">
+                    <a href="privacy-policy.html" class="text-munchies-green font-bold text-xl hover:underline">Privacy Policy</a>
+                    <a href="terms.html" class="text-munchies-green font-bold text-xl hover:underline">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const AIRTABLE_TOKEN = 'patdfiQ8AuEMlV9Sp.0d6e9d216168530d137faf5eb4dd7ae0c288d78bdbe0dff580d01e72398ffc30'; // Paste your Token here
+        const BASE_ID = 'appdqBZtxDVSZmG0Z';
+        const TABLE_NAME = 'Menu Items';
+
+        async function loadAirtableData() {
+            if (AIRTABLE_TOKEN.includes('xxx')) return;
+            try {
+                const Airtable = window.Airtable;
+                const base = new Airtable({apiKey: AIRTABLE_TOKEN}).base(BASE_ID);
+                const records = await base(TABLE_NAME).select({view: 'Grid view'}).all();
+
+                const vendorIds = {
+                    'Soshanguve Sizzle': 'soshanguve-sizzle-items',
+                    'The Block H Grill': 'block-h-grill-items',
+                    'Di Pitseng': 'di-pitseng-items',
+                    'Kwasa Grill': 'kwasa-grill-items'
+                };
+
+                const menuData = {};
+                records.forEach(r => {
+                    const vField = r.get('Vendor');
+                    const vName = Array.isArray(vField) ? vField[0] : vField;
+                    if(vName && vendorIds[vName]) {
+                        if(!menuData[vName]) menuData[vName] = [];
+                        menuData[vName].push(r.get('Name'));
+                    }
+                });
+
+                Object.keys(menuData).forEach(vendor => {
+                    const el = document.getElementById(vendorIds[vendor]);
+                    if(el) el.innerText = 'Specials: ' + menuData[vendor].slice(0, 3).join(' • ');
+                });
+            } catch (e) { console.error(e); }
+        }
+
+        window.addEventListener('load', loadAirtableData);
+        lucide.createIcons();
+    </script>
+</body>
+</html>
