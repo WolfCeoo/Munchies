@@ -206,17 +206,26 @@
         </div>
     </footer>
     
-
     <script>
         // MOBILE MENU LOGIC
         const btn = document.getElementById('menu-btn');
         const menu = document.getElementById('mobile-menu');
+        const mobileLinks = menu.querySelectorAll('a');
+
+        // Toggle menu when burger is clicked
         btn.addEventListener('click', () => {
             menu.classList.toggle('hidden');
         });
 
+        // AUTO-COLLAPSE: Hide menu when a link is clicked
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+
         // AIRTABLE CONFIG
-        const AIRTABLE_TOKEN = 'patOp4nSGoeBPi5m3.0970b1bc45b58fa0e75e9ff78c822d718c03b50b32aa774b8a648791909cce9c'; 
+        const AIRTABLE_TOKEN = ''; 
         const BASE_ID = 'appdqBZtxDVSZmG0Z';
         const TABLE_NAME = 'Menu Items';
 
