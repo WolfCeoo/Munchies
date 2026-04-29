@@ -3,253 +3,917 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    
-    <!-- Facebook domain verification meta tag -->
     <meta name="facebook-domain-verification" content="oss55rq5za9vlhaq8m0xf03tl8gzhr" />
-    
     <title>Munchies Delivery Service | Soshanguve Food Delivery</title>
-    
     <meta name="description" content="Munchies Delivery Service Pty Ltd (2026/103543/07). Fast local food delivery in Soshanguve.">
     <meta property="og:title" content="Munchies Delivery Service - Full of Taste">
     <meta property="og:image" content="https://images.unsplash.com/photo-1606131731446-5568d87113aa?q=80&w=1200">
-
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: {
-                        munchies: { 
-                            green: '#2ecc71',
-                            dark: '#0a111f' 
-                        }
-                    },
-                    fontFamily: {
-                        street: ['"Archivo Black"', 'sans-serif'],
-                        sans: ['Inter', 'sans-serif']
-                    }
+                    colors: { munchies: { green: '#2ecc71', dark: '#0a111f' } },
+                    fontFamily: { street: ['"Archivo Black"', 'sans-serif'], sans: ['Inter', 'sans-serif'] }
                 }
             }
         }
     </script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/airtable/0.11.6/airtable.min.js"></script>
     <style>
-        #nav-container { transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-        .glass { background: rgba(10, 17, 31, 0.85); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
-        @keyframes subtle-bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
+        /* Nav */
+        #nav-container { transition: all 0.5s cubic-bezier(0.4,0,0.2,1); }
+        .glass { background: rgba(10,17,31,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+
+        /* Hero animations */
+        @keyframes fadeUp { from{opacity:0;transform:translateY(32px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes subtle-bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
         .animate-bounce-slow { animation: subtle-bounce 3s infinite ease-in-out; }
+        .h1{animation:fadeUp .7s .1s both}
+        .h2{animation:fadeUp .7s .3s both}
+        .h3{animation:fadeUp .7s .5s both}
+        .h4{animation:fadeUp .7s .65s both}
+        .h5{animation:fadeUp .7s .8s both}
+
+        /* Scroll reveal */
+        .reveal { opacity:0; transform:translateY(36px); transition:opacity .65s ease,transform .65s ease; }
+        .reveal.visible { opacity:1; transform:translateY(0); }
+        .stagger > *:nth-child(1){transition-delay:0s}
+        .stagger > *:nth-child(2){transition-delay:.1s}
+        .stagger > *:nth-child(3){transition-delay:.2s}
+        .stagger > *:nth-child(4){transition-delay:.3s}
+
+        /* Tab */
+        .tab-btn { transition:all .3s ease; color:#9ca3af; border:1.5px solid rgba(255,255,255,0.1); }
+        .tab-btn.active { background:#2ecc71; color:#0a111f; border-color:#2ecc71; transform:scale(1.04); }
+
+        /* Forms */
+        .munchies-input {
+            width:100%; background:rgba(255,255,255,0.05); border:1.5px solid rgba(255,255,255,0.1);
+            border-radius:14px; padding:14px 18px; color:#fff; font-size:.95rem; outline:none;
+            transition:border-color .25s, box-shadow .25s, background .25s;
+            -webkit-appearance:none; appearance:none;
+        }
+        .munchies-input:focus { border-color:#2ecc71; box-shadow:0 0 0 3px rgba(46,204,113,.15); background:rgba(255,255,255,.08); }
+        .munchies-input.field-error-state { border-color:#e74c3c; box-shadow:0 0 0 3px rgba(231,76,60,.12); }
+        .munchies-input.field-ok { border-color:#2ecc71; }
+        .munchies-input::placeholder { color:rgba(255,255,255,.3); }
+        select.munchies-input option { background:#0a111f; color:#fff; }
+
+        .field-msg { font-size:.76rem; margin-top:5px; display:none; align-items:center; gap:4px; font-weight:700; }
+        .field-msg.show { display:flex; }
+        .field-msg.err { color:#e74c3c; }
+        .field-msg.ok  { color:#2ecc71; }
+
+        /* Upload */
+        .upload-zone {
+            border:2px dashed rgba(46,204,113,.3); border-radius:14px; padding:22px 16px;
+            text-align:center; cursor:pointer; transition:all .25s; background:rgba(46,204,113,.03);
+        }
+        .upload-zone:hover,.upload-zone.drag-over { border-color:#2ecc71; background:rgba(46,204,113,.08); }
+        .upload-zone.has-file { border-color:#2ecc71; background:rgba(46,204,113,.08); border-style:solid; }
+
+        /* Submit btn */
+        .submit-btn {
+            background:#2ecc71; color:#0a111f; font-weight:800; font-family:'Archivo Black',sans-serif;
+            padding:16px 32px; border-radius:999px; border:none; cursor:pointer;
+            width:100%; font-size:1rem; letter-spacing:.06em;
+            transition:all .3s; position:relative;
+        }
+        .submit-btn:hover:not(:disabled) { transform:scale(1.02); box-shadow:0 8px 32px rgba(46,204,113,.35); }
+        .submit-btn:active:not(:disabled) { transform:scale(.98); }
+        .submit-btn:disabled { opacity:.55; cursor:not-allowed; }
+        .spin { display:none; width:20px; height:20px; border:3px solid rgba(10,17,31,.25); border-top-color:#0a111f; border-radius:50%; animation:rotate .7s linear infinite; margin:0 auto; }
+        @keyframes rotate{to{transform:rotate(360deg)}}
+
+        /* Toast */
+        #toast {
+            position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(80px);
+            padding:13px 28px; border-radius:999px; font-weight:700; font-size:.88rem;
+            z-index:9999; transition:transform .4s cubic-bezier(.34,1.56,.64,1); pointer-events:none;
+            white-space:nowrap; display:none;
+        }
+        #toast.show { transform:translateX(-50%) translateY(0); display:block; }
+        #toast.ok  { background:#2ecc71; color:#0a111f; }
+        #toast.bad { background:#e74c3c; color:#fff; }
+
+        /* Trust badge */
+        .trust-badge {
+            display:inline-flex; align-items:center; gap:7px;
+            background:rgba(46,204,113,.1); border:1px solid rgba(46,204,113,.22);
+            padding:7px 16px; border-radius:999px; font-size:.73rem;
+            font-weight:700; color:#2ecc71; letter-spacing:.08em; text-transform:uppercase;
+        }
+
+        /* Legitimacy cards */
+        .legit-card {
+            background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07);
+            border-radius:20px; padding:24px; transition:all .3s;
+        }
+        .legit-card:hover { border-color:rgba(46,204,113,.25); background:rgba(46,204,113,.04); transform:translateY(-3px); }
+
+        /* Join card */
+        .join-card { transition:all .4s cubic-bezier(.34,1.56,.64,1); }
+
+        /* ID status */
+        .id-status { display:none; align-items:center; gap:6px; font-size:.78rem; font-weight:700; margin-top:6px; }
+        .id-status.show { display:flex; }
+        .id-status.ok  { color:#2ecc71; }
+        .id-status.bad { color:#e74c3c; }
+
+        /* Penalty banner */
+        .penalty-banner {
+            background:rgba(231,76,60,.07); border:1px solid rgba(231,76,60,.18);
+            border-left:4px solid #e74c3c; border-radius:12px; padding:14px 18px;
+        }
+
+        /* Vendor card hover */
+        .vendor-card { transition: transform .3s ease, box-shadow .3s ease; }
+        .vendor-card:hover { transform:translateY(-4px); box-shadow:0 20px 50px rgba(0,0,0,.4); }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar{width:5px}
+        ::-webkit-scrollbar-track{background:#0a111f}
+        ::-webkit-scrollbar-thumb{background:#2ecc71;border-radius:99px}
+
+        /* Tab panels */
+        .tab-panel { display:none; }
+        .tab-panel.active { display:block; animation:fadeUp .4s ease; }
     </style>
 </head>
 <body class="bg-white text-slate-900 font-sans">
 
-    <nav id="main-nav" class="fixed top-0 left-0 w-full z-50 flex justify-center transition-all duration-500">
-        <div id="nav-container" class="w-full h-20 flex items-center justify-between px-8 glass border-b border-white/10 transition-all duration-500">
-            <div class="flex items-center gap-4">
-                <img src="assets/munchies-logo.jpg" alt="Logo" class="h-10 w-10 rounded-full border-2 border-munchies-green">
-                <span id="logo-text" class="font-street text-white text-2xl tracking-tighter transition-transform duration-500">MUNCHIES</span>
-            </div>
-            
-            <div class="hidden md:flex items-center gap-10 text-white font-bold uppercase text-[11px] tracking-[0.2em]">
-                <a href="#" class="hover:text-munchies-green transition-all">Home</a>
-                <a href="#about" class="hover:text-munchies-green transition-all">About</a>
-                <a href="#vendors" class="hover:text-munchies-green transition-all">Vendors</a>
-                <a href="https://wa.me/27673357429" class="bg-munchies-green text-munchies-dark px-6 py-2.5 rounded-full hover:scale-105 active:scale-95 transition-all shadow-lg shadow-munchies-green/20">Order Now</a>
-            </div>
+<!-- ═══ NAV ═══ -->
+<nav id="main-nav" class="fixed top-0 left-0 w-full z-50 flex justify-center">
+    <div id="nav-container" class="w-full h-20 flex items-center justify-between px-8 glass border-b border-white/10">
+        <div class="flex items-center gap-4">
+            <img src="assets/munchies-logo.jpg" alt="Logo" class="h-10 w-10 rounded-full border-2 border-munchies-green">
+            <span id="logo-text" class="font-street text-white text-2xl tracking-tighter transition-transform duration-500">MUNCHIES</span>
+        </div>
+        <div class="hidden md:flex items-center gap-8 text-white font-bold uppercase text-[11px] tracking-[0.2em]">
+            <a href="#" class="hover:text-munchies-green transition-colors">Home</a>
+            <a href="#about" class="hover:text-munchies-green transition-colors">About</a>
+            <a href="#vendors" class="hover:text-munchies-green transition-colors">Vendors</a>
+            <a href="#join" class="hover:text-munchies-green transition-colors">Join Us</a>
+            <a href="https://wa.me/27673357429" class="bg-munchies-green text-munchies-dark px-6 py-2.5 rounded-full hover:scale-105 active:scale-95 transition-all shadow-lg shadow-munchies-green/20">Order Now</a>
+        </div>
+        <button id="menu-btn" class="md:hidden text-white"><i data-lucide="menu"></i></button>
+    </div>
+    <div id="mobile-menu" class="hidden absolute top-full left-0 w-full glass border-b border-white/10 shadow-2xl">
+        <div class="flex flex-col p-8 gap-6 text-white font-bold uppercase tracking-widest text-sm text-center">
+            <a href="#" class="pb-4 border-b border-white/5">Home</a>
+            <a href="#about" class="pb-4 border-b border-white/5">About</a>
+            <a href="#vendors" class="pb-4 border-b border-white/5">Vendors</a>
+            <a href="#join" class="pb-4 border-b border-white/5">Join Us</a>
+            <a href="https://wa.me/27673357429" class="text-munchies-green text-lg font-black">Order Now</a>
+        </div>
+    </div>
+</nav>
 
-            <button id="menu-btn" class="md:hidden text-white">
-                <i data-lucide="menu"></i>
+<!-- ═══ HERO ═══ -->
+<header class="relative h-screen flex items-center justify-center text-white overflow-hidden">
+    <div class="absolute inset-0">
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1920&auto=format&fit=crop"
+             alt="Soshanguve Street Food" class="w-full h-full object-cover brightness-[0.28]">
+        <div class="absolute inset-0 bg-gradient-to-t from-munchies-dark via-transparent to-black/30"></div>
+    </div>
+    <div class="relative z-10 text-center px-6 max-w-5xl">
+        <img src="assets/munchies-logo.jpg" alt="Munchies Logo"
+             class="mx-auto h-24 w-24 md:h-32 md:w-32 rounded-full border-4 border-munchies-green mb-6 shadow-2xl animate-bounce-slow h1">
+        <h1 class="font-street text-5xl md:text-9xl mb-2 tracking-tighter leading-none h2">MUNCHIES</h1>
+        <div class="bg-munchies-green text-munchies-dark inline-block px-6 py-1 md:px-8 md:py-2 rotate-[-1deg] mb-10 shadow-xl h3">
+            <span class="font-street text-2xl md:text-6xl uppercase tracking-widest">Full of Taste</span>
+        </div>
+        <p class="text-lg md:text-2xl font-medium text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed h4">Soshanguve's fastest route to local food.</p>
+        <a href="https://wa.me/27673357429"
+           class="h5 bg-white text-munchies-dark hover:bg-munchies-green hover:text-white text-lg md:text-xl font-extrabold px-8 py-4 md:px-12 md:py-6 rounded-2xl shadow-2xl inline-flex items-center gap-4 transition-all hover:scale-105 active:scale-95">
+            <i data-lucide="message-circle" class="fill-current w-5 h-5 md:w-6 md:h-6"></i> ORDER ON WHATSAPP
+        </a>
+    </div>
+</header>
+
+<!-- ═══ ABOUT ═══ -->
+<section id="about" class="py-24 md:py-32 px-6 max-w-7xl mx-auto">
+    <div class="text-center mb-16 reveal">
+        <h2 class="text-4xl md:text-6xl font-extrabold text-munchies-green mb-8 tracking-tight">About Us</h2>
+        <p class="text-lg md:text-xl text-gray-600 max-w-5xl mx-auto leading-relaxed font-medium">
+            Founded by Andile Mathe and Kabelo Matseke, Munchies Delivery Service (Pty) Ltd is a hyper-local food delivery platform serving Soshanguve. We connect residents with authentic township vendors for fast, reliable delivery.
+        </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 stagger">
+        <div class="reveal p-8 md:p-10 rounded-[2.5rem] bg-slate-50 border border-slate-100 hover:border-munchies-green/30 transition-all group">
+            <div class="w-14 h-14 bg-munchies-green/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <i data-lucide="zap" class="text-munchies-green w-7 h-7"></i>
+            </div>
+            <h3 class="text-xl md:text-2xl font-bold mb-4">Fast Delivery</h3>
+            <p class="text-gray-600 text-sm md:text-base">Quick turnarounds because we know when you're hungry, you're hungry.</p>
+        </div>
+        <div class="reveal p-8 md:p-10 rounded-[2.5rem] bg-slate-50 border border-slate-100 hover:border-munchies-green/30 transition-all group">
+            <div class="w-14 h-14 bg-munchies-green/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <i data-lucide="heart" class="text-munchies-green w-7 h-7"></i>
+            </div>
+            <h3 class="text-xl md:text-2xl font-bold mb-4">Support Local</h3>
+            <p class="text-gray-600 text-sm md:text-base">Every order helps grow a small business right here in the township.</p>
+        </div>
+        <div class="reveal p-8 md:p-10 rounded-[2.5rem] bg-slate-50 border border-slate-100 hover:border-munchies-green/30 transition-all group">
+            <div class="w-14 h-14 bg-munchies-green/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <i data-lucide="shield-check" class="text-munchies-green w-7 h-7"></i>
+            </div>
+            <h3 class="text-xl md:text-2xl font-bold mb-4">Secure Service</h3>
+            <p class="text-gray-600 text-sm md:text-base">Registered business (2026/103543/07) providing safe, tracked deliveries.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ LEGITIMACY STRIP ═══ -->
+<section class="py-16 md:py-24 px-6 bg-munchies-dark">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-12 reveal">
+            <div class="trust-badge mb-6 mx-auto w-fit">
+                <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Verified South African Business
+            </div>
+            <h2 class="font-street text-3xl md:text-5xl text-white tracking-tight mb-3">Fully Legitimate. Fully Local.</h2>
+            <p class="text-gray-400 max-w-xl mx-auto text-sm md:text-base">Munchies operates within the full legal framework of South Africa. Here's our proof.</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 stagger">
+            <div class="legit-card reveal">
+                <div class="w-10 h-10 bg-munchies-green/10 rounded-xl flex items-center justify-center mb-4">
+                    <i data-lucide="file-badge" class="text-munchies-green w-5 h-5"></i>
+                </div>
+                <p class="text-xs text-gray-500 uppercase tracking-widest font-bold mb-1">CIPC Registered</p>
+                <p class="text-white font-bold text-sm">Munchies Delivery Service (Pty) Ltd</p>
+                <p class="text-munchies-green text-xs font-mono mt-1">Reg: 2026/103543/07</p>
+            </div>
+            <div class="legit-card reveal">
+                <div class="w-10 h-10 bg-munchies-green/10 rounded-xl flex items-center justify-center mb-4">
+                    <i data-lucide="lock" class="text-munchies-green w-5 h-5"></i>
+                </div>
+                <p class="text-xs text-gray-500 uppercase tracking-widest font-bold mb-1">POPIA Compliant</p>
+                <p class="text-white font-bold text-sm">Protection of Personal Information Act</p>
+                <p class="text-gray-400 text-xs mt-1">Your data is protected by law</p>
+            </div>
+            <div class="legit-card reveal">
+                <div class="w-10 h-10 bg-munchies-green/10 rounded-xl flex items-center justify-center mb-4">
+                    <i data-lucide="message-square" class="text-munchies-green w-5 h-5"></i>
+                </div>
+                <p class="text-xs text-gray-500 uppercase tracking-widest font-bold mb-1">Meta Verified</p>
+                <p class="text-white font-bold text-sm">WhatsApp Business API</p>
+                <p class="text-gray-400 text-xs mt-1">Official communication channel</p>
+            </div>
+            <div class="legit-card reveal">
+                <div class="w-10 h-10 bg-munchies-green/10 rounded-xl flex items-center justify-center mb-4">
+                    <i data-lucide="map-pin" class="text-munchies-green w-5 h-5"></i>
+                </div>
+                <p class="text-xs text-gray-500 uppercase tracking-widest font-bold mb-1">Physical Address</p>
+                <p class="text-white font-bold text-sm">64 Block H, Soshanguve</p>
+                <p class="text-gray-400 text-xs mt-1">Pretoria, 0152 · Gauteng</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ MAP ═══ -->
+<section class="w-full h-[400px] md:h-[500px] relative">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14402.046555198083!2d28.1000!3d-25.5200!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1ebfe0835f5f5f5f%3A0x5f5f5f5f5f5f5f5f!2sSoshanguve!5e0!3m2!1sen!2sza!4v1700000000000"
+            class="w-full h-full border-0 grayscale" allowfullscreen="" loading="lazy"></iframe>
+    <div class="absolute inset-0 bg-munchies-green/10 pointer-events-none"></div>
+    <div class="absolute bottom-12 left-1/2 -translate-x-1/2 glass text-white px-8 py-4 rounded-full text-xs md:text-sm font-bold shadow-2xl flex items-center gap-4 border border-white/20 whitespace-nowrap">
+        <span class="flex h-2 w-2 md:h-3 md:w-3 rounded-full bg-munchies-green animate-ping"></span>
+        SERVING ALL OF SOSHANGUVE
+    </div>
+</section>
+
+<!-- ═══ VENDORS ═══ -->
+<section id="vendors" class="py-24 md:py-32 px-6 max-w-7xl mx-auto">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6 reveal">
+        <div>
+            <h2 class="font-street text-4xl md:text-6xl italic tracking-tighter mb-4">OUR VENDORS</h2>
+            <p class="text-gray-500 text-base md:text-lg">The best menus around Soshanguve curated for you.</p>
+        </div>
+        <div class="h-[2px] flex-grow mx-8 bg-slate-100 hidden md:block"></div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 stagger">
+        <a href="https://forms.fillout.com/t/9Sp16Jm6SCus?prefill_vendor=Soshanguve+Sizzle"
+           class="reveal vendor-card group relative h-[400px] md:h-[500px] overflow-hidden rounded-[2rem] bg-munchies-dark shadow-2xl">
+            <img src="https://images.unsplash.com/photo-1606131731446-5568d87113aa?q=80&w=800" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110" alt="Vendor">
+            <div class="absolute inset-0 bg-gradient-to-t from-munchies-dark via-munchies-dark/20 to-transparent"></div>
+            <div class="absolute inset-x-0 bottom-0 p-8">
+                <h3 class="text-2xl font-bold text-white mb-6">Soshanguve Sizzle</h3>
+                <div class="flex items-center text-xs font-bold text-munchies-green uppercase tracking-widest md:opacity-0 md:group-hover:opacity-100 transition-all md:translate-y-4 md:group-hover:translate-y-0">
+                    View Menu & Order <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                </div>
+            </div>
+        </a>
+        <a href="https://forms.fillout.com/t/9Sp16Jm6SCus?prefill_vendor=The+Block+H+Grill"
+           class="reveal vendor-card group relative h-[400px] md:h-[500px] overflow-hidden rounded-[2rem] bg-munchies-dark shadow-2xl">
+            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=800" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110" alt="Vendor">
+            <div class="absolute inset-0 bg-gradient-to-t from-munchies-dark via-munchies-dark/20 to-transparent"></div>
+            <div class="absolute inset-x-0 bottom-0 p-8">
+                <h3 class="text-2xl font-bold text-white mb-6">The Block H Grill</h3>
+                <div class="flex items-center text-xs font-bold text-munchies-green uppercase tracking-widest md:opacity-0 md:group-hover:opacity-100 transition-all md:translate-y-4 md:group-hover:translate-y-0">
+                    View Menu & Order <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                </div>
+            </div>
+        </a>
+        <a href="https://forms.fillout.com/t/9Sp16Jm6SCus?prefill_vendor=Di+Pitseng"
+           class="reveal vendor-card group relative h-[400px] md:h-[500px] overflow-hidden rounded-[2rem] bg-munchies-dark shadow-2xl">
+            <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?q=80&w=800" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110" alt="Vendor">
+            <div class="absolute inset-0 bg-gradient-to-t from-munchies-dark via-munchies-dark/20 to-transparent"></div>
+            <div class="absolute inset-x-0 bottom-0 p-8">
+                <h3 class="text-2xl font-bold text-white mb-6">Di Pitseng</h3>
+                <div class="flex items-center text-xs font-bold text-munchies-green uppercase tracking-widest md:opacity-0 md:group-hover:opacity-100 transition-all md:translate-y-4 md:group-hover:translate-y-0">
+                    View Menu & Order <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                </div>
+            </div>
+        </a>
+        <a href="https://forms.fillout.com/t/9Sp16Jm6SCus?prefill_vendor=Kwasa+Grill"
+           class="reveal vendor-card group relative h-[400px] md:h-[500px] overflow-hidden rounded-[2rem] bg-munchies-dark shadow-2xl">
+            <img src="https://images.unsplash.com/photo-1532635211-8ec15f2ce05c?q=80&w=800" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110" alt="Vendor">
+            <div class="absolute inset-0 bg-gradient-to-t from-munchies-dark via-munchies-dark/20 to-transparent"></div>
+            <div class="absolute inset-x-0 bottom-0 p-8">
+                <h3 class="text-2xl font-bold text-white mb-6">Kwasa Grill</h3>
+                <div class="flex items-center text-xs font-bold text-munchies-green uppercase tracking-widest md:opacity-0 md:group-hover:opacity-100 transition-all md:translate-y-4 md:group-hover:translate-y-0">
+                    View Menu & Order <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                </div>
+            </div>
+        </a>
+    </div>
+</section>
+
+<!-- ═══ JOIN US ═══ -->
+<section id="join" class="py-24 md:py-32 px-6 bg-munchies-dark">
+    <div class="max-w-7xl mx-auto">
+
+        <div class="text-center mb-14 reveal">
+            <div class="trust-badge mb-6 mx-auto w-fit">
+                <i data-lucide="users" class="w-3.5 h-3.5"></i> Now Recruiting
+            </div>
+            <h2 class="font-street text-4xl md:text-6xl text-white tracking-tight mb-4">
+                JOIN THE <span class="text-munchies-green">MUNCHIES</span> TEAM
+            </h2>
+            <p class="text-gray-400 max-w-xl mx-auto text-base">Whether you ride or cook — there's a place for you in Soshanguve's fastest growing food network.</p>
+        </div>
+
+        <!-- Tab buttons -->
+        <div class="flex gap-3 justify-center mb-12 reveal">
+            <button id="tab-driver" onclick="switchTab('driver')"
+                class="tab-btn active flex items-center gap-2 px-7 py-3 rounded-full font-bold uppercase text-sm tracking-widest">
+                <i data-lucide="bike" class="w-4 h-4"></i> I'm a Driver
+            </button>
+            <button id="tab-vendor" onclick="switchTab('vendor')"
+                class="tab-btn flex items-center gap-2 px-7 py-3 rounded-full font-bold uppercase text-sm tracking-widest">
+                <i data-lucide="store" class="w-4 h-4"></i> I'm a Vendor
             </button>
         </div>
 
-        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full glass border-b border-white/10 shadow-2xl">
-            <div class="flex flex-col p-8 gap-6 text-white font-bold uppercase tracking-widest text-sm text-center">
-                <a href="#" class="pb-4 border-b border-white/5">Home</a>
-                <a href="#about" class="pb-4 border-b border-white/5">About</a>
-                <a href="#vendors" class="pb-4 border-b border-white/5">Vendors</a>
-                <a href="https://wa.me/27673357429" class="text-munchies-green text-lg font-black">Order Now</a>
-            </div>
-        </div>
-    </nav>
+        <!-- ── DRIVER PANEL ── -->
+        <div id="panel-driver" class="tab-panel active max-w-2xl mx-auto">
+            <div class="join-card bg-white/[0.04] border border-white/10 rounded-[2rem] p-8 md:p-12">
 
-    <header class="relative h-screen flex items-center justify-center text-white overflow-hidden">
-        <div class="absolute inset-0">
-            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1920&auto=format&fit=crop" 
-                 alt="Soshanguve Street Food" 
-                 class="w-full h-full object-cover brightness-[0.3]">
-            <div class="absolute inset-0 bg-gradient-to-t from-munchies-dark via-transparent to-black/40"></div>
-        </div>
-        
-        <div class="relative z-10 text-center px-6 max-w-5xl">
-            <img src="assets/munchies-logo.jpg" alt="Munchies Logo" class="mx-auto h-24 w-24 md:h-32 md:w-32 rounded-full border-4 border-munchies-green mb-6 md:mb-8 shadow-2xl animate-bounce-slow">
-            <h1 class="font-street text-5xl md:text-9xl mb-2 tracking-tighter leading-none">MUNCHIES</h1>
-            <div class="bg-munchies-green text-munchies-dark inline-block px-6 py-1 md:px-8 md:py-2 rotate-[-1deg] mb-10 md:mb-12 shadow-xl">
-                <span class="font-street text-2xl md:text-6xl uppercase tracking-widest">Full of Taste</span>
-            </div>
-            <p class="text-lg md:text-2xl font-medium text-gray-300 mb-10 md:mb-12 max-w-2xl mx-auto leading-relaxed">Soshanguve's fastest route to local food.</p>
-            <a href="https://wa.me/27673357429" class="bg-white text-munchies-dark hover:bg-munchies-green hover:text-white text-lg md:text-xl font-extrabold px-8 py-4 md:px-12 md:py-6 rounded-2xl shadow-2xl inline-flex items-center gap-4 transition-all hover:scale-105 active:scale-95">
-                <i data-lucide="message-circle" class="fill-current w-5 h-5 md:w-6 md:h-6"></i> ORDER ON WHATSAPP
-            </a>
-        </div>
-    </header>
-
-    <section id="about" class="py-24 md:py-32 px-6 max-w-7xl mx-auto">
-        <div class="text-center mb-16 md:mb-20">
-            <h2 class="text-4xl md:text-6xl font-extrabold text-munchies-green mb-8 tracking-tight">About Us</h2>
-            <p class="text-lg md:text-xl text-gray-600 max-w-5xl mx-auto leading-relaxed font-medium">
-                Founded by Andile Mathe and Kabelo Matseke, Munchies Delivery Service (Pty) Ltd is a hyper-local food delivery platform serving Soshanguve. We connect residents with authentic township vendors for fast, reliable delivery.
-            </p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
-            <div class="p-8 md:p-10 rounded-[2.5rem] md:rounded-[3rem] bg-slate-50 border border-slate-100 hover:border-munchies-green/30 transition-all group">
-                <div class="w-14 h-14 md:w-16 md:h-16 bg-munchies-green/10 rounded-2xl flex items-center justify-center mb-6 md:mb-8 group-hover:scale-110 transition-transform">
-                    <i data-lucide="zap" class="text-munchies-green w-7 h-7 md:w-8 md:h-8"></i>
-                </div>
-                <h3 class="text-xl md:text-2xl font-bold mb-4">Fast Delivery</h3>
-                <p class="text-gray-600 text-sm md:text-base">Quick turnarounds because we know when you're hungry, you're hungry.</p>
-            </div>
-            <div class="p-8 md:p-10 rounded-[2.5rem] md:rounded-[3rem] bg-slate-50 border border-slate-100 hover:border-munchies-green/30 transition-all group">
-                <div class="w-14 h-14 md:w-16 md:h-16 bg-munchies-green/10 rounded-2xl flex items-center justify-center mb-6 md:mb-8 group-hover:scale-110 transition-transform">
-                    <i data-lucide="heart" class="text-munchies-green w-7 h-7 md:w-8 md:h-8"></i>
-                </div>
-                <h3 class="text-xl md:text-2xl font-bold mb-4">Support Local</h3>
-                <p class="text-gray-600 text-sm md:text-base">Every order helps grow a small business right here in the township.</p>
-            </div>
-            <div class="p-8 md:p-10 rounded-[2.5rem] md:rounded-[3rem] bg-slate-50 border border-slate-100 hover:border-munchies-green/30 transition-all group">
-                <div class="w-14 h-14 md:w-16 md:h-16 bg-munchies-green/10 rounded-2xl flex items-center justify-center mb-6 md:mb-8 group-hover:scale-110 transition-transform">
-                    <i data-lucide="shield-check" class="text-munchies-green w-7 h-7 md:w-8 md:h-8"></i>
-                </div>
-                <h3 class="text-xl md:text-2xl font-bold mb-4">Secure Service</h3>
-                <p class="text-gray-600 text-sm md:text-base">Registered business (2026/103543/07) providing safe, tracked deliveries.</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="w-full h-[400px] md:h-[500px] relative">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14402.046555198083!2d28.1000!3d-25.5200!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1ebfe0835f5f5f5f%3A0x5f5f5f5f5f5f5f5f!2sSoshanguve!5e0!3m2!1sen!2sza!4v1700000000000" class="w-full h-full border-0 grayscale" allowfullscreen="" loading="lazy"></iframe>
-        <div class="absolute inset-0 bg-munchies-green/10 pointer-events-none"></div>
-        <div class="absolute bottom-12 left-1/2 -translate-x-1/2 glass text-white px-8 py-4 md:px-10 md:py-5 rounded-full text-xs md:text-sm font-bold shadow-2xl flex items-center gap-4 border border-white/20 whitespace-nowrap">
-            <span class="flex h-2 w-2 md:h-3 md:w-3 rounded-full bg-munchies-green animate-ping"></span>
-            SERVING ALL OF SOSHANGUVE
-        </div>
-    </section>
-
-    <section id="vendors" class="py-24 md:py-32 px-6 max-w-7xl mx-auto">
-        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-16 gap-6">
-            <div>
-                <h2 class="font-street text-4xl md:text-6xl italic tracking-tighter mb-4">OUR VENDORS</h2>
-                <p class="text-gray-500 text-base md:text-lg">The best menus around Soshanguve curated for you.</p>
-            </div>
-            <div class="h-[2px] flex-grow mx-8 bg-slate-100 hidden md:block"></div>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-            <a href="https://forms.fillout.com/t/9Sp16Jm6SCus?prefill_vendor=Soshanguve+Sizzle" class="group relative h-[400px] md:h-[500px] overflow-hidden rounded-[2rem] md:rounded-[2.5rem] bg-munchies-dark shadow-2xl">
-                <img src="https://images.unsplash.com/photo-1606131731446-5568d87113aa?q=80&w=800" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110" alt="Vendor">
-                <div class="absolute inset-0 bg-gradient-to-t from-munchies-dark via-munchies-dark/20 to-transparent"></div>
-                <div class="absolute inset-x-0 bottom-0 p-8">
-                    <h3 class="text-2xl md:text-3xl font-bold text-white mb-6">Soshanguve Sizzle</h3>
-                    <div class="flex items-center text-xs font-bold text-munchies-green uppercase tracking-widest md:opacity-0 md:group-hover:opacity-100 transition-all md:translate-y-4 md:group-hover:translate-y-0">
-                        View Menu & Order <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                <div class="grid grid-cols-3 gap-3 mb-8">
+                    <div class="text-center p-4 rounded-2xl bg-munchies-green/10 border border-munchies-green/15">
+                        <p class="text-munchies-green font-street text-lg mb-1">100%</p>
+                        <p class="text-gray-400 text-xs font-bold uppercase tracking-wide">Your Earnings</p>
+                    </div>
+                    <div class="text-center p-4 rounded-2xl bg-munchies-green/10 border border-munchies-green/15">
+                        <p class="text-munchies-green font-street text-lg mb-1">Flex</p>
+                        <p class="text-gray-400 text-xs font-bold uppercase tracking-wide">Your Hours</p>
+                    </div>
+                    <div class="text-center p-4 rounded-2xl bg-munchies-green/10 border border-munchies-green/15">
+                        <p class="text-munchies-green font-street text-lg mb-1">R0</p>
+                        <p class="text-gray-400 text-xs font-bold uppercase tracking-wide">Sign-up Fee</p>
                     </div>
                 </div>
-            </a>
 
-            <a href="https://forms.fillout.com/t/9Sp16Jm6SCus?prefill_vendor=The+Block+H+Grill" class="group relative h-[400px] md:h-[500px] overflow-hidden rounded-[2rem] md:rounded-[2.5rem] bg-munchies-dark shadow-2xl">
-                <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=800" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110" alt="Vendor">
-                <div class="absolute inset-0 bg-gradient-to-t from-munchies-dark via-munchies-dark/20 to-transparent"></div>
-                <div class="absolute inset-x-0 bottom-0 p-8">
-                    <h3 class="text-2xl md:text-3xl font-bold text-white mb-6">The Block H Grill</h3>
-                    <div class="flex items-center text-xs font-bold text-munchies-green uppercase tracking-widest md:opacity-0 md:group-hover:opacity-100 transition-all md:translate-y-4 md:group-hover:translate-y-0">
-                        View Menu & Order <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                <div class="penalty-banner mb-8">
+                    <div class="flex items-start gap-3">
+                        <i data-lucide="alert-triangle" class="text-red-400 w-5 h-5 mt-0.5 shrink-0"></i>
+                        <div>
+                            <p class="text-white font-bold text-sm mb-1">Delivery Commitment Policy</p>
+                            <p class="text-gray-400 text-xs leading-relaxed">You don't have to be based in Soshanguve — but you must be able to fulfil deliveries reliably. Unexplained delays or missed runs result in a <strong class="text-red-400">reduced delivery split</strong> as per our driver agreement.</p>
+                        </div>
                     </div>
                 </div>
-            </a>
 
-            <a href="https://forms.fillout.com/t/9Sp16Jm6SCus?prefill_vendor=Di+Pitseng" class="group relative h-[400px] md:h-[500px] overflow-hidden rounded-[2rem] md:rounded-[2.5rem] bg-munchies-dark shadow-2xl">
-                <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?q=80&w=800" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110" alt="Vendor">
-                <div class="absolute inset-0 bg-gradient-to-t from-munchies-dark via-munchies-dark/20 to-transparent"></div>
-                <div class="absolute inset-x-0 bottom-0 p-8">
-                    <h3 class="text-2xl md:text-3xl font-bold text-white mb-6">Di Pitseng</h3>
-                    <div class="flex items-center text-xs font-bold text-munchies-green uppercase tracking-widest md:opacity-0 md:group-hover:opacity-100 transition-all md:translate-y-4 md:group-hover:translate-y-0">
-                        View Menu & Order <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
-                    </div>
-                </div>
-            </a>
+                <form id="driver-form" novalidate>
+                    <div class="space-y-5">
 
-            <a href="https://forms.fillout.com/t/9Sp16Jm6SCus?prefill_vendor=Kwasa+Grill" class="group relative h-[400px] md:h-[500px] overflow-hidden rounded-[2rem] md:rounded-[2.5rem] bg-munchies-dark shadow-2xl">
-                <img src="https://images.unsplash.com/photo-1532635211-8ec15f2ce05c?q=80&w=800" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110" alt="Vendor">
-                <div class="absolute inset-0 bg-gradient-to-t from-munchies-dark via-munchies-dark/20 to-transparent"></div>
-                <div class="absolute inset-x-0 bottom-0 p-8">
-                    <h3 class="text-2xl md:text-3xl font-bold text-white mb-6">Kwasa Grill</h3>
-                    <div class="flex items-center text-xs font-bold text-munchies-green uppercase tracking-widest md:opacity-0 md:group-hover:opacity-100 transition-all md:translate-y-4 md:group-hover:translate-y-0">
-                        View Menu & Order <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                        <div>
+                            <label class="form-label">Full Name *</label>
+                            <input type="text" id="d-name" class="munchies-input" placeholder="e.g. Thabo Nkosi" autocomplete="name">
+                            <p class="field-msg err" id="d-name-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Full name is required</p>
+                        </div>
+
+                        <div>
+                            <label class="form-label">WhatsApp Number *</label>
+                            <div class="flex gap-2">
+                                <span class="munchies-input w-auto px-4 flex items-center text-munchies-green font-bold shrink-0 cursor-default">+27</span>
+                                <input type="tel" id="d-phone" class="munchies-input" placeholder="67 335 7429" maxlength="10">
+                            </div>
+                            <p class="field-msg err" id="d-phone-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Enter a valid SA mobile number</p>
+                        </div>
+
+                        <div>
+                            <label class="form-label">SA ID Number *</label>
+                            <input type="text" id="d-id" class="munchies-input" placeholder="13-digit South African ID" maxlength="13" inputmode="numeric">
+                            <div class="id-status" id="d-id-status"></div>
+                            <p class="field-msg err" id="d-id-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Please enter a valid 13-digit SA ID</p>
+                        </div>
+
+                        <div>
+                            <label class="form-label">Vehicle Type *</label>
+                            <select id="d-vehicle" class="munchies-input">
+                                <option value="">Select your vehicle</option>
+                                <option value="Bicycle">Bicycle (no licence required)</option>
+                                <option value="Motorbike">Motorbike</option>
+                                <option value="Car">Car</option>
+                            </select>
+                            <p class="field-msg err" id="d-vehicle-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Please select a vehicle type</p>
+                        </div>
+
+                        <div id="d-licence-wrap">
+                            <label class="form-label">Driver's Licence (Upload) *</label>
+                            <div class="upload-zone" id="d-licence-zone" onclick="document.getElementById('d-licence-file').click()">
+                                <input type="file" id="d-licence-file" accept="image/*,application/pdf" class="hidden">
+                                <i data-lucide="upload-cloud" class="text-munchies-green w-7 h-7 mx-auto mb-2"></i>
+                                <p class="text-gray-300 text-sm font-semibold">Click to upload your driver's licence</p>
+                                <p class="text-gray-500 text-xs mt-1">JPG, PNG or PDF · Max 5MB</p>
+                                <p id="d-licence-name" class="text-munchies-green text-xs font-bold mt-2 hidden"></p>
+                            </div>
+                            <p class="field-msg err" id="d-licence-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Please upload your driver's licence</p>
+                        </div>
+
+                        <div>
+                            <label class="form-label">
+                                Criminal Record Certificate *
+                                <span class="text-gray-500 normal-case tracking-normal font-normal ml-1">(valid affidavit from South African Police Service)</span>
+                            </label>
+                            <div class="upload-zone" id="d-criminal-zone" onclick="document.getElementById('d-criminal-file').click()">
+                                <input type="file" id="d-criminal-file" accept="image/*,application/pdf" class="hidden">
+                                <i data-lucide="file-check" class="text-munchies-green w-7 h-7 mx-auto mb-2"></i>
+                                <p class="text-gray-300 text-sm font-semibold">Upload your SAPS clearance / affidavit</p>
+                                <p class="text-gray-500 text-xs mt-1">JPG, PNG or PDF · Max 5MB</p>
+                                <p id="d-criminal-name" class="text-munchies-green text-xs font-bold mt-2 hidden"></p>
+                            </div>
+                            <p class="field-msg err" id="d-criminal-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Criminal clearance document is required</p>
+                        </div>
+
+                        <div>
+                            <label class="form-label">Identity Selfie *</label>
+                            <div class="upload-zone" id="d-selfie-zone" onclick="document.getElementById('d-selfie-file').click()">
+                                <input type="file" id="d-selfie-file" accept="image/*" capture="user" class="hidden">
+                                <i data-lucide="camera" class="text-munchies-green w-7 h-7 mx-auto mb-2"></i>
+                                <p class="text-gray-300 text-sm font-semibold">Upload a clear selfie for identity verification</p>
+                                <p class="text-gray-500 text-xs mt-1">JPG or PNG · Max 5MB</p>
+                                <p id="d-selfie-name" class="text-munchies-green text-xs font-bold mt-2 hidden"></p>
+                            </div>
+                            <p class="field-msg err" id="d-selfie-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> A selfie is required for verification</p>
+                        </div>
+
+                        <label class="flex items-start gap-3 cursor-pointer mt-2">
+                            <input type="checkbox" id="d-consent" class="mt-1 accent-munchies-green w-4 h-4 shrink-0">
+                            <span class="text-gray-400 text-sm leading-relaxed">I agree to the <a href="terms.html" class="text-munchies-green underline">Munchies Driver Terms</a>, the delivery commitment policy, and consent to my data being processed in line with <a href="privacy-policy.html" class="text-munchies-green underline">POPIA</a>.</span>
+                        </label>
+                        <p class="field-msg err" id="d-consent-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> You must agree to continue</p>
+
+                        <button type="submit" id="d-submit" class="submit-btn mt-2">
+                            <span class="btn-text">APPLY AS A DRIVER</span>
+                            <span class="spin" id="d-spin"></span>
+                        </button>
                     </div>
-                </div>
-            </a>
+                </form>
+            </div>
         </div>
-    </section>
 
-    <footer class="bg-munchies-dark text-white py-16 md:py-24 px-6 border-t border-white/5">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
-            <div>
-                <h3 class="text-3xl font-street mb-6">MUNCHIES</h3>
-                <div class="space-y-2 text-gray-400">
-                    <p class="font-bold text-white">Munchies Delivery Service (Pty) Ltd</p>
-                    <p>Reg: 2026/103543/07</p>
-                    <p class="text-xs uppercase tracking-widest pt-4">Soshanguve, Pretoria</p>
+        <!-- ── VENDOR PANEL ── -->
+        <div id="panel-vendor" class="tab-panel max-w-2xl mx-auto">
+            <div class="join-card bg-white/[0.04] border border-white/10 rounded-[2rem] p-8 md:p-12">
+
+                <div class="grid grid-cols-3 gap-3 mb-8">
+                    <div class="text-center p-4 rounded-2xl bg-munchies-green/10 border border-munchies-green/15">
+                        <p class="text-munchies-green font-street text-lg mb-1">R0</p>
+                        <p class="text-gray-400 text-xs font-bold uppercase tracking-wide">Food Fees</p>
+                    </div>
+                    <div class="text-center p-4 rounded-2xl bg-munchies-green/10 border border-munchies-green/15">
+                        <p class="text-munchies-green font-street text-lg mb-1">Live</p>
+                        <p class="text-gray-400 text-xs font-bold uppercase tracking-wide">Order Tracking</p>
+                    </div>
+                    <div class="text-center p-4 rounded-2xl bg-munchies-green/10 border border-munchies-green/15">
+                        <p class="text-munchies-green font-street text-lg mb-1">Your</p>
+                        <p class="text-gray-400 text-xs font-bold uppercase tracking-wide">Own Bikers</p>
+                    </div>
+                </div>
+
+                <form id="vendor-form" novalidate>
+                    <div class="space-y-5">
+
+                        <div>
+                            <label class="form-label">Business / Store Name *</label>
+                            <input type="text" id="v-biz" class="munchies-input" placeholder="e.g. Mama's Kitchen">
+                            <p class="field-msg err" id="v-biz-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Business name is required</p>
+                        </div>
+
+                        <div>
+                            <label class="form-label">Owner's Full Name *</label>
+                            <input type="text" id="v-owner" class="munchies-input" placeholder="e.g. Nomsa Dlamini">
+                            <p class="field-msg err" id="v-owner-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Owner name is required</p>
+                        </div>
+
+                        <div>
+                            <label class="form-label">WhatsApp Number *</label>
+                            <div class="flex gap-2">
+                                <span class="munchies-input w-auto px-4 flex items-center text-munchies-green font-bold shrink-0 cursor-default">+27</span>
+                                <input type="tel" id="v-phone" class="munchies-input" placeholder="67 335 7429" maxlength="10">
+                            </div>
+                            <p class="field-msg err" id="v-phone-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Enter a valid SA mobile number</p>
+                        </div>
+
+                        <div>
+                            <label class="form-label">Owner SA ID Number *</label>
+                            <input type="text" id="v-id" class="munchies-input" placeholder="13-digit South African ID" maxlength="13" inputmode="numeric">
+                            <div class="id-status" id="v-id-status"></div>
+                            <p class="field-msg err" id="v-id-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Please enter a valid 13-digit SA ID</p>
+                        </div>
+
+                        <div>
+                            <label class="form-label">Business Type *</label>
+                            <select id="v-type" class="munchies-input">
+                                <option value="">Select type</option>
+                                <option>Spaza / Home Kitchen</option>
+                                <option>Restaurant</option>
+                                <option>Street Vendor</option>
+                                <option>Tuck Shop</option>
+                                <option>Other</option>
+                            </select>
+                            <p class="field-msg err" id="v-type-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Please select a business type</p>
+                        </div>
+
+                        <div>
+                            <label class="form-label">Business Address in Soshanguve *</label>
+                            <input type="text" id="v-address" class="munchies-input" placeholder="e.g. Block K, Soshanguve">
+                            <p class="field-msg err" id="v-address-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Address is required</p>
+                        </div>
+
+                        <div>
+                            <label class="form-label">Bank *</label>
+                            <select id="v-bank" class="munchies-input">
+                                <option value="">Select your bank</option>
+                                <option>Capitec</option>
+                                <option>FNB</option>
+                                <option>Standard Bank</option>
+                                <option>Absa</option>
+                                <option>Nedbank</option>
+                                <option>TymeBank</option>
+                                <option>African Bank</option>
+                                <option>Other</option>
+                            </select>
+                            <p class="field-msg err" id="v-bank-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Please select your bank</p>
+                        </div>
+
+                        <label class="flex items-start gap-3 cursor-pointer mt-2">
+                            <input type="checkbox" id="v-consent" class="mt-1 accent-munchies-green w-4 h-4 shrink-0">
+                            <span class="text-gray-400 text-sm leading-relaxed">I agree to the <a href="terms.html" class="text-munchies-green underline">Munchies Vendor Terms</a> and consent to my data being processed in line with <a href="privacy-policy.html" class="text-munchies-green underline">POPIA</a>.</span>
+                        </label>
+                        <p class="field-msg err" id="v-consent-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> You must agree to continue</p>
+
+                        <button type="submit" id="v-submit" class="submit-btn mt-2">
+                            <span class="btn-text">REGISTER AS A VENDOR</span>
+                            <span class="spin" id="v-spin"></span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="bg-munchies-dark text-white py-16 md:py-24 px-6 border-t border-white/5">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
+        <div>
+            <h3 class="text-3xl font-street mb-6">MUNCHIES</h3>
+            <div class="space-y-2 text-gray-400">
+                <p class="font-bold text-white">Munchies Delivery Service (Pty) Ltd</p>
+                <p>Reg: 2026/103543/07</p>
+                <p class="text-xs uppercase tracking-widest pt-4">Soshanguve, Pretoria</p>
+            </div>
+        </div>
+        <div>
+            <h4 class="text-xl font-bold mb-6 text-munchies-green underline decoration-2 underline-offset-8">Location</h4>
+            <div class="space-y-4 text-gray-400">
+                <p>64 Block H, Soshanguve, Pretoria, 0152</p>
+                <div class="pt-2">
+                    <p class="text-white font-bold">Contact:</p>
+                    <p>067 335 7429</p>
                 </div>
             </div>
-            <div>
-                <h4 class="text-xl font-bold mb-6 text-munchies-green underline decoration-2 underline-offset-8">Location</h4>
-                <div class="space-y-4 text-gray-400">
-                    <p>64 Block H, Soshanguve, Pretoria, 0152</p>
-                    <div class="pt-2">
-                        <p class="text-white font-bold">Contact:</p>
-                        <p>067 335 7429</p>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <h4 class="text-xl font-bold mb-6">Legal</h4>
-                <div class="flex flex-col gap-4 text-sm md:text-base">
-                    <a href="privacy-policy.html" class="text-gray-400 hover:text-munchies-green transition-colors">Privacy Policy</a>
-                    <a href="terms.html" class="text-gray-400 hover:text-munchies-green transition-colors">Terms of Service</a>
-                </div>
+        </div>
+        <div>
+            <h4 class="text-xl font-bold mb-6">Legal</h4>
+            <div class="flex flex-col gap-4 text-sm">
+                <a href="privacy-policy.html" class="text-gray-400 hover:text-munchies-green transition-colors">Privacy Policy</a>
+                <a href="terms.html" class="text-gray-400 hover:text-munchies-green transition-colors">Terms of Service</a>
             </div>
         </div>
-        <div class="max-w-7xl mx-auto pt-12 mt-12 border-t border-white/5 text-center text-gray-500 text-xs md:text-sm">
-            © 2026 Munchies Delivery Service. Built for the Township.
-        </div>
-    </footer>
-    
-    <script>
-        const navContainer = document.getElementById('nav-container');
-        const logoText = document.getElementById('logo-text');
+    </div>
+    <div class="max-w-7xl mx-auto pt-12 mt-12 border-t border-white/5 text-center text-gray-500 text-xs md:text-sm">
+        © 2026 Munchies Delivery Service. Built for the Township.
+    </div>
+</footer>
 
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 60) {
-                navContainer.classList.remove('w-full', 'h-20', 'px-8');
-                navContainer.classList.add('w-[95%]', 'md:w-[850px]', 'mt-4', 'h-16', 'rounded-full', 'px-10', 'shadow-2xl', 'border');
-                logoText.classList.add('scale-90');
-            } else {
-                navContainer.classList.add('w-full', 'h-20', 'px-8');
-                navContainer.classList.remove('w-[95%]', 'md:w-[850px]', 'mt-4', 'h-16', 'rounded-full', 'px-10', 'shadow-2xl', 'border');
-                logoText.classList.remove('scale-90');
-            }
+<!-- Toast -->
+<div id="toast"></div>
+
+<style>
+.form-label { display:block; font-size:.72rem; font-weight:700; color:#9ca3af; text-transform:uppercase; letter-spacing:.12em; margin-bottom:8px; }
+</style>
+
+<script>
+// ─── Config ────────────────────────────────────────────────────────────────
+// IMPORTANT: Your current token (patOp4nSGoeBPi5m3) is a READ-ONLY token.
+// To write records, you need a PAT with "data.records:write" scope.
+// Create one at: https://airtable.com/create/tokens
+// Replace WRITE_TOKEN below with your new write-scoped token.
+// Your n8n workflow can also intercept these records via Airtable trigger as it already does.
+const AT_BASE    = 'appdqBZtxDVSZmG0Z';
+const WRITE_TOKEN = 'patOp4nSGoeBPi5m3'; // ← Replace this
+
+// ─── SA ID Validation (Luhn algorithm + date sanity) ──────────────────────
+function validateSAID(id) {
+    if (!/^\d{13}$/.test(id)) return false;
+    const mm = parseInt(id.slice(2,4));
+    const dd = parseInt(id.slice(4,6));
+    if (mm < 1 || mm > 12 || dd < 1 || dd > 31) return false;
+    let sum = 0;
+    for (let i = 0; i < 13; i++) {
+        let d = parseInt(id[i]);
+        if (i % 2 === 1) { d *= 2; if (d > 9) d -= 9; }
+        sum += d;
+    }
+    return sum % 10 === 0;
+}
+
+function wireIDField(inputId, statusId) {
+    const inp = document.getElementById(inputId);
+    const st  = document.getElementById(statusId);
+    inp.addEventListener('input', () => {
+        inp.value = inp.value.replace(/\D/g,'');
+        if (inp.value.length < 13) { st.className = 'id-status'; inp.classList.remove('field-ok','field-error-state'); return; }
+        const ok = validateSAID(inp.value);
+        st.className = 'id-status show ' + (ok ? 'ok' : 'bad');
+        st.innerHTML = ok
+            ? '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Valid SA ID'
+            : '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg> Invalid ID number';
+        inp.classList.toggle('field-ok', ok);
+        inp.classList.toggle('field-error-state', !ok);
+    });
+}
+wireIDField('d-id','d-id-status');
+wireIDField('v-id','v-id-status');
+
+// ─── Upload zones ──────────────────────────────────────────────────────────
+function wireUpload(zoneId, fileId, nameId) {
+    const zone  = document.getElementById(zoneId);
+    const input = document.getElementById(fileId);
+    const label = document.getElementById(nameId);
+    input.addEventListener('change', () => {
+        const f = input.files[0];
+        if (!f) return;
+        if (f.size > 5 * 1024 * 1024) { showToast('File too large — max 5MB per file', 'bad'); input.value=''; return; }
+        label.textContent = '✓ ' + f.name;
+        label.classList.remove('hidden');
+        zone.classList.add('has-file');
+    });
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+    zone.addEventListener('drop', e => {
+        e.preventDefault(); zone.classList.remove('drag-over');
+        if (e.dataTransfer.files[0]) { input.files = e.dataTransfer.files; input.dispatchEvent(new Event('change')); }
+    });
+}
+wireUpload('d-licence-zone',  'd-licence-file',  'd-licence-name');
+wireUpload('d-criminal-zone', 'd-criminal-file', 'd-criminal-name');
+wireUpload('d-selfie-zone',   'd-selfie-file',   'd-selfie-name');
+
+// ─── Vehicle → toggle licence field ───────────────────────────────────────
+document.getElementById('d-vehicle').addEventListener('change', function() {
+    document.getElementById('d-licence-wrap').style.display = this.value === 'Bicycle' ? 'none' : 'block';
+});
+
+// ─── Toast ─────────────────────────────────────────────────────────────────
+function showToast(msg, type='ok') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = type + ' show';
+    t.style.display = 'block';
+    clearTimeout(t._timer);
+    t._timer = setTimeout(() => {
+        t.classList.remove('show');
+        setTimeout(() => t.style.display='none', 400);
+    }, 3800);
+}
+
+// ─── Validation helpers ────────────────────────────────────────────────────
+const $ = id => document.getElementById(id);
+const val = id => $(id).value.trim();
+const chk = id => $(id).checked;
+const hasFile = id => $(id).files && $(id).files.length > 0;
+const validPhone = p => p.replace(/\D/g,'').length >= 9;
+
+function markField(inputId, errId, isError) {
+    const inp = $(inputId);
+    const err = $(errId);
+    if (isError) {
+        inp.classList.add('field-error-state');
+        inp.classList.remove('field-ok');
+        err.classList.add('show');
+    } else {
+        inp.classList.remove('field-error-state');
+        err.classList.remove('show');
+    }
+    return isError;
+}
+
+function markUpload(errId, zoneId, isError) {
+    const err  = $(errId);
+    const zone = $(zoneId);
+    if (isError) {
+        err.classList.add('show');
+        zone.style.borderColor = '#e74c3c';
+    } else {
+        err.classList.remove('show');
+        zone.style.borderColor = '';
+    }
+    return isError;
+}
+
+function markConsent(inputId, errId, isError) {
+    $(errId).classList.toggle('show', isError);
+    return isError;
+}
+
+function setBusy(submitId, spinId, busy) {
+    const btn  = $(submitId);
+    const spin = $(spinId);
+    btn.disabled = busy;
+    btn.querySelector('.btn-text').style.display = busy ? 'none' : 'inline';
+    spin.style.display = busy ? 'block' : 'none';
+}
+
+// ─── Airtable POST ─────────────────────────────────────────────────────────
+async function postToAirtable(table, fields) {
+    const res = await fetch(`https://api.airtable.com/v0/${AT_BASE}/${encodeURIComponent(table)}`, {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + WRITE_TOKEN, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fields })
+    });
+    if (!res.ok) {
+        const body = await res.json().catch(()=>({}));
+        throw new Error(body.error?.message || 'Submission failed');
+    }
+    return res.json();
+}
+
+// ─── DRIVER FORM ───────────────────────────────────────────────────────────
+$('driver-form').addEventListener('submit', async e => {
+    e.preventDefault();
+    let err = false;
+    err |= markField('d-name',    'd-name-err',    !val('d-name'));
+    err |= markField('d-phone',   'd-phone-err',   !validPhone(val('d-phone')));
+    const idOk = validateSAID(val('d-id'));
+    err |= markField('d-id',      'd-id-err',      !idOk);
+    err |= markField('d-vehicle', 'd-vehicle-err', !val('d-vehicle'));
+
+    const isBike = val('d-vehicle') === 'Bicycle';
+    if (!isBike) err |= markUpload('d-licence-err', 'd-licence-zone', !hasFile('d-licence-file'));
+    else $('d-licence-err').classList.remove('show');
+
+    err |= markUpload('d-criminal-err', 'd-criminal-zone', !hasFile('d-criminal-file'));
+    err |= markUpload('d-selfie-err',   'd-selfie-zone',   !hasFile('d-selfie-file'));
+    err |= markConsent('d-consent', 'd-consent-err', !chk('d-consent'));
+
+    if (err) {
+        showToast('Please complete all required fields correctly.', 'bad');
+        document.querySelector('#panel-driver .field-error-state, #panel-driver [style*="e74c3c"]')
+            ?.scrollIntoView({ behavior:'smooth', block:'center' });
+        return;
+    }
+
+    setBusy('d-submit','d-spin', true);
+    try {
+        await postToAirtable('Drivers', {
+            'Driver Name':         val('d-name'),
+            'Driver Phone (+27)':  '+27' + val('d-phone').replace(/\D/g,''),
+            'SA ID Number':        val('d-id'),
+            'Vehicle Type':        val('d-vehicle'),
+            "Driver's Licence":    isBike ? 'N/A (Bicycle)' : $('d-licence-file').files[0].name,
+            'Criminal Clearance':  $('d-criminal-file').files[0].name,
+            'Selfie':              $('d-selfie-file').files[0].name,
+            'Current Status':      'Pending Review',
+            'Last Know Zone':      'TBD',
+            'Application Source':  'Website'
         });
+        showToast('✓ Application received! We\'ll be in touch on WhatsApp.', 'ok');
+        $('driver-form').reset();
+        ['d-licence-zone','d-criminal-zone','d-selfie-zone'].forEach(id => {
+            $(id).classList.remove('has-file');
+            $(id).style.borderColor = '';
+        });
+        ['d-licence-name','d-criminal-name','d-selfie-name'].forEach(id => $(id).classList.add('hidden'));
+        $('d-id-status').className = 'id-status';
+    } catch {
+        showToast('Something went wrong — please WhatsApp us directly at 067 335 7429.', 'bad');
+    } finally {
+        setBusy('d-submit','d-spin', false);
+    }
+});
 
-        const btn = document.getElementById('menu-btn');
-        const menu = document.getElementById('mobile-menu');
-        btn.addEventListener('click', () => menu.classList.toggle('hidden'));
-        menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => menu.classList.add('hidden')));
+// ─── VENDOR FORM ───────────────────────────────────────────────────────────
+$('vendor-form').addEventListener('submit', async e => {
+    e.preventDefault();
+    let err = false;
+    err |= markField('v-biz',     'v-biz-err',     !val('v-biz'));
+    err |= markField('v-owner',   'v-owner-err',   !val('v-owner'));
+    err |= markField('v-phone',   'v-phone-err',   !validPhone(val('v-phone')));
+    const idOk = validateSAID(val('v-id'));
+    err |= markField('v-id',      'v-id-err',      !idOk);
+    err |= markField('v-type',    'v-type-err',    !val('v-type'));
+    err |= markField('v-address', 'v-address-err', !val('v-address'));
+    err |= markField('v-bank',    'v-bank-err',    !val('v-bank'));
+    err |= markConsent('v-consent','v-consent-err', !chk('v-consent'));
 
-        lucide.createIcons();
-    </script>
+    if (err) {
+        showToast('Please complete all required fields correctly.', 'bad');
+        document.querySelector('#panel-vendor .field-error-state')
+            ?.scrollIntoView({ behavior:'smooth', block:'center' });
+        return;
+    }
+
+    setBusy('v-submit','v-spin', true);
+    try {
+        await postToAirtable('Vendors', {
+            'Vendor Name':        val('v-biz'),
+            'Owner Name':         val('v-owner'),
+            'Phone (+27)':        '+27' + val('v-phone').replace(/\D/g,''),
+            'SA ID Number':       val('v-id'),
+            'Business Type':      val('v-type'),
+            'Address':            val('v-address'),
+            'Bank':               val('v-bank'),
+            'Status':             'Pending Review',
+            'Application Source': 'Website'
+        });
+        showToast('✓ Vendor application received! We\'ll contact you on WhatsApp.', 'ok');
+        $('vendor-form').reset();
+        $('v-id-status').className = 'id-status';
+    } catch {
+        showToast('Something went wrong — please WhatsApp us directly at 067 335 7429.', 'bad');
+    } finally {
+        setBusy('v-submit','v-spin', false);
+    }
+});
+
+// ─── Tab switcher ──────────────────────────────────────────────────────────
+function switchTab(t) {
+    ['driver','vendor'].forEach(k => {
+        $('panel-'+k).classList.toggle('active', k===t);
+        $('tab-'+k).classList.toggle('active', k===t);
+    });
+}
+
+// ─── Nav scroll ────────────────────────────────────────────────────────────
+const nc = $('nav-container'), lt = $('logo-text');
+window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY > 60;
+    nc.classList.toggle('w-full', !scrolled);
+    nc.classList.toggle('h-20', !scrolled);
+    nc.classList.toggle('px-8', !scrolled);
+    nc.classList.toggle('w-[95%]', scrolled);
+    nc.classList.toggle('md:w-[900px]', scrolled);
+    nc.classList.toggle('mt-4', scrolled);
+    nc.classList.toggle('h-16', scrolled);
+    nc.classList.toggle('rounded-full', scrolled);
+    nc.classList.toggle('px-10', scrolled);
+    nc.classList.toggle('shadow-2xl', scrolled);
+    nc.classList.toggle('border', scrolled);
+    lt.classList.toggle('scale-90', scrolled);
+});
+
+// ─── Mobile menu ───────────────────────────────────────────────────────────
+const menuBtn  = $('menu-btn');
+const mobileMenu = $('mobile-menu');
+menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+// ─── Scroll reveal ─────────────────────────────────────────────────────────
+const ro = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+// ─── Lucide icons ──────────────────────────────────────────────────────────
+lucide.createIcons();
+</script>
 </body>
 </html>
