@@ -22,13 +22,7 @@
   #nav-container { transition: all 0.5s cubic-bezier(0.4,0,0.2,1); }
   .glass { background: rgba(10,17,31,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
   @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
-  .fade-up   { animation: fadeUp 0.5s ease both; }
-  .fade-up-1 { animation: fadeUp 0.5s 0.05s ease both; }
-  .fade-up-2 { animation: fadeUp 0.5s 0.10s ease both; }
-  .fade-up-3 { animation: fadeUp 0.5s 0.15s ease both; }
-  .fade-up-4 { animation: fadeUp 0.5s 0.20s ease both; }
-  .fade-up-5 { animation: fadeUp 0.5s 0.25s ease both; }
-  .fade-up-6 { animation: fadeUp 0.5s 0.30s ease both; }
+  @keyframes spin { to{transform:rotate(360deg)} }
 
   .munchies-input {
     width:100%; background:rgba(255,255,255,0.05); border:1.5px solid rgba(255,255,255,0.1);
@@ -40,9 +34,32 @@
   .munchies-input::placeholder { color:rgba(255,255,255,.3); }
   .form-label { display:block; font-size:.72rem; font-weight:700; color:#9ca3af; text-transform:uppercase; letter-spacing:.12em; margin-bottom:8px; }
 
-  .mode-btn { transition:all .3s ease; color:#9ca3af; border:1.5px solid rgba(255,255,255,0.1); border-radius:999px; }
-  .mode-btn.active { background:#2ecc71; color:#0a111f; border-color:#2ecc71; }
+  /* Steps */
+  .step { display:none; animation: fadeUp 0.4s ease both; }
+  .step.active { display:block; }
 
+  /* Step indicator */
+  .step-dot { width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,.2); transition:all .3s; }
+  .step-dot.active { background:#2ecc71; transform:scale(1.3); }
+  .step-dot.done { background:#2ecc71; opacity:0.5; }
+
+  /* Vendor cards */
+  .vendor-card {
+    background:rgba(255,255,255,.04); border:1.5px solid rgba(255,255,255,.08);
+    border-radius:16px; padding:16px; cursor:pointer; transition:all .2s;
+    display:flex; align-items:center; gap:14px;
+  }
+  .vendor-card:hover { background:rgba(46,204,113,.06); border-color:rgba(46,204,113,.2); }
+  .vendor-card.selected { background:rgba(46,204,113,.1); border-color:#2ecc71; }
+  .vendor-radio {
+    width:22px; height:22px; border:2px solid rgba(255,255,255,.2); border-radius:50%;
+    flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:all .2s;
+  }
+  .vendor-card.selected .vendor-radio { border-color:#2ecc71; background:#2ecc71; }
+  .vendor-radio-dot { width:8px; height:8px; background:white; border-radius:50%; opacity:0; transition:opacity .15s; }
+  .vendor-card.selected .vendor-radio-dot { opacity:1; }
+
+  /* Item cards */
   .item-card {
     background:rgba(255,255,255,.04); border:1.5px solid rgba(255,255,255,.08);
     border-radius:16px; padding:16px; cursor:pointer; transition:all .2s;
@@ -58,6 +75,11 @@
   .item-radio-dot { width:8px; height:8px; background:white; border-radius:50%; opacity:0; transition:opacity .15s; }
   .item-card.selected .item-radio-dot { opacity:1; }
 
+  /* Mode toggle */
+  .mode-btn { transition:all .3s ease; color:#9ca3af; border:1.5px solid rgba(255,255,255,0.1); border-radius:999px; }
+  .mode-btn.active { background:#2ecc71; color:#0a111f; border-color:#2ecc71; }
+
+  /* Qty */
   .qty-btn {
     width:40px; height:40px; background:rgba(255,255,255,.06); border:1.5px solid rgba(255,255,255,.1);
     color:#fff; font-size:20px; cursor:pointer; display:flex; align-items:center; justify-content:center;
@@ -65,6 +87,7 @@
   }
   .qty-btn:hover { background:rgba(46,204,113,.15); border-color:#2ecc71; color:#2ecc71; }
 
+  /* GPS */
   .gps-btn {
     width:100%; background:rgba(255,255,255,.04); border:1.5px dashed rgba(255,255,255,.15);
     border-radius:14px; padding:14px 18px; cursor:pointer; transition:all .2s;
@@ -73,20 +96,29 @@
   .gps-btn:hover { border-color:#2ecc71; background:rgba(46,204,113,.06); color:#fff; }
   .gps-btn.captured { border-color:#2ecc71; border-style:solid; background:rgba(46,204,113,.08); color:#2ecc71; }
 
+  /* Summary */
   .summary-row { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid rgba(255,255,255,.06); font-size:.9rem; }
   .summary-row:last-child { border-bottom:none; padding-top:14px; font-weight:700; font-size:1rem; }
 
-  .submit-btn {
+  /* Buttons */
+  .btn-primary {
     background:#2ecc71; color:#0a111f; font-weight:800; font-family:'Archivo Black',sans-serif;
     padding:16px 32px; border-radius:999px; border:none; cursor:pointer;
     width:100%; font-size:1rem; letter-spacing:.06em; transition:all .3s;
   }
-  .submit-btn:hover:not(:disabled) { transform:scale(1.02); box-shadow:0 8px 32px rgba(46,204,113,.35); }
-  .submit-btn:active:not(:disabled) { transform:scale(.98); }
-  .submit-btn:disabled { opacity:.55; cursor:not-allowed; }
+  .btn-primary:hover:not(:disabled) { transform:scale(1.02); box-shadow:0 8px 32px rgba(46,204,113,.35); }
+  .btn-primary:active:not(:disabled) { transform:scale(.98); }
+  .btn-primary:disabled { opacity:.55; cursor:not-allowed; }
 
-  @keyframes spin { to{transform:rotate(360deg)} }
+  .btn-back {
+    background:rgba(255,255,255,.06); color:#fff; font-weight:700; font-family:Inter,sans-serif;
+    padding:14px 24px; border-radius:999px; border:1.5px solid rgba(255,255,255,.1); cursor:pointer;
+    font-size:.9rem; transition:all .3s; display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn-back:hover { background:rgba(255,255,255,.1); }
+
   .spin-icon { display:inline-block; width:18px; height:18px; border:3px solid rgba(10,17,31,.25); border-top-color:#0a111f; border-radius:50%; animation:spin .7s linear infinite; vertical-align:middle; margin-right:8px; }
+  .loader { display:inline-block; width:16px; height:16px; border:2px solid rgba(255,255,255,.1); border-top-color:#2ecc71; border-radius:50%; animation:spin .8s linear infinite; vertical-align:middle; margin-right:8px; }
 
   #toast {
     position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(80px);
@@ -97,9 +129,6 @@
   #toast.show { transform:translateX(-50%) translateY(0); display:block; }
   #toast.ok  { background:#2ecc71; color:#0a111f; }
   #toast.bad { background:#e74c3c; color:#fff; }
-
-  @keyframes menu-spin { to{transform:rotate(360deg)} }
-  .menu-spinner { display:inline-block; width:18px; height:18px; border:2px solid rgba(255,255,255,.1); border-top-color:#2ecc71; border-radius:50%; animation:menu-spin .8s linear infinite; vertical-align:middle; margin-right:8px; }
 
   ::-webkit-scrollbar{width:5px}
   ::-webkit-scrollbar-track{background:#0a111f}
@@ -139,23 +168,42 @@
   </div>
 </nav>
 
-<!-- PAGE HEADER -->
-<div class="pt-32 pb-12 px-6 text-center fade-up">
-  <div class="inline-flex items-center gap-2 bg-munchies-green/10 border border-munchies-green/20 px-5 py-2 rounded-full text-munchies-green text-xs font-bold uppercase tracking-widest mb-6">
-    <span class="w-2 h-2 bg-munchies-green rounded-full animate-pulse"></span>
-    <span id="vendorBadge">Loading vendor...</span>
+<!-- MAIN -->
+<div class="pt-28 pb-32 px-6 max-w-xl mx-auto">
+
+  <!-- Step indicator -->
+  <div class="flex items-center justify-center gap-3 mb-10" id="stepIndicator">
+    <div class="step-dot active" id="dot1"></div>
+    <div class="step-dot" id="dot2"></div>
+    <div class="step-dot" id="dot3"></div>
+    <div class="step-dot" id="dot4"></div>
   </div>
-  <h1 class="font-street text-4xl md:text-6xl tracking-tighter mb-3">PLACE YOUR ORDER</h1>
-  <p class="text-gray-400 text-base max-w-md mx-auto">Fast, local delivery straight to your door in Soshanguve.</p>
-</div>
 
-<!-- FORM -->
-<div class="max-w-xl mx-auto px-6 pb-32" id="mainForm">
+  <!-- ═══ STEP 1: Choose Restaurant ═══ -->
+  <div class="step active" id="step1">
+    <div class="text-center mb-8">
+      <h1 class="font-street text-4xl md:text-5xl tracking-tighter mb-3">CHOOSE A RESTAURANT</h1>
+      <p class="text-gray-400 text-base">Pick where you want to order from</p>
+    </div>
+    <div class="space-y-3" id="vendorList">
+      <div class="text-center py-10 text-gray-500">
+        <span class="loader"></span> Loading restaurants...
+      </div>
+    </div>
+    <div class="mt-6">
+      <button class="btn-primary" id="step1Next" onclick="goToStep2()" disabled>
+        Continue <i data-lucide="arrow-right" class="w-4 h-4 inline ml-2"></i>
+      </button>
+    </div>
+  </div>
 
-  <!-- 1. Details -->
-  <div class="mb-8 fade-up-1">
-    <p class="form-label mb-4">Your details</p>
-    <div class="bg-white/[0.04] border border-white/10 rounded-[1.5rem] overflow-hidden divide-y divide-white/[0.06]">
+  <!-- ═══ STEP 2: Your Details ═══ -->
+  <div class="step" id="step2">
+    <div class="text-center mb-8">
+      <h1 class="font-street text-4xl md:text-5xl tracking-tighter mb-3">YOUR DETAILS</h1>
+      <p class="text-gray-400 text-base">So we can reach you on WhatsApp</p>
+    </div>
+    <div class="bg-white/[0.04] border border-white/10 rounded-[1.5rem] overflow-hidden divide-y divide-white/[0.06] mb-6">
       <div class="p-5">
         <label class="form-label">Full name</label>
         <input class="munchies-input" id="customerName" type="text" placeholder="e.g. Thabo Nkosi" autocomplete="name" />
@@ -165,81 +213,110 @@
         <input class="munchies-input" id="customerPhone" type="tel" placeholder="+27 81 234 5678" autocomplete="tel" />
       </div>
     </div>
-  </div>
-
-  <!-- 2. Order type -->
-  <div class="mb-8 fade-up-2">
-    <p class="form-label mb-4">Order type</p>
     <div class="flex gap-3">
-      <button class="mode-btn active flex-1 flex items-center justify-center gap-2 px-6 py-3 font-bold uppercase text-sm tracking-widest" id="modeDelivery" type="button" onclick="setMode('Delivery')">
-        <i data-lucide="bike" class="w-4 h-4"></i> Delivery
-      </button>
-      <button class="mode-btn flex-1 flex items-center justify-center gap-2 px-6 py-3 font-bold uppercase text-sm tracking-widest" id="modePickup" type="button" onclick="setMode('Pickup from store')">
-        <i data-lucide="store" class="w-4 h-4"></i> Pickup
-      </button>
+      <button class="btn-back" onclick="goToStep(1)"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back</button>
+      <button class="btn-primary" onclick="goToStep3()">Continue <i data-lucide="arrow-right" class="w-4 h-4 inline ml-2"></i></button>
     </div>
   </div>
 
-  <!-- 3. Location -->
-  <div class="mb-8 fade-up-3" id="locationSection">
-    <p class="form-label mb-4">Delivery location</p>
-    <div class="space-y-3">
-      <button class="gps-btn" id="gpsBtn" type="button" onclick="captureGPS()">
-        <i data-lucide="map-pin" class="w-5 h-5 flex-shrink-0"></i>
-        <div class="text-left">
-          <div class="text-sm font-semibold" id="gpsText">Tap to share your GPS location</div>
-          <div class="text-xs text-gray-500 mt-0.5 font-mono" id="gpsCoords"></div>
-        </div>
-      </button>
-      <div>
-        <label class="form-label">Street address / landmark</label>
-        <input class="munchies-input" id="deliveryAddress" type="text" placeholder="e.g. House 3, Block H, Soshanguve" />
+  <!-- ═══ STEP 3: Order Type + Location + Meal ═══ -->
+  <div class="step" id="step3">
+    <div class="text-center mb-8">
+      <h1 class="font-street text-4xl md:text-5xl tracking-tighter mb-3">YOUR ORDER</h1>
+      <p class="text-gray-400 text-base" id="step3VendorName"></p>
+    </div>
+
+    <!-- Order type -->
+    <div class="mb-6">
+      <p class="form-label mb-3">Order type</p>
+      <div class="flex gap-3">
+        <button class="mode-btn active flex-1 flex items-center justify-center gap-2 px-6 py-3 font-bold uppercase text-sm tracking-widest" id="modeDelivery" type="button" onclick="setMode('Delivery')">
+          <i data-lucide="bike" class="w-4 h-4"></i> Delivery
+        </button>
+        <button class="mode-btn flex-1 flex items-center justify-center gap-2 px-6 py-3 font-bold uppercase text-sm tracking-widest" id="modePickup" type="button" onclick="setMode('Pickup from store')">
+          <i data-lucide="store" class="w-4 h-4"></i> Pickup
+        </button>
       </div>
     </div>
-  </div>
 
-  <!-- 4. Menu -->
-  <div class="mb-8 fade-up-4">
-    <p class="form-label mb-4">Select your meal</p>
-    <div id="menuContainer" class="space-y-3">
-      <div class="text-center py-10 text-gray-500">
-        <span class="menu-spinner"></span> Loading menu...
-      </div>
-    </div>
-  </div>
-
-  <!-- 5. Qty + Notes -->
-  <div class="mb-8 fade-up-5" id="qtySection" style="display:none;">
-    <p class="form-label mb-4">Quantity & notes</p>
-    <div class="bg-white/[0.04] border border-white/10 rounded-[1.5rem] overflow-hidden divide-y divide-white/[0.06]">
-      <div class="p-5 flex items-center justify-between">
-        <span class="font-semibold">How many?</span>
-        <div class="flex items-center gap-3">
-          <button class="qty-btn" type="button" onclick="changeQty(-1)">−</button>
-          <span class="font-street text-xl w-8 text-center" id="qtyDisplay">1</span>
-          <button class="qty-btn" type="button" onclick="changeQty(1)">+</button>
+    <!-- Location -->
+    <div class="mb-6" id="locationSection">
+      <p class="form-label mb-3">Delivery location</p>
+      <div class="space-y-3">
+        <button class="gps-btn" id="gpsBtn" type="button" onclick="captureGPS()">
+          <i data-lucide="map-pin" class="w-5 h-5 flex-shrink-0"></i>
+          <div class="text-left">
+            <div class="text-sm font-semibold" id="gpsText">Tap to share your GPS location</div>
+            <div class="text-xs text-gray-500 mt-0.5 font-mono" id="gpsCoords"></div>
+          </div>
+        </button>
+        <div>
+          <label class="form-label">Street address / landmark</label>
+          <input class="munchies-input" id="deliveryAddress" type="text" placeholder="e.g. House 3, Block H, Soshanguve" />
         </div>
       </div>
-      <div class="p-5">
-        <label class="form-label">Special instructions <span class="text-gray-600 normal-case tracking-normal font-normal">(optional)</span></label>
-        <textarea class="munchies-input" style="resize:none;height:80px;" id="specialNotes" placeholder="e.g. No onions, extra sauce..."></textarea>
+    </div>
+
+    <!-- Menu -->
+    <div class="mb-6">
+      <p class="form-label mb-3">Select your meal</p>
+      <div class="space-y-3" id="menuList">
+        <div class="text-center py-10 text-gray-500">
+          <span class="loader"></span> Loading menu...
+        </div>
       </div>
+    </div>
+
+    <!-- Qty + Notes (hidden until item selected) -->
+    <div class="mb-6" id="qtySection" style="display:none;">
+      <p class="form-label mb-3">Quantity & notes</p>
+      <div class="bg-white/[0.04] border border-white/10 rounded-[1.5rem] overflow-hidden divide-y divide-white/[0.06]">
+        <div class="p-5 flex items-center justify-between">
+          <span class="font-semibold">How many?</span>
+          <div class="flex items-center gap-3">
+            <button class="qty-btn" type="button" onclick="changeQty(-1)">−</button>
+            <span class="font-street text-xl w-8 text-center" id="qtyDisplay">1</span>
+            <button class="qty-btn" type="button" onclick="changeQty(1)">+</button>
+          </div>
+        </div>
+        <div class="p-5">
+          <label class="form-label">Special instructions <span class="text-gray-600 normal-case tracking-normal font-normal">(optional)</span></label>
+          <textarea class="munchies-input" style="resize:none;height:80px;" id="specialNotes" placeholder="e.g. No onions, extra sauce..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex gap-3">
+      <button class="btn-back" onclick="goToStep(2)"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back</button>
+      <button class="btn-primary" onclick="goToStep4()">Review Order <i data-lucide="arrow-right" class="w-4 h-4 inline ml-2"></i></button>
     </div>
   </div>
 
-  <!-- 6. Summary -->
-  <div class="mb-8 fade-up-6" id="summarySection" style="display:none;">
-    <p class="form-label mb-4">Order summary</p>
-    <div class="bg-white/[0.04] border border-white/10 rounded-[1.5rem] p-5">
+  <!-- ═══ STEP 4: Review + Submit ═══ -->
+  <div class="step" id="step4">
+    <div class="text-center mb-8">
+      <h1 class="font-street text-4xl md:text-5xl tracking-tighter mb-3">REVIEW ORDER</h1>
+      <p class="text-gray-400 text-base">Confirm everything looks right</p>
+    </div>
+
+    <div class="bg-white/[0.04] border border-white/10 rounded-[1.5rem] p-5 mb-6">
+      <div class="summary-row"><span class="text-gray-400">Restaurant</span><span id="sumVendor" class="font-semibold">—</span></div>
+      <div class="summary-row"><span class="text-gray-400">Customer</span><span id="sumName" class="font-semibold">—</span></div>
+      <div class="summary-row"><span class="text-gray-400">WhatsApp</span><span id="sumPhone" class="font-semibold">—</span></div>
+      <div class="summary-row"><span class="text-gray-400">Order type</span><span id="sumMode" class="font-semibold">—</span></div>
+      <div class="summary-row" id="sumAddressRow"><span class="text-gray-400">Address</span><span id="sumAddress" class="font-semibold">—</span></div>
       <div class="summary-row"><span class="text-gray-400">Item</span><span id="sumItem" class="font-semibold">—</span></div>
       <div class="summary-row"><span class="text-gray-400">Quantity</span><span id="sumQty" class="font-semibold">—</span></div>
       <div class="summary-row"><span class="text-gray-400">Item cost</span><span id="sumCost" class="font-semibold">—</span></div>
       <div class="summary-row"><span class="text-gray-400">Delivery fee</span><span id="sumFee" class="font-semibold text-munchies-green">Calculated on dispatch</span></div>
-      <div class="summary-row"><span class="text-white">Items total</span><span id="sumTotal" class="text-munchies-green font-street text-xl">—</span></div>
+      <div class="summary-row"><span class="text-white font-bold">Items total</span><span id="sumTotal" class="text-munchies-green font-street text-xl">—</span></div>
+    </div>
+
+    <div class="flex gap-3">
+      <button class="btn-back" onclick="goToStep(3)"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back</button>
+      <button class="btn-primary" id="submitBtn" onclick="submitOrder()">Place Order 🛵</button>
     </div>
   </div>
-
-  <button class="submit-btn fade-up-6" id="submitBtn" onclick="submitOrder()">PLACE ORDER 🛵</button>
 
 </div>
 
@@ -271,56 +348,82 @@
 </footer>
 
 <script>
-// ── PROXY — no token in frontend code
 const PROXY     = 'https://munchies-airtable.munchies-ds.workers.dev/proxy';
 const T_ORDERS  = 'tblqBciXC0NIJtjjt';
 const T_MENU    = 'tblvSNrMok04PGCcF';
 const T_VENDORS = 'tblTU0tKt3dSGgPsE';
 
-let deliveryMode = 'Delivery';
-let selectedItem = null;
-let quantity     = 1;
+let currentStep  = 1;
+let selectedVendor = null;
+let selectedItem   = null;
+let quantity       = 1;
+let deliveryMode   = 'Delivery';
 let gpsLat = null, gpsLng = null;
-let vendorRecord = null;
 
+// Read prefill from URL
 const params      = new URLSearchParams(window.location.search);
-const vendorParam = params.get('vendor') || params.get('prefill_vendor') || '';
+const prefillVendor = params.get('vendor') || params.get('prefill_vendor') || '';
 
+// ── Boot
 async function boot() {
-  await loadVendor();
-  await loadMenu();
+  await loadVendors();
 }
 
-async function loadVendor() {
-  const el = document.getElementById('vendorBadge');
-  if (!vendorParam) { el.textContent = 'All Vendors'; return; }
+// ── Load vendors from Airtable
+async function loadVendors() {
+  const list = document.getElementById('vendorList');
   try {
-    const res = await atFetch(T_VENDORS,
-      `filterByFormula=SEARCH("${encodeURIComponent(vendorParam)}",{Vendor Name})`);
-    if (res.records?.length) {
-      vendorRecord = res.records[0];
-      el.textContent = vendorRecord.fields['Vendor Name'] || vendorParam;
-    } else {
-      el.textContent = vendorParam;
-    }
-  } catch { el.textContent = vendorParam; }
-}
-
-async function loadMenu() {
-  const container = document.getElementById('menuContainer');
-  try {
-    let formula = `{Stock Status}="In Stock"`;
-    if (vendorRecord) {
-      formula = `AND({Stock Status}="In Stock",FIND("${vendorRecord.id}",ARRAYJOIN(Vendor)))`;
-    }
-    const res = await atFetch(T_MENU,
-      `filterByFormula=${encodeURIComponent(formula)}&fields[]=Item Name&fields[]=Price&fields[]=Stock Status`
-    );
+    const res = await atFetch(T_VENDORS, `fields[]=Vendor Name&fields[]=Shop Status`);
+    list.innerHTML = '';
     if (!res.records?.length) {
-      container.innerHTML = '<div class="text-center py-10 text-gray-500">No items available right now 😔</div>';
+      list.innerHTML = '<div class="text-center py-10 text-gray-500">No restaurants available right now</div>';
       return;
     }
-    container.innerHTML = '';
+    res.records.forEach(rec => {
+      const name   = rec.fields['Vendor Name'] || 'Unknown';
+      const status = rec.fields['Shop Status'] || '';
+      const isOpen = status.includes('Taking Orders') || status.includes('Open');
+      const card = document.createElement('div');
+      card.className   = 'vendor-card';
+      card.dataset.id   = rec.id;
+      card.dataset.name = name;
+      card.innerHTML = `
+        <div class="vendor-radio"><div class="vendor-radio-dot"></div></div>
+        <div class="flex-1">
+          <div class="font-semibold text-white">${name}</div>
+          <div class="text-xs mt-0.5 ${isOpen ? 'text-munchies-green' : 'text-gray-500'}">${status || 'Status unknown'}</div>
+        </div>
+        ${isOpen ? '' : '<span class="text-xs text-gray-600 font-bold uppercase">Closed</span>'}`;
+      card.onclick = () => selectVendor(card);
+      list.appendChild(card);
+
+      // Auto-select if prefill matches
+      if (prefillVendor && name.toLowerCase().includes(prefillVendor.toLowerCase())) {
+        selectVendor(card);
+      }
+    });
+  } catch(e) {
+    list.innerHTML = '<div class="text-center py-10 text-red-400 text-sm">Could not load restaurants. Please <a href="https://wa.me/27673357429" class="underline">WhatsApp us</a>.</div>';
+  }
+}
+
+// ── Load menu for selected vendor
+async function loadMenu() {
+  const list = document.getElementById('menuList');
+  list.innerHTML = '<div class="text-center py-10 text-gray-500"><span class="loader"></span> Loading menu...</div>';
+  selectedItem = null;
+  document.getElementById('qtySection').style.display = 'none';
+
+  try {
+    const formula = `AND({Stock Status}="In Stock",FIND("${selectedVendor.id}",ARRAYJOIN(Vendor)))`;
+    const res = await atFetch(T_MENU,
+      `filterByFormula=${encodeURIComponent(formula)}&fields[]=Item Name&fields[]=Price`
+    );
+    list.innerHTML = '';
+    if (!res.records?.length) {
+      list.innerHTML = '<div class="text-center py-10 text-gray-500">No items available from this restaurant right now</div>';
+      return;
+    }
     res.records.forEach(rec => {
       const card = document.createElement('div');
       card.className     = 'item-card';
@@ -332,89 +435,142 @@ async function loadMenu() {
         <div class="flex-1"><div class="font-semibold text-white">${rec.fields['Item Name'] || 'Item'}</div></div>
         <div class="font-street text-munchies-green text-lg">R${rec.fields['Price'] || 0}</div>`;
       card.onclick = () => selectItem(card);
-      container.appendChild(card);
+      list.appendChild(card);
     });
   } catch(e) {
-    container.innerHTML = '<div class="text-center py-10 text-red-400 text-sm">Could not load menu. Please try again or <a href="https://wa.me/27673357429" class="underline">WhatsApp us</a>.</div>';
+    list.innerHTML = '<div class="text-center py-10 text-red-400 text-sm">Could not load menu. Please try again.</div>';
   }
 }
 
+// ── Select vendor
+function selectVendor(card) {
+  document.querySelectorAll('.vendor-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  selectedVendor = { id: card.dataset.id, name: card.dataset.name };
+  document.getElementById('step1Next').disabled = false;
+}
+
+// ── Select item
+function selectItem(card) {
+  document.querySelectorAll('.item-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  selectedItem = { id: card.dataset.id, name: card.dataset.name, price: parseFloat(card.dataset.price) };
+  document.getElementById('qtySection').style.display = '';
+}
+
+// ── Delivery mode
 function setMode(mode) {
   deliveryMode = mode;
   document.getElementById('modeDelivery').classList.toggle('active', mode === 'Delivery');
   document.getElementById('modePickup').classList.toggle('active', mode === 'Pickup from store');
   document.getElementById('locationSection').style.display = mode === 'Delivery' ? '' : 'none';
-  updateSummary();
 }
 
+// ── GPS
 function captureGPS() {
-  const btn    = document.getElementById('gpsBtn');
-  const text   = document.getElementById('gpsText');
+  const btn = document.getElementById('gpsBtn');
+  const text = document.getElementById('gpsText');
   const coords = document.getElementById('gpsCoords');
   text.textContent = 'Getting your location...';
   if (!navigator.geolocation) { text.textContent = 'GPS not available — enter address below'; return; }
   navigator.geolocation.getCurrentPosition(pos => {
-    gpsLat = pos.coords.latitude;
-    gpsLng = pos.coords.longitude;
+    gpsLat = pos.coords.latitude; gpsLng = pos.coords.longitude;
     btn.classList.add('captured');
     text.textContent   = '✓ Location captured';
     coords.textContent = `${gpsLat.toFixed(5)}, ${gpsLng.toFixed(5)}`;
     showToast('GPS location saved ✓', 'ok');
   }, () => {
     text.textContent = 'Could not get location — enter address below';
-    showToast('Enter your address manually', 'bad');
   }, { enableHighAccuracy: true, timeout: 10000 });
 }
 
-function selectItem(card) {
-  document.querySelectorAll('.item-card').forEach(c => c.classList.remove('selected'));
-  card.classList.add('selected');
-  selectedItem = { id: card.dataset.id, name: card.dataset.name, price: parseFloat(card.dataset.price) };
-  document.getElementById('qtySection').style.display = '';
-  document.getElementById('summarySection').style.display = '';
-  updateSummary();
-}
-
+// ── Qty
 function changeQty(delta) {
   quantity = Math.max(1, Math.min(20, quantity + delta));
   document.getElementById('qtyDisplay').textContent = quantity;
-  updateSummary();
 }
 
-function updateSummary() {
-  if (!selectedItem) return;
-  const total = selectedItem.price * quantity;
-  document.getElementById('sumItem').textContent  = selectedItem.name;
-  document.getElementById('sumQty').textContent   = quantity;
-  document.getElementById('sumCost').textContent  = `R${total}`;
-  document.getElementById('sumFee').textContent   = deliveryMode === 'Pickup from store' ? 'Free (pickup)' : 'Calculated on dispatch';
-  document.getElementById('sumTotal').textContent = `R${total}`;
+// ── Step navigation
+function goToStep(n) {
+  document.getElementById('step' + currentStep).classList.remove('active');
+  document.getElementById('step' + n).classList.add('active');
+  updateDots(n);
+  currentStep = n;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-async function submitOrder() {
-  const name    = document.getElementById('customerName').value.trim();
-  const phone   = document.getElementById('customerPhone').value.trim();
+function updateDots(n) {
+  for (let i = 1; i <= 4; i++) {
+    const dot = document.getElementById('dot' + i);
+    dot.classList.remove('active', 'done');
+    if (i < n) dot.classList.add('done');
+    else if (i === n) dot.classList.add('active');
+  }
+}
+
+function goToStep2() {
+  if (!selectedVendor) return showToast('Please select a restaurant', 'bad');
+  goToStep(2);
+}
+
+function goToStep3() {
+  const name  = document.getElementById('customerName').value.trim();
+  const phone = document.getElementById('customerPhone').value.trim();
+  if (!name)  return showToast('Please enter your name', 'bad');
+  if (!phone) return showToast('Please enter your WhatsApp number', 'bad');
+  document.getElementById('step3VendorName').textContent = `Ordering from ${selectedVendor.name}`;
+  loadMenu();
+  goToStep(3);
+}
+
+function goToStep4() {
   const address = document.getElementById('deliveryAddress').value.trim();
-  const notes   = document.getElementById('specialNotes').value.trim();
-
-  if (!name)         return showToast('Please enter your name', 'bad');
-  if (!phone)        return showToast('Please enter your WhatsApp number', 'bad');
   if (deliveryMode === 'Delivery' && !address && !gpsLat)
-                     return showToast('Please share your GPS or enter your address', 'bad');
+    return showToast('Please share your GPS or enter your address', 'bad');
   if (!selectedItem) return showToast('Please select a meal', 'bad');
 
+  // Populate summary
+  const total = selectedItem.price * quantity;
+  document.getElementById('sumVendor').textContent  = selectedVendor.name;
+  document.getElementById('sumName').textContent    = document.getElementById('customerName').value.trim();
+  document.getElementById('sumPhone').textContent   = document.getElementById('customerPhone').value.trim();
+  document.getElementById('sumMode').textContent    = deliveryMode;
+  document.getElementById('sumItem').textContent    = selectedItem.name;
+  document.getElementById('sumQty').textContent     = quantity;
+  document.getElementById('sumCost').textContent    = `R${total}`;
+  document.getElementById('sumTotal').textContent   = `R${total}`;
+  document.getElementById('sumFee').textContent     = deliveryMode === 'Pickup from store' ? 'Free (pickup)' : 'Calculated on dispatch';
+
+  const addrRow = document.getElementById('sumAddressRow');
+  if (deliveryMode === 'Delivery') {
+    addrRow.style.display = '';
+    document.getElementById('sumAddress').textContent = gpsLat
+      ? `GPS: ${gpsLat.toFixed(4)}, ${gpsLng.toFixed(4)}`
+      : address;
+  } else {
+    addrRow.style.display = 'none';
+  }
+
+  goToStep(4);
+}
+
+// ── Submit
+async function submitOrder() {
   const btn = document.getElementById('submitBtn');
   btn.disabled = true;
   btn.innerHTML = '<span class="spin-icon"></span>PLACING ORDER...';
 
   const orderId = 'ST-' + Math.floor(1000 + Math.random() * 9000);
+  const address = document.getElementById('deliveryAddress').value.trim();
+  const notes   = document.getElementById('specialNotes').value.trim();
 
   const fields = {
     'ID':                              orderId,
-    'Customer Name':                   name,
-    'Phone Number':                    phone,
+    'Customer Name':                   document.getElementById('customerName').value.trim(),
+    'Phone Number':                    document.getElementById('customerPhone').value.trim(),
     'Delivery Address / House Number': notes ? `${address} — ${notes}` : address,
     'Link to Menu':                    [selectedItem.id],
+    'Link to Vendor':                  [selectedVendor.id],
     'Quantity':                        quantity,
     'Item Cost':                       [selectedItem.price],
     'Order Time':                      new Date().toISOString(),
@@ -423,9 +579,7 @@ async function submitOrder() {
     'Delivery Mode':                   deliveryMode,
   };
 
-  if (vendorRecord) fields['Link to Vendor'] = [vendorRecord.id];
-  if (gpsLat)       fields['Customer Lat']   = gpsLat;
-  if (gpsLng)       fields['Customer Long']  = gpsLng;
+  if (gpsLat) { fields['Customer Lat'] = gpsLat; fields['Customer Long'] = gpsLng; }
 
   try {
     const res = await fetch(`${PROXY}/${T_ORDERS}`, {
@@ -436,55 +590,46 @@ async function submitOrder() {
     const data = await res.json();
     if (!res.ok) throw new Error(data.error?.message || 'Failed');
 
-    document.getElementById('mainForm').classList.add('hidden');
+    document.querySelector('.pt-28').classList.add('hidden');
+    document.getElementById('stepIndicator').classList.add('hidden');
     document.getElementById('successId').textContent    = orderId;
-    document.getElementById('successPhone').textContent = phone;
+    document.getElementById('successPhone').textContent = document.getElementById('customerPhone').value.trim();
     document.getElementById('successScreen').classList.remove('hidden');
     lucide.createIcons();
   } catch {
     showToast('Something went wrong. Please WhatsApp us on 067 335 7429', 'bad');
     btn.disabled = false;
-    btn.innerHTML = 'PLACE ORDER 🛵';
+    btn.innerHTML = 'Place Order 🛵';
   }
 }
 
+// ── Airtable fetch via proxy
 async function atFetch(table, query = '') {
   const res = await fetch(`${PROXY}/${table}${query ? '?' + query : ''}`);
   if (!res.ok) throw new Error('Proxy error');
   return res.json();
 }
 
+// ── Toast
 function showToast(msg, type = 'ok') {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = type + ' show';
-  t.style.display = 'block';
+  t.textContent = msg; t.className = type + ' show'; t.style.display = 'block';
   clearTimeout(t._timer);
-  t._timer = setTimeout(() => {
-    t.classList.remove('show');
-    setTimeout(() => t.style.display = 'none', 400);
-  }, 3800);
+  t._timer = setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.style.display = 'none', 400); }, 3800);
 }
 
+// ── Nav scroll
 const nc = document.getElementById('nav-container');
 const lt = document.getElementById('logo-text');
 window.addEventListener('scroll', () => {
-  const scrolled = window.scrollY > 60;
-  nc.classList.toggle('w-full', !scrolled);
-  nc.classList.toggle('h-20', !scrolled);
-  nc.classList.toggle('px-8', !scrolled);
-  nc.classList.toggle('w-[95%]', scrolled);
-  nc.classList.toggle('md:w-[900px]', scrolled);
-  nc.classList.toggle('mt-4', scrolled);
-  nc.classList.toggle('h-16', scrolled);
-  nc.classList.toggle('rounded-full', scrolled);
-  nc.classList.toggle('px-10', scrolled);
-  nc.classList.toggle('shadow-2xl', scrolled);
-  nc.classList.toggle('border', scrolled);
-  lt.classList.toggle('scale-90', scrolled);
+  const s = window.scrollY > 60;
+  nc.classList.toggle('w-full',!s); nc.classList.toggle('h-20',!s); nc.classList.toggle('px-8',!s);
+  nc.classList.toggle('w-[95%]',s); nc.classList.toggle('md:w-[900px]',s); nc.classList.toggle('mt-4',s);
+  nc.classList.toggle('h-16',s); nc.classList.toggle('rounded-full',s); nc.classList.toggle('px-10',s);
+  nc.classList.toggle('shadow-2xl',s); nc.classList.toggle('border',s); lt.classList.toggle('scale-90',s);
 });
 
-const menuBtn    = document.getElementById('menu-btn');
+const menuBtn = document.getElementById('menu-btn');
 const mobileMenu = document.getElementById('mobile-menu');
 menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
 mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
