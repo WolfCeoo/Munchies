@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Order Now | Munchies Delivery Service</title>
+<meta name="description" content="Order food delivery in Soshanguve from Munchies Delivery Service.">
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: { munchies: { green: '#2ecc71', dark: '#0a111f' } },
+        fontFamily: { street: ['"Archivo Black"', 'sans-serif'], sans: ['Inter', 'sans-serif'] }
+      }
+    }
+  }
+</script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  /* Nav */
+  #nav-container { transition: all 0.5s cubic-bezier(0.4,0,0.2,1); }
+  .glass { background: rgba(10,17,31,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+  .fade-up { animation: fadeUp 0.5s ease both; }
+  .fade-up-1 { animation: fadeUp 0.5s 0.05s ease both; }
+  .fade-up-2 { animation: fadeUp 0.5s 0.1s ease both; }
+  .fade-up-3 { animation: fadeUp 0.5s 0.15s ease both; }
+  .fade-up-4 { animation: fadeUp 0.5s 0.2s ease both; }
+  .fade-up-5 { animation: fadeUp 0.5s 0.25s ease both; }
+  .fade-up-6 { animation: fadeUp 0.5s 0.3s ease both; }
+
+  /* Inputs */
+  .munchies-input {
+    width:100%; background:rgba(255,255,255,0.05); border:1.5px solid rgba(255,255,255,0.1);
+    border-radius:14px; padding:14px 18px; color:#fff; font-size:.95rem; outline:none;
+    transition:border-color .25s, box-shadow .25s, background .25s;
+    -webkit-appearance:none; appearance:none; font-family: Inter, sans-serif;
+  }
+  .munchies-input:focus { border-color:#2ecc71; box-shadow:0 0 0 3px rgba(46,204,113,.15); background:rgba(255,255,255,.08); }
+  .munchies-input::placeholder { color:rgba(255,255,255,.3); }
+  select.munchies-input option { background:#0a111f; color:#fff; }
+  textarea.munchies-input { resize:none; height:80px; }
+
+  /* Field label */
+  .form-label { display:block; font-size:.72rem; font-weight:700; color:#9ca3af; text-transform:uppercase; letter-spacing:.12em; margin-bottom:8px; }
+
+  /* Mode toggle */
+  .mode-btn { transition:all .3s ease; color:#9ca3af; border:1.5px solid rgba(255,255,255,0.1); border-radius:999px; }
+  .mode-btn.active { background:#2ecc71; color:#0a111f; border-color:#2ecc71; }
+
+  /* Menu items */
+  .item-card {
+    background:rgba(255,255,255,.04); border:1.5px solid rgba(255,255,255,.08);
+    border-radius:16px; padding:16px; cursor:pointer; transition:all .2s;
+    display:flex; align-items:center; gap:14px;
+  }
+  .item-card:hover { background:rgba(46,204,113,.06); border-color:rgba(46,204,113,.2); }
+  .item-card.selected { background:rgba(46,204,113,.1); border-color:#2ecc71; }
+  .item-radio {
+    width:22px; height:22px; border:2px solid rgba(255,255,255,.2); border-radius:50%;
+    flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:all .2s;
+  }
+  .item-card.selected .item-radio { border-color:#2ecc71; background:#2ecc71; }
+  .item-radio-dot { width:8px; height:8px; background:white; border-radius:50%; opacity:0; transition:opacity .15s; }
+  .item-card.selected .item-radio-dot { opacity:1; }
+
+  /* Qty */
+  .qty-btn {
+    width:40px; height:40px; background:rgba(255,255,255,.06); border:1.5px solid rgba(255,255,255,.1);
+    color:#fff; font-size:20px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+    transition:all .15s; border-radius:10px;
+  }
+  .qty-btn:hover { background:rgba(46,204,113,.15); border-color:#2ecc71; color:#2ecc71; }
+
+  /* GPS */
+  .gps-btn {
+    width:100%; background:rgba(255,255,255,.04); border:1.5px dashed rgba(255,255,255,.15);
+    border-radius:14px; padding:14px 18px; cursor:pointer; transition:all .2s;
+    display:flex; align-items:center; gap:12px; color:rgba(255,255,255,.5); font-family:Inter,sans-serif;
+  }
+  .gps-btn:hover { border-color:#2ecc71; background:rgba(46,204,113,.06); color:#fff; }
+  .gps-btn.captured { border-color:#2ecc71; border-style:solid; background:rgba(46,204,113,.08); color:#2ecc71; }
+
+  /* Summary */
+  .summary-row { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid rgba(255,255,255,.06); font-size:.9rem; }
+  .summary-row:last-child { border-bottom:none; padding-top:14px; font-weight:700; font-size:1rem; }
+
+  /* Submit */
+  .submit-btn {
+    background:#2ecc71; color:#0a111f; font-weight:800; font-family:'Archivo Black',sans-serif;
+    padding:16px 32px; border-radius:999px; border:none; cursor:pointer;
+    width:100%; font-size:1rem; letter-spacing:.06em; transition:all .3s;
+  }
+  .submit-btn:hover:not(:disabled) { transform:scale(1.02); box-shadow:0 8px 32px rgba(46,204,113,.35); }
+  .submit-btn:active:not(:disabled) { transform:scale(.98); }
+  .submit-btn:disabled { opacity:.55; cursor:not-allowed; }
+
+  /* Spinner */
+  @keyframes spin { to{transform:rotate(360deg)} }
+  .spin-icon { display:inline-block; width:18px; height:18px; border:3px solid rgba(10,17,31,.25); border-top-color:#0a111f; border-radius:50%; animation:spin .7s linear infinite; vertical-align:middle; margin-right:8px; }
+
+  /* Toast */
+  #toast {
+    position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(80px);
+    padding:13px 28px; border-radius:999px; font-weight:700; font-size:.88rem;
+    z-index:9999; transition:transform .4s cubic-bezier(.34,1.56,.64,1); pointer-events:none;
+    white-space:nowrap; display:none;
+  }
+  #toast.show { transform:translateX(-50%) translateY(0); display:block; }
+  #toast.ok  { background:#2ecc71; color:#0a111f; }
+  #toast.bad { background:#e74c3c; color:#fff; }
+
+  /* Menu loading */
+  .menu-spinner { display:inline-block; width:18px; height:18px; border:2px solid rgba(255,255,255,.1); border-top-color:#2ecc71; border-radius:50%; animation:spin .8s linear infinite; vertical-align:middle; margin-right:8px; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar{width:5px}
+  ::-webkit-scrollbar-track{background:#0a111f}
+  ::-webkit-scrollbar-thumb{background:#2ecc71;border-radius:99px}
+</style>
+</head>
+<body class="bg-munchies-dark text-white font-sans min-h-screen">
+
+<!-- ═══ NAV (identical to index.html) ═══ -->
+<nav id="main-nav" class="fixed top-0 left-0 w-full z-50 flex justify-center">
+  <div id="nav-container" class="w-full h-20 flex items-center justify-between px-8 glass border-b border-white/10">
+    <a href="index.html" class="flex items-center gap-4">
+      <img src="assets/munchies-logo.jpg" alt="Logo" class="h-10 w-10 rounded-full border-2 border-munchies-green">
+      <span id="logo-text" class="font-street text-white text-2xl tracking-tighter transition-transform duration-500">MUNCHIES</span>
+    </a>
+    <div class="hidden md:flex items-center gap-8 text-white font-bold uppercase text-[11px] tracking-[0.2em]">
+      <a href="index.html" class="hover:text-munchies-green transition-colors">Home</a>
+      <a href="index.html#about" class="hover:text-munchies-green transition-colors">About</a>
+      <a href="index.html#vendors" class="hover:text-munchies-green transition-colors">Vendors</a>
+      <a href="index.html#join" class="hover:text-munchies-green transition-colors">Join Us</a>
+      <a href="order.html" class="bg-munchies-green text-munchies-dark px-6 py-2.5 rounded-full hover:scale-105 active:scale-95 transition-all shadow-lg shadow-munchies-green/20 flex items-center gap-2">
+        <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i> Order Now
+      </a>
+    </div>
+    <button id="menu-btn" class="md:hidden text-white"><i data-lucide="menu"></i></button>
+  </div>
+  <div id="mobile-menu" class="hidden absolute top-full left-0 w-full glass border-b border-white/10 shadow-2xl">
+    <div class="flex flex-col p-8 gap-6 text-white font-bold uppercase tracking-widest text-sm text-center">
+      <a href="index.html" class="pb-4 border-b border-white/5">Home</a>
+      <a href="index.html#about" class="pb-4 border-b border-white/5">About</a>
+      <a href="index.html#vendors" class="pb-4 border-b border-white/5">Vendors</a>
+      <a href="index.html#join" class="pb-4 border-b border-white/5">Join Us</a>
+      <a href="order.html" class="text-munchies-green text-lg font-black flex items-center justify-center gap-2">
+        <i data-lucide="shopping-bag" class="w-5 h-5"></i> Order Now
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ PAGE HEADER ═══ -->
+<div class="pt-32 pb-12 px-6 text-center fade-up">
+  <div class="inline-flex items-center gap-2 bg-munchies-green/10 border border-munchies-green/20 px-5 py-2 rounded-full text-munchies-green text-xs font-bold uppercase tracking-widest mb-6">
+    <span class="w-2 h-2 bg-munchies-green rounded-full animate-pulse"></span>
+    <span id="vendorBadge">Loading vendor...</span>
+  </div>
+  <h1 class="font-street text-4xl md:text-6xl tracking-tighter mb-3">PLACE YOUR ORDER</h1>
+  <p class="text-gray-400 text-base max-w-md mx-auto">Fast, local delivery straight to your door in Soshanguve.</p>
+</div>
+
+<!-- ═══ FORM ═══ -->
+<div class="max-w-xl mx-auto px-6 pb-32" id="mainForm">
+
+  <!-- 1. Your details -->
+  <div class="mb-8 fade-up-1">
+    <p class="form-label mb-4">Your details</p>
+    <div class="bg-white/[0.04] border border-white/10 rounded-[1.5rem] overflow-hidden divide-y divide-white/[0.06]">
+      <div class="p-5">
+        <label class="form-label">Full name</label>
+        <input class="munchies-input" id="customerName" type="text" placeholder="e.g. Thabo Nkosi" autocomplete="name" />
+      </div>
+      <div class="p-5">
+        <label class="form-label">WhatsApp number</label>
+        <input class="munchies-input" id="customerPhone" type="tel" placeholder="+27 81 234 5678" autocomplete="tel" />
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Order type -->
+  <div class="mb-8 fade-up-2">
+    <p class="form-label mb-4">Order type</p>
+    <div class="flex gap-3">
+      <button class="mode-btn active flex-1 flex items-center justify-center gap-2 px-6 py-3 font-bold uppercase text-sm tracking-widest" id="modeDelivery" type="button" onclick="setMode('Delivery')">
+        <i data-lucide="bike" class="w-4 h-4"></i> Delivery
+      </button>
+      <button class="mode-btn flex-1 flex items-center justify-center gap-2 px-6 py-3 font-bold uppercase text-sm tracking-widest" id="modePickup" type="button" onclick="setMode('Pickup from store')">
+        <i data-lucide="store" class="w-4 h-4"></i> Pickup
+      </button>
+    </div>
+  </div>
+
+  <!-- 3. Location -->
+  <div class="mb-8 fade-up-3" id="locationSection">
+    <p class="form-label mb-4">Delivery location</p>
+    <div class="space-y-3">
+      <button class="gps-btn" id="gpsBtn" type="button" onclick="captureGPS()">
+        <i data-lucide="map-pin" class="w-5 h-5 flex-shrink-0" id="gpsIcon"></i>
+        <div class="text-left">
+          <div class="text-sm font-semibold" id="gpsText">Tap to share your GPS location</div>
+          <div class="text-xs text-gray-500 mt-0.5 font-mono" id="gpsCoords"></div>
+        </div>
+      </button>
+      <div>
+        <label class="form-label">Street address / landmark</label>
+        <input class="munchies-input" id="deliveryAddress" type="text" placeholder="e.g. House 3, Block H, Soshanguve" />
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Menu -->
+  <div class="mb-8 fade-up-4">
+    <p class="form-label mb-4">Select your meal</p>
+    <div id="menuContainer" class="space-y-3">
+      <div class="text-center py-10 text-gray-500">
+        <span class="menu-spinner"></span> Loading menu...
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Qty + Notes (hidden until item selected) -->
+  <div class="mb-8 fade-up-5" id="qtySection" style="display:none;">
+    <p class="form-label mb-4">Quantity & notes</p>
+    <div class="bg-white/[0.04] border border-white/10 rounded-[1.5rem] overflow-hidden divide-y divide-white/[0.06]">
+      <div class="p-5 flex items-center justify-between">
+        <span class="font-semibold">How many?</span>
+        <div class="flex items-center gap-3">
+          <button class="qty-btn" type="button" onclick="changeQty(-1)">−</button>
+          <span class="font-street text-xl w-8 text-center" id="qtyDisplay">1</span>
+          <button class="qty-btn" type="button" onclick="changeQty(1)">+</button>
+        </div>
+      </div>
+      <div class="p-5">
+        <label class="form-label">Special instructions <span class="text-gray-600 normal-case tracking-normal font-normal">(optional)</span></label>
+        <textarea class="munchies-input" id="specialNotes" placeholder="e.g. No onions, extra sauce..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Summary (hidden until item selected) -->
+  <div class="mb-8 fade-up-6" id="summarySection" style="display:none;">
+    <p class="form-label mb-4">Order summary</p>
+    <div class="bg-white/[0.04] border border-white/10 rounded-[1.5rem] p-5">
+      <div class="summary-row"><span class="text-gray-400">Item</span><span id="sumItem" class="font-semibold">—</span></div>
+      <div class="summary-row"><span class="text-gray-400">Quantity</span><span id="sumQty" class="font-semibold">—</span></div>
+      <div class="summary-row"><span class="text-gray-400">Item cost</span><span id="sumCost" class="font-semibold">—</span></div>
+      <div class="summary-row"><span class="text-gray-400">Delivery fee</span><span id="sumFee" class="font-semibold text-munchies-green">Calculated on dispatch</span></div>
+      <div class="summary-row">
+        <span class="text-white">Items total</span>
+        <span id="sumTotal" class="text-munchies-green font-street text-xl">—</span>
+      </div>
+    </div>
+  </div>
+
+  <button class="submit-btn fade-up-6" id="submitBtn" onclick="submitOrder()">
+    PLACE ORDER 🛵
+  </button>
+
+</div>
+
+<!-- ═══ SUCCESS ═══ -->
+<div class="hidden max-w-xl mx-auto px-6 pt-40 pb-32 text-center" id="successScreen">
+  <div class="text-7xl mb-8">🎉</div>
+  <h2 class="font-street text-4xl md:text-5xl tracking-tighter mb-4">YOU'RE IN THE QUEUE!</h2>
+  <div class="inline-block bg-munchies-green/10 border border-munchies-green/30 rounded-2xl px-8 py-4 mb-6">
+    <span class="font-street text-munchies-green text-2xl" id="successId"></span>
+  </div>
+  <p class="text-gray-400 text-base leading-relaxed mb-8">Your order is placed. We're finding you a driver now.</p>
+  <div class="bg-white/[0.04] border border-white/10 rounded-2xl p-6 text-left mb-8">
+    <div class="flex items-start gap-3">
+      <i data-lucide="message-circle" class="text-munchies-green w-5 h-5 mt-0.5 flex-shrink-0"></i>
+      <p class="text-gray-400 text-sm leading-relaxed">
+        📱 You'll get a WhatsApp update on <strong class="text-white" id="successPhone"></strong> once your driver is assigned. Keep an eye on your messages.
+      </p>
+    </div>
+  </div>
+  <a href="index.html" class="inline-flex items-center gap-2 text-munchies-green font-bold hover:underline">
+    <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to home
+  </a>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="bg-munchies-dark border-t border-white/5 py-8 px-6 text-center text-gray-600 text-xs">
+  © 2026 Munchies Delivery Service (Pty) Ltd · Reg: 2026/103543/07 · Built for the Township.
+</footer>
+
+<script>
+// ── CONFIG — paste token locally, never share in chat
+const TOKEN     = 'patOp4nSGoeBPi5m3';
+const BASE      = 'appdqBZtxDVSZmG0Z';
+const T_ORDERS  = 'tblqBciXC0NIJtjjt';
+const T_MENU    = 'tblvSNrMok04PGCcF';
+const T_VENDORS = 'tblTU0tKt3dSGgPsE';
+
+let deliveryMode = 'Delivery';
+let selectedItem = null;
+let quantity     = 1;
+let gpsLat = null, gpsLng = null;
+let vendorRecord = null;
+
+const params      = new URLSearchParams(window.location.search);
+const vendorParam = params.get('vendor') || params.get('prefill_vendor') || '';
+
+// ── Boot
+async function boot() {
+  await loadVendor();
+  await loadMenu();
+}
+
+async function loadVendor() {
+  const badge = document.getElementById('vendorBadge');
+  if (!vendorParam) { badge.textContent = 'All Vendors'; return; }
+  try {
+    const res = await atFetch(T_VENDORS,
+      `filterByFormula=SEARCH("${encodeURIComponent(vendorParam)}",{Vendor Name})`);
+    if (res.records?.length) {
+      vendorRecord = res.records[0];
+      badge.textContent = vendorRecord.fields['Vendor Name'] || vendorParam;
+    } else {
+      badge.textContent = vendorParam;
+    }
+  } catch { badge.textContent = vendorParam; }
+}
+
+async function loadMenu() {
+  const container = document.getElementById('menuContainer');
+  try {
+    let formula = `{Stock Status}="In Stock"`;
+    if (vendorRecord) {
+      formula = `AND({Stock Status}="In Stock",FIND("${vendorRecord.id}",ARRAYJOIN(Vendor)))`;
+    }
+    const res = await atFetch(T_MENU,
+      `filterByFormula=${encodeURIComponent(formula)}&fields[]=Item Name&fields[]=Price&fields[]=Stock Status`
+    );
+
+    if (!res.records?.length) {
+      container.innerHTML = '<div class="text-center py-10 text-gray-500">No items available right now 😔</div>';
+      return;
+    }
+
+    container.innerHTML = '';
+    res.records.forEach(rec => {
+      const card = document.createElement('div');
+      card.className    = 'item-card';
+      card.dataset.id    = rec.id;
+      card.dataset.name  = rec.fields['Item Name'] || 'Item';
+      card.dataset.price = rec.fields['Price'] || 0;
+      card.innerHTML = `
+        <div class="item-radio"><div class="item-radio-dot"></div></div>
+        <div class="flex-1">
+          <div class="font-semibold text-white">${rec.fields['Item Name'] || 'Item'}</div>
+        </div>
+        <div class="font-street text-munchies-green text-lg">R${rec.fields['Price'] || 0}</div>`;
+      card.onclick = () => selectItem(card);
+      container.appendChild(card);
+    });
+  } catch(e) {
+    container.innerHTML = '<div class="text-center py-10 text-red-400 text-sm">Could not load menu. Please try again or <a href="https://wa.me/27673357429" class="underline">WhatsApp us</a>.</div>';
+  }
+}
+
+// ── Delivery mode
+function setMode(mode) {
+  deliveryMode = mode;
+  document.getElementById('modeDelivery').classList.toggle('active', mode === 'Delivery');
+  document.getElementById('modePickup').classList.toggle('active', mode === 'Pickup from store');
+  document.getElementById('locationSection').style.display = mode === 'Delivery' ? '' : 'none';
+  updateSummary();
+}
+
+// ── GPS
+function captureGPS() {
+  const btn    = document.getElementById('gpsBtn');
+  const text   = document.getElementById('gpsText');
+  const coords = document.getElementById('gpsCoords');
+  text.textContent = 'Getting your location...';
+  if (!navigator.geolocation) {
+    text.textContent = 'GPS not available — enter address below';
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(pos => {
+    gpsLat = pos.coords.latitude;
+    gpsLng = pos.coords.longitude;
+    btn.classList.add('captured');
+    text.textContent   = '✓ Location captured';
+    coords.textContent = `${gpsLat.toFixed(5)}, ${gpsLng.toFixed(5)}`;
+    showToast('GPS location saved ✓', 'ok');
+  }, () => {
+    text.textContent = 'Could not get location — enter address below';
+    showToast('Enter your address manually', 'bad');
+  }, { enableHighAccuracy: true, timeout: 10000 });
+}
+
+// ── Item selection
+function selectItem(card) {
+  document.querySelectorAll('.item-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  selectedItem = { id: card.dataset.id, name: card.dataset.name, price: parseFloat(card.dataset.price) };
+  document.getElementById('qtySection').style.display = '';
+  document.getElementById('summarySection').style.display = '';
+  updateSummary();
+}
+
+// ── Quantity
+function changeQty(delta) {
+  quantity = Math.max(1, Math.min(20, quantity + delta));
+  document.getElementById('qtyDisplay').textContent = quantity;
+  updateSummary();
+}
+
+// ── Summary
+function updateSummary() {
+  if (!selectedItem) return;
+  const total = selectedItem.price * quantity;
+  document.getElementById('sumItem').textContent  = selectedItem.name;
+  document.getElementById('sumQty').textContent   = quantity;
+  document.getElementById('sumCost').textContent  = `R${total}`;
+  document.getElementById('sumFee').textContent   = deliveryMode === 'Pickup from store' ? 'Free (pickup)' : 'Calculated on dispatch';
+  document.getElementById('sumTotal').textContent = `R${total}`;
+}
+
+// ── Submit
+async function submitOrder() {
+  const name    = document.getElementById('customerName').value.trim();
+  const phone   = document.getElementById('customerPhone').value.trim();
+  const address = document.getElementById('deliveryAddress').value.trim();
+  const notes   = document.getElementById('specialNotes').value.trim();
+
+  if (!name)         return showToast('Please enter your name', 'bad');
+  if (!phone)        return showToast('Please enter your WhatsApp number', 'bad');
+  if (deliveryMode === 'Delivery' && !address && !gpsLat)
+                     return showToast('Please share your GPS or enter your address', 'bad');
+  if (!selectedItem) return showToast('Please select a meal', 'bad');
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin-icon"></span>PLACING ORDER...';
+
+  const orderId = 'ST-' + Math.floor(1000 + Math.random() * 9000);
+
+  const fields = {
+    'ID':                              orderId,
+    'Customer Name':                   name,
+    'Phone Number':                    phone,
+    'Delivery Address / House Number': notes ? `${address} — ${notes}` : address,
+    'Link to Menu':                    [selectedItem.id],
+    'Quantity':                        quantity,
+    'Item Cost':                       [selectedItem.price],
+    'Order Time':                      new Date().toISOString(),
+    'Window Status':                   '🔴 Locked / Dispatching',
+    'Order Status':                    'Finding Driver',
+    'Delivery Mode':                   deliveryMode,
+  };
+
+  if (vendorRecord) fields['Link to Vendor'] = [vendorRecord.id];
+  if (gpsLat)       fields['Customer Lat']   = gpsLat;
+  if (gpsLng)       fields['Customer Long']  = gpsLng;
+
+  try {
+    const res = await fetch(`https://api.airtable.com/v0/${BASE}/${T_ORDERS}`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${TOKEN}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ fields })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error?.message || 'Failed');
+
+    document.getElementById('mainForm').classList.add('hidden');
+    document.getElementById('successId').textContent    = orderId;
+    document.getElementById('successPhone').textContent = phone;
+    document.getElementById('successScreen').classList.remove('hidden');
+    lucide.createIcons();
+  } catch {
+    showToast('Something went wrong. Please WhatsApp us on 067 335 7429', 'bad');
+    btn.disabled = false;
+    btn.innerHTML = 'PLACE ORDER 🛵';
+  }
+}
+
+// ── Airtable helper
+async function atFetch(table, query = '') {
+  const res = await fetch(`https://api.airtable.com/v0/${BASE}/${table}${query ? '?' + query : ''}`, {
+    headers: { 'Authorization': `Bearer ${TOKEN}` }
+  });
+  if (!res.ok) throw new Error('Airtable error');
+  return res.json();
+}
+
+// ── Toast
+function showToast(msg, type = 'ok') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = type + ' show';
+  t.style.display = 'block';
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => {
+    t.classList.remove('show');
+    setTimeout(() => t.style.display = 'none', 400);
+  }, 3800);
+}
+
+// ── Nav scroll (same as index.html)
+const nc = document.getElementById('nav-container');
+const lt = document.getElementById('logo-text');
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY > 60;
+  nc.classList.toggle('w-full', !scrolled);
+  nc.classList.toggle('h-20', !scrolled);
+  nc.classList.toggle('px-8', !scrolled);
+  nc.classList.toggle('w-[95%]', scrolled);
+  nc.classList.toggle('md:w-[900px]', scrolled);
+  nc.classList.toggle('mt-4', scrolled);
+  nc.classList.toggle('h-16', scrolled);
+  nc.classList.toggle('rounded-full', scrolled);
+  nc.classList.toggle('px-10', scrolled);
+  nc.classList.toggle('shadow-2xl', scrolled);
+  nc.classList.toggle('border', scrolled);
+  lt.classList.toggle('scale-90', scrolled);
+});
+
+// ── Mobile menu
+const menuBtn    = document.getElementById('menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+lucide.createIcons();
+boot();
+</script>
+</body>
+</html>
