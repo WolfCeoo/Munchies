@@ -22,11 +22,8 @@
     </script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* Nav */
         #nav-container { transition: all 0.5s cubic-bezier(0.4,0,0.2,1); }
         .glass { background: rgba(10,17,31,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
-
-        /* Hero animations */
         @keyframes fadeUp { from{opacity:0;transform:translateY(32px)} to{opacity:1;transform:translateY(0)} }
         @keyframes subtle-bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
         .animate-bounce-slow { animation: subtle-bounce 3s infinite ease-in-out; }
@@ -35,20 +32,14 @@
         .h3{animation:fadeUp .7s .5s both}
         .h4{animation:fadeUp .7s .65s both}
         .h5{animation:fadeUp .7s .8s both}
-
-        /* Scroll reveal */
         .reveal { opacity:0; transform:translateY(36px); transition:opacity .65s ease,transform .65s ease; }
         .reveal.visible { opacity:1; transform:translateY(0); }
         .stagger > *:nth-child(1){transition-delay:0s}
         .stagger > *:nth-child(2){transition-delay:.1s}
         .stagger > *:nth-child(3){transition-delay:.2s}
         .stagger > *:nth-child(4){transition-delay:.3s}
-
-        /* Tab */
         .tab-btn { transition:all .3s ease; color:#9ca3af; border:1.5px solid rgba(255,255,255,0.1); }
         .tab-btn.active { background:#2ecc71; color:#0a111f; border-color:#2ecc71; transform:scale(1.04); }
-
-        /* Forms */
         .munchies-input {
             width:100%; background:rgba(255,255,255,0.05); border:1.5px solid rgba(255,255,255,0.1);
             border-radius:14px; padding:14px 18px; color:#fff; font-size:.95rem; outline:none;
@@ -60,21 +51,16 @@
         .munchies-input.field-ok { border-color:#2ecc71; }
         .munchies-input::placeholder { color:rgba(255,255,255,.3); }
         select.munchies-input option { background:#0a111f; color:#fff; }
-
         .field-msg { font-size:.76rem; margin-top:5px; display:none; align-items:center; gap:4px; font-weight:700; }
         .field-msg.show { display:flex; }
         .field-msg.err { color:#e74c3c; }
         .field-msg.ok  { color:#2ecc71; }
-
-        /* Upload */
         .upload-zone {
             border:2px dashed rgba(46,204,113,.3); border-radius:14px; padding:22px 16px;
             text-align:center; cursor:pointer; transition:all .25s; background:rgba(46,204,113,.03);
         }
         .upload-zone:hover,.upload-zone.drag-over { border-color:#2ecc71; background:rgba(46,204,113,.08); }
         .upload-zone.has-file { border-color:#2ecc71; background:rgba(46,204,113,.08); border-style:solid; }
-
-        /* Submit btn */
         .submit-btn {
             background:#2ecc71; color:#0a111f; font-weight:800; font-family:'Archivo Black',sans-serif;
             padding:16px 32px; border-radius:999px; border:none; cursor:pointer;
@@ -86,8 +72,6 @@
         .submit-btn:disabled { opacity:.55; cursor:not-allowed; }
         .spin { display:none; width:20px; height:20px; border:3px solid rgba(10,17,31,.25); border-top-color:#0a111f; border-radius:50%; animation:rotate .7s linear infinite; margin:0 auto; }
         @keyframes rotate{to{transform:rotate(360deg)}}
-
-        /* Toast */
         #toast {
             position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(80px);
             padding:13px 28px; border-radius:999px; font-weight:700; font-size:.88rem;
@@ -97,54 +81,38 @@
         #toast.show { transform:translateX(-50%) translateY(0); display:block; }
         #toast.ok  { background:#2ecc71; color:#0a111f; }
         #toast.bad { background:#e74c3c; color:#fff; }
-
-        /* Trust badge */
         .trust-badge {
             display:inline-flex; align-items:center; gap:7px;
             background:rgba(46,204,113,.1); border:1px solid rgba(46,204,113,.22);
             padding:7px 16px; border-radius:999px; font-size:.73rem;
             font-weight:700; color:#2ecc71; letter-spacing:.08em; text-transform:uppercase;
         }
-
-        /* Legitimacy cards */
         .legit-card {
             background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07);
             border-radius:20px; padding:24px; transition:all .3s;
         }
         .legit-card:hover { border-color:rgba(46,204,113,.25); background:rgba(46,204,113,.04); transform:translateY(-3px); }
-
-        /* Join card */
         .join-card { transition:all .4s cubic-bezier(.34,1.56,.64,1); }
-
-        /* ID status */
         .id-status { display:none; align-items:center; gap:6px; font-size:.78rem; font-weight:700; margin-top:6px; }
         .id-status.show { display:flex; }
         .id-status.ok  { color:#2ecc71; }
         .id-status.bad { color:#e74c3c; }
-
-        /* Penalty banner */
         .penalty-banner {
             background:rgba(231,76,60,.07); border:1px solid rgba(231,76,60,.18);
             border-left:4px solid #e74c3c; border-radius:12px; padding:14px 18px;
         }
-
-        /* Vendor card hover */
         .vendor-card { transition: transform .3s ease, box-shadow .3s ease; }
         .vendor-card:hover { transform:translateY(-4px); box-shadow:0 20px 50px rgba(0,0,0,.4); }
-
-        /* Scrollbar */
         ::-webkit-scrollbar{width:5px}
         ::-webkit-scrollbar-track{background:#0a111f}
         ::-webkit-scrollbar-thumb{background:#2ecc71;border-radius:99px}
-
-        /* Tab panels */
         .tab-panel { display:none; }
         .tab-panel.active { display:block; animation:fadeUp .4s ease; }
     </style>
 </head>
 <body class="bg-white text-slate-900 font-sans">
 
-<!-- ═══ NAV ═══ -->
+<!-- NAV -->
 <nav id="main-nav" class="fixed top-0 left-0 w-full z-50 flex justify-center">
     <div id="nav-container" class="w-full h-20 flex items-center justify-between px-8 glass border-b border-white/10">
         <div class="flex items-center gap-4">
@@ -175,7 +143,7 @@
     </div>
 </nav>
 
-<!-- ═══ HERO ═══ -->
+<!-- HERO -->
 <header class="relative h-screen flex items-center justify-center text-white overflow-hidden">
     <div class="absolute inset-0">
         <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1920&auto=format&fit=crop"
@@ -191,19 +159,17 @@
         </div>
         <p class="text-lg md:text-2xl font-medium text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed h4">Soshanguve's fastest route to local food.</p>
         <div class="h5 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="order.html"
-               class="bg-munchies-green text-munchies-dark text-lg md:text-xl font-extrabold px-8 py-4 md:px-10 md:py-5 rounded-2xl shadow-2xl shadow-munchies-green/25 inline-flex items-center gap-3 transition-all hover:scale-105 active:scale-95 hover:brightness-110">
+            <a href="order.html" class="bg-munchies-green text-munchies-dark text-lg md:text-xl font-extrabold px-8 py-4 md:px-10 md:py-5 rounded-2xl shadow-2xl shadow-munchies-green/25 inline-flex items-center gap-3 transition-all hover:scale-105 active:scale-95 hover:brightness-110">
                 <i data-lucide="shopping-bag" class="w-5 h-5 md:w-6 md:h-6"></i> ORDER NOW
             </a>
-            <a href="https://wa.me/27673357429"
-               class="bg-white/10 border border-white/25 text-white text-base md:text-lg font-bold px-7 py-4 md:py-5 rounded-2xl inline-flex items-center gap-3 transition-all hover:bg-white/20 hover:scale-105 active:scale-95 backdrop-blur-sm">
+            <a href="https://wa.me/27673357429" class="bg-white/10 border border-white/25 text-white text-base md:text-lg font-bold px-7 py-4 md:py-5 rounded-2xl inline-flex items-center gap-3 transition-all hover:bg-white/20 hover:scale-105 active:scale-95 backdrop-blur-sm">
                 <i data-lucide="message-circle" class="w-5 h-5"></i> WHATSAPP US
             </a>
         </div>
     </div>
 </header>
 
-<!-- ═══ ABOUT ═══ -->
+<!-- ABOUT -->
 <section id="about" class="py-24 md:py-32 px-6 max-w-7xl mx-auto">
     <div class="text-center mb-16 reveal">
         <h2 class="text-4xl md:text-6xl font-extrabold text-munchies-green mb-8 tracking-tight">About Us</h2>
@@ -236,7 +202,7 @@
     </div>
 </section>
 
-<!-- ═══ LEGITIMACY STRIP ═══ -->
+<!-- LEGITIMACY -->
 <section class="py-16 md:py-24 px-6 bg-munchies-dark">
     <div class="max-w-7xl mx-auto">
         <div class="text-center mb-12 reveal">
@@ -283,7 +249,7 @@
     </div>
 </section>
 
-<!-- ═══ MAP ═══ -->
+<!-- MAP -->
 <section class="w-full h-[400px] md:h-[500px] relative">
     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14402.046555198083!2d28.1000!3d-25.5200!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1ebfe0835f5f5f5f%3A0x5f5f5f5f5f5f5f5f!2sSoshanguve!5e0!3m2!1sen!2sza!4v1700000000000"
             class="w-full h-full border-0 grayscale" allowfullscreen="" loading="lazy"></iframe>
@@ -294,7 +260,7 @@
     </div>
 </section>
 
-<!-- ═══ VENDORS ═══ -->
+<!-- VENDORS -->
 <section id="vendors" class="py-24 md:py-32 px-6 max-w-7xl mx-auto">
     <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6 reveal">
         <div>
@@ -304,8 +270,7 @@
         <div class="h-[2px] flex-grow mx-8 bg-slate-100 hidden md:block"></div>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 stagger">
-        <a href="order.html?prefill_vendor=Soshanguve+Sizzle"
-           class="reveal vendor-card group relative h-[400px] md:h-[500px] overflow-hidden rounded-[2rem] bg-munchies-dark shadow-2xl">
+        <a href="order.html?prefill_vendor=Soshanguve+Sizzle" class="reveal vendor-card group relative h-[400px] md:h-[500px] overflow-hidden rounded-[2rem] bg-munchies-dark shadow-2xl">
             <img src="https://images.unsplash.com/photo-1606131731446-5568d87113aa?q=80&w=800" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110" alt="Vendor">
             <div class="absolute inset-0 bg-gradient-to-t from-munchies-dark via-munchies-dark/20 to-transparent"></div>
             <div class="absolute inset-x-0 bottom-0 p-8">
@@ -315,8 +280,7 @@
                 </div>
             </div>
         </a>
-        <a href="order.html?prefill_vendor=The+Block+H+Grill"
-           class="reveal vendor-card group relative h-[400px] md:h-[500px] overflow-hidden rounded-[2rem] bg-munchies-dark shadow-2xl">
+        <a href="order.html?prefill_vendor=The+Block+H+Grill" class="reveal vendor-card group relative h-[400px] md:h-[500px] overflow-hidden rounded-[2rem] bg-munchies-dark shadow-2xl">
             <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=800" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110" alt="Vendor">
             <div class="absolute inset-0 bg-gradient-to-t from-munchies-dark via-munchies-dark/20 to-transparent"></div>
             <div class="absolute inset-x-0 bottom-0 p-8">
@@ -326,8 +290,7 @@
                 </div>
             </div>
         </a>
-        <a href="order.html?prefill_vendor=Di+Pitseng"
-           class="reveal vendor-card group relative h-[400px] md:h-[500px] overflow-hidden rounded-[2rem] bg-munchies-dark shadow-2xl">
+        <a href="order.html?prefill_vendor=Di+Pitseng" class="reveal vendor-card group relative h-[400px] md:h-[500px] overflow-hidden rounded-[2rem] bg-munchies-dark shadow-2xl">
             <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?q=80&w=800" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110" alt="Vendor">
             <div class="absolute inset-0 bg-gradient-to-t from-munchies-dark via-munchies-dark/20 to-transparent"></div>
             <div class="absolute inset-x-0 bottom-0 p-8">
@@ -337,8 +300,7 @@
                 </div>
             </div>
         </a>
-        <a href="order.html?prefill_vendor=Kwasa+Grill"
-           class="reveal vendor-card group relative h-[400px] md:h-[500px] overflow-hidden rounded-[2rem] bg-munchies-dark shadow-2xl">
+        <a href="order.html?prefill_vendor=Kwasa+Grill" class="reveal vendor-card group relative h-[400px] md:h-[500px] overflow-hidden rounded-[2rem] bg-munchies-dark shadow-2xl">
             <img src="https://images.unsplash.com/photo-1532635211-8ec15f2ce05c?q=80&w=800" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110" alt="Vendor">
             <div class="absolute inset-0 bg-gradient-to-t from-munchies-dark via-munchies-dark/20 to-transparent"></div>
             <div class="absolute inset-x-0 bottom-0 p-8">
@@ -351,10 +313,9 @@
     </div>
 </section>
 
-<!-- ═══ JOIN US ═══ -->
+<!-- JOIN -->
 <section id="join" class="py-24 md:py-32 px-6 bg-munchies-dark">
     <div class="max-w-7xl mx-auto">
-
         <div class="text-center mb-14 reveal">
             <div class="trust-badge mb-6 mx-auto w-fit">
                 <i data-lucide="users" class="w-3.5 h-3.5"></i> Now Recruiting
@@ -364,23 +325,18 @@
             </h2>
             <p class="text-gray-400 max-w-xl mx-auto text-base">Whether you ride or cook — there's a place for you in Soshanguve's fastest growing food network.</p>
         </div>
-
-        <!-- Tab buttons -->
         <div class="flex gap-3 justify-center mb-12 reveal">
-            <button id="tab-driver" onclick="switchTab('driver')"
-                class="tab-btn active flex items-center gap-2 px-7 py-3 rounded-full font-bold uppercase text-sm tracking-widest">
+            <button id="tab-driver" onclick="switchTab('driver')" class="tab-btn active flex items-center gap-2 px-7 py-3 rounded-full font-bold uppercase text-sm tracking-widest">
                 <i data-lucide="bike" class="w-4 h-4"></i> I'm a Driver
             </button>
-            <button id="tab-vendor" onclick="switchTab('vendor')"
-                class="tab-btn flex items-center gap-2 px-7 py-3 rounded-full font-bold uppercase text-sm tracking-widest">
+            <button id="tab-vendor" onclick="switchTab('vendor')" class="tab-btn flex items-center gap-2 px-7 py-3 rounded-full font-bold uppercase text-sm tracking-widest">
                 <i data-lucide="store" class="w-4 h-4"></i> I'm a Vendor
             </button>
         </div>
 
-        <!-- ── DRIVER PANEL ── -->
+        <!-- DRIVER PANEL -->
         <div id="panel-driver" class="tab-panel active max-w-2xl mx-auto">
             <div class="join-card bg-white/[0.04] border border-white/10 rounded-[2rem] p-8 md:p-12">
-
                 <div class="grid grid-cols-3 gap-3 mb-8">
                     <div class="text-center p-4 rounded-2xl bg-munchies-green/10 border border-munchies-green/15">
                         <p class="text-munchies-green font-street text-lg mb-1">100%</p>
@@ -395,7 +351,6 @@
                         <p class="text-gray-400 text-xs font-bold uppercase tracking-wide">Sign-up Fee</p>
                     </div>
                 </div>
-
                 <div class="penalty-banner mb-8">
                     <div class="flex items-start gap-3">
                         <i data-lucide="alert-triangle" class="text-red-400 w-5 h-5 mt-0.5 shrink-0"></i>
@@ -405,16 +360,13 @@
                         </div>
                     </div>
                 </div>
-
                 <form id="driver-form" novalidate>
                     <div class="space-y-5">
-
                         <div>
                             <label class="form-label">Full Name *</label>
                             <input type="text" id="d-name" class="munchies-input" placeholder="e.g. Thabo Nkosi" autocomplete="name">
                             <p class="field-msg err" id="d-name-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Full name is required</p>
                         </div>
-
                         <div>
                             <label class="form-label">WhatsApp Number *</label>
                             <div class="flex gap-2">
@@ -423,14 +375,12 @@
                             </div>
                             <p class="field-msg err" id="d-phone-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Enter a valid SA mobile number</p>
                         </div>
-
                         <div>
                             <label class="form-label">SA ID Number *</label>
                             <input type="text" id="d-id" class="munchies-input" placeholder="13-digit South African ID" maxlength="13" inputmode="numeric">
                             <div class="id-status" id="d-id-status"></div>
                             <p class="field-msg err" id="d-id-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Please enter a valid 13-digit SA ID</p>
                         </div>
-
                         <div>
                             <label class="form-label">Vehicle Type *</label>
                             <select id="d-vehicle" class="munchies-input">
@@ -441,7 +391,6 @@
                             </select>
                             <p class="field-msg err" id="d-vehicle-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Please select a vehicle type</p>
                         </div>
-
                         <div id="d-licence-wrap">
                             <label class="form-label">Driver's Licence (Upload) *</label>
                             <div class="upload-zone" id="d-licence-zone" onclick="document.getElementById('d-licence-file').click()">
@@ -453,12 +402,8 @@
                             </div>
                             <p class="field-msg err" id="d-licence-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Please upload your driver's licence</p>
                         </div>
-
                         <div>
-                            <label class="form-label">
-                                Criminal Record Certificate *
-                                <span class="text-gray-500 normal-case tracking-normal font-normal ml-1">(valid affidavit from South African Police Service)</span>
-                            </label>
+                            <label class="form-label">Criminal Record Certificate * <span class="text-gray-500 normal-case tracking-normal font-normal ml-1">(valid affidavit from SAPS)</span></label>
                             <div class="upload-zone" id="d-criminal-zone" onclick="document.getElementById('d-criminal-file').click()">
                                 <input type="file" id="d-criminal-file" accept="image/*,application/pdf" class="hidden">
                                 <i data-lucide="file-check" class="text-munchies-green w-7 h-7 mx-auto mb-2"></i>
@@ -468,7 +413,6 @@
                             </div>
                             <p class="field-msg err" id="d-criminal-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Criminal clearance document is required</p>
                         </div>
-
                         <div>
                             <label class="form-label">Identity Selfie *</label>
                             <div class="upload-zone" id="d-selfie-zone" onclick="document.getElementById('d-selfie-file').click()">
@@ -480,13 +424,11 @@
                             </div>
                             <p class="field-msg err" id="d-selfie-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> A selfie is required for verification</p>
                         </div>
-
                         <label class="flex items-start gap-3 cursor-pointer mt-2">
                             <input type="checkbox" id="d-consent" class="mt-1 accent-munchies-green w-4 h-4 shrink-0">
                             <span class="text-gray-400 text-sm leading-relaxed">I agree to the <a href="terms.html" class="text-munchies-green underline">Munchies Driver Terms</a>, the delivery commitment policy, and consent to my data being processed in line with <a href="privacy-policy.html" class="text-munchies-green underline">POPIA</a>.</span>
                         </label>
                         <p class="field-msg err" id="d-consent-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> You must agree to continue</p>
-
                         <button type="submit" id="d-submit" class="submit-btn mt-2">
                             <span class="btn-text">APPLY AS A DRIVER</span>
                             <span class="spin" id="d-spin"></span>
@@ -496,10 +438,9 @@
             </div>
         </div>
 
-        <!-- ── VENDOR PANEL ── -->
+        <!-- VENDOR PANEL -->
         <div id="panel-vendor" class="tab-panel max-w-2xl mx-auto">
             <div class="join-card bg-white/[0.04] border border-white/10 rounded-[2rem] p-8 md:p-12">
-
                 <div class="grid grid-cols-3 gap-3 mb-8">
                     <div class="text-center p-4 rounded-2xl bg-munchies-green/10 border border-munchies-green/15">
                         <p class="text-munchies-green font-street text-lg mb-1">R0</p>
@@ -514,22 +455,18 @@
                         <p class="text-gray-400 text-xs font-bold uppercase tracking-wide">Own Bikers</p>
                     </div>
                 </div>
-
                 <form id="vendor-form" novalidate>
                     <div class="space-y-5">
-
                         <div>
                             <label class="form-label">Business / Store Name *</label>
                             <input type="text" id="v-biz" class="munchies-input" placeholder="e.g. Mama's Kitchen">
                             <p class="field-msg err" id="v-biz-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Business name is required</p>
                         </div>
-
                         <div>
                             <label class="form-label">Owner's Full Name *</label>
                             <input type="text" id="v-owner" class="munchies-input" placeholder="e.g. Nomsa Dlamini">
                             <p class="field-msg err" id="v-owner-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Owner name is required</p>
                         </div>
-
                         <div>
                             <label class="form-label">WhatsApp Number *</label>
                             <div class="flex gap-2">
@@ -538,14 +475,12 @@
                             </div>
                             <p class="field-msg err" id="v-phone-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Enter a valid SA mobile number</p>
                         </div>
-
                         <div>
                             <label class="form-label">Owner SA ID Number *</label>
                             <input type="text" id="v-id" class="munchies-input" placeholder="13-digit South African ID" maxlength="13" inputmode="numeric">
                             <div class="id-status" id="v-id-status"></div>
                             <p class="field-msg err" id="v-id-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Please enter a valid 13-digit SA ID</p>
                         </div>
-
                         <div>
                             <label class="form-label">Business Type *</label>
                             <select id="v-type" class="munchies-input">
@@ -558,13 +493,11 @@
                             </select>
                             <p class="field-msg err" id="v-type-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Please select a business type</p>
                         </div>
-
                         <div>
                             <label class="form-label">Business Address in Soshanguve *</label>
                             <input type="text" id="v-address" class="munchies-input" placeholder="e.g. Block K, Soshanguve">
                             <p class="field-msg err" id="v-address-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Address is required</p>
                         </div>
-
                         <div>
                             <label class="form-label">Bank *</label>
                             <select id="v-bank" class="munchies-input">
@@ -580,13 +513,11 @@
                             </select>
                             <p class="field-msg err" id="v-bank-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Please select your bank</p>
                         </div>
-
                         <label class="flex items-start gap-3 cursor-pointer mt-2">
                             <input type="checkbox" id="v-consent" class="mt-1 accent-munchies-green w-4 h-4 shrink-0">
                             <span class="text-gray-400 text-sm leading-relaxed">I agree to the <a href="terms.html" class="text-munchies-green underline">Munchies Vendor Terms</a> and consent to my data being processed in line with <a href="privacy-policy.html" class="text-munchies-green underline">POPIA</a>.</span>
                         </label>
                         <p class="field-msg err" id="v-consent-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> You must agree to continue</p>
-
                         <button type="submit" id="v-submit" class="submit-btn mt-2">
                             <span class="btn-text">REGISTER AS A VENDOR</span>
                             <span class="spin" id="v-spin"></span>
@@ -595,11 +526,10 @@
                 </form>
             </div>
         </div>
-
     </div>
 </section>
 
-<!-- ═══ FOOTER ═══ -->
+<!-- FOOTER -->
 <footer class="bg-munchies-dark text-white py-16 md:py-24 px-6 border-t border-white/5">
     <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
         <div>
@@ -633,7 +563,6 @@
     </div>
 </footer>
 
-<!-- Toast -->
 <div id="toast"></div>
 
 <style>
@@ -641,14 +570,12 @@
 </style>
 
 <script>
-const AT_BASE     = 'appdqBZtxDVSZmG0Z';
-const WRITE_TOKEN = 'patOp4nSGoeBPi5m3.1cb5c869b39c91ff2581011e54d425537944d05de60e7998e3c78ae8c3cc58e2';
+// ── PROXY — no token in frontend code
+const PROXY = 'https://munchies-airtable.munchies-ds.workers.dev/proxy';
 
-// ─── SA ID Validation ──────────────────────────────────────────────────────
 function validateSAID(id) {
     if (!/^\d{13}$/.test(id)) return false;
-    const mm = parseInt(id.slice(2,4));
-    const dd = parseInt(id.slice(4,6));
+    const mm = parseInt(id.slice(2,4)), dd = parseInt(id.slice(4,6));
     if (mm < 1 || mm > 12 || dd < 1 || dd > 31) return false;
     let sum = 0;
     for (let i = 0; i < 13; i++) {
@@ -677,49 +604,33 @@ function wireIDField(inputId, statusId) {
 wireIDField('d-id','d-id-status');
 wireIDField('v-id','v-id-status');
 
-// ─── Upload zones ──────────────────────────────────────────────────────────
 function wireUpload(zoneId, fileId, nameId) {
-    const zone  = document.getElementById(zoneId);
-    const input = document.getElementById(fileId);
-    const label = document.getElementById(nameId);
+    const zone = document.getElementById(zoneId), input = document.getElementById(fileId), label = document.getElementById(nameId);
     input.addEventListener('change', () => {
         const f = input.files[0];
         if (!f) return;
-        if (f.size > 5 * 1024 * 1024) { showToast('File too large — max 5MB per file', 'bad'); input.value=''; return; }
-        label.textContent = '✓ ' + f.name;
-        label.classList.remove('hidden');
-        zone.classList.add('has-file');
+        if (f.size > 5*1024*1024) { showToast('File too large — max 5MB','bad'); input.value=''; return; }
+        label.textContent = '✓ ' + f.name; label.classList.remove('hidden'); zone.classList.add('has-file');
     });
     zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
     zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
-    zone.addEventListener('drop', e => {
-        e.preventDefault(); zone.classList.remove('drag-over');
-        if (e.dataTransfer.files[0]) { input.files = e.dataTransfer.files; input.dispatchEvent(new Event('change')); }
-    });
+    zone.addEventListener('drop', e => { e.preventDefault(); zone.classList.remove('drag-over'); if (e.dataTransfer.files[0]) { input.files = e.dataTransfer.files; input.dispatchEvent(new Event('change')); } });
 }
-wireUpload('d-licence-zone',  'd-licence-file',  'd-licence-name');
-wireUpload('d-criminal-zone', 'd-criminal-file', 'd-criminal-name');
-wireUpload('d-selfie-zone',   'd-selfie-file',   'd-selfie-name');
+wireUpload('d-licence-zone','d-licence-file','d-licence-name');
+wireUpload('d-criminal-zone','d-criminal-file','d-criminal-name');
+wireUpload('d-selfie-zone','d-selfie-file','d-selfie-name');
 
-// ─── Vehicle → toggle licence field ───────────────────────────────────────
 document.getElementById('d-vehicle').addEventListener('change', function() {
     document.getElementById('d-licence-wrap').style.display = this.value === 'Bicycle' ? 'none' : 'block';
 });
 
-// ─── Toast ─────────────────────────────────────────────────────────────────
 function showToast(msg, type='ok') {
     const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.className = type + ' show';
-    t.style.display = 'block';
+    t.textContent = msg; t.className = type+' show'; t.style.display='block';
     clearTimeout(t._timer);
-    t._timer = setTimeout(() => {
-        t.classList.remove('show');
-        setTimeout(() => t.style.display='none', 400);
-    }, 3800);
+    t._timer = setTimeout(() => { t.classList.remove('show'); setTimeout(()=>t.style.display='none',400); }, 3800);
 }
 
-// ─── Validation helpers ────────────────────────────────────────────────────
 const $el = id => document.getElementById(id);
 const val = id => $el(id).value.trim();
 const chk = id => $el(id).checked;
@@ -727,158 +638,98 @@ const hasFile = id => $el(id).files && $el(id).files.length > 0;
 const validPhone = p => p.replace(/\D/g,'').length >= 9;
 
 function markField(inputId, errId, isError) {
-    const inp = $el(inputId);
-    const err = $el(errId);
-    if (isError) {
-        inp.classList.add('field-error-state');
-        inp.classList.remove('field-ok');
-        err.classList.add('show');
-    } else {
-        inp.classList.remove('field-error-state');
-        err.classList.remove('show');
-    }
+    const inp = $el(inputId), err = $el(errId);
+    inp.classList.toggle('field-error-state', isError);
+    if (!isError) inp.classList.remove('field-error-state');
+    err.classList.toggle('show', isError);
     return isError;
 }
-
 function markUpload(errId, zoneId, isError) {
-    const err  = $el(errId);
-    const zone = $el(zoneId);
-    if (isError) {
-        err.classList.add('show');
-        zone.style.borderColor = '#e74c3c';
-    } else {
-        err.classList.remove('show');
-        zone.style.borderColor = '';
-    }
-    return isError;
-}
-
-function markConsent(inputId, errId, isError) {
     $el(errId).classList.toggle('show', isError);
+    $el(zoneId).style.borderColor = isError ? '#e74c3c' : '';
     return isError;
 }
-
+function markConsent(inputId, errId, isError) { $el(errId).classList.toggle('show', isError); return isError; }
 function setBusy(submitId, spinId, busy) {
-    const btn  = $el(submitId);
-    const spin = $el(spinId);
+    const btn = $el(submitId), spin = $el(spinId);
     btn.disabled = busy;
     btn.querySelector('.btn-text').style.display = busy ? 'none' : 'inline';
     spin.style.display = busy ? 'block' : 'none';
 }
 
-// ─── Airtable POST ─────────────────────────────────────────────────────────
-async function postToAirtable(table, fields) {
-    const res = await fetch(`https://api.airtable.com/v0/${AT_BASE}/${encodeURIComponent(table)}`, {
+async function postViaProxy(table, fields) {
+    const res = await fetch(`${PROXY}/${table}`, {
         method: 'POST',
-        headers: { 'Authorization': 'Bearer ' + WRITE_TOKEN, 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ fields })
     });
-    if (!res.ok) {
-        const body = await res.json().catch(()=>({}));
-        throw new Error(body.error?.message || 'Submission failed');
-    }
+    if (!res.ok) { const b = await res.json().catch(()=>({})); throw new Error(b.error?.message || 'Failed'); }
     return res.json();
 }
 
-// ─── DRIVER FORM ───────────────────────────────────────────────────────────
 $el('driver-form').addEventListener('submit', async e => {
     e.preventDefault();
     let err = false;
-    err |= markField('d-name',    'd-name-err',    !val('d-name'));
-    err |= markField('d-phone',   'd-phone-err',   !validPhone(val('d-phone')));
-    const idOk = validateSAID(val('d-id'));
-    err |= markField('d-id',      'd-id-err',      !idOk);
-    err |= markField('d-vehicle', 'd-vehicle-err', !val('d-vehicle'));
-
-    const isBike = val('d-vehicle') === 'Bicycle';
-    if (!isBike) err |= markUpload('d-licence-err', 'd-licence-zone', !hasFile('d-licence-file'));
+    err |= markField('d-name','d-name-err',!val('d-name'));
+    err |= markField('d-phone','d-phone-err',!validPhone(val('d-phone')));
+    err |= markField('d-id','d-id-err',!validateSAID(val('d-id')));
+    err |= markField('d-vehicle','d-vehicle-err',!val('d-vehicle'));
+    const isBike = val('d-vehicle')==='Bicycle';
+    if (!isBike) err |= markUpload('d-licence-err','d-licence-zone',!hasFile('d-licence-file'));
     else $el('d-licence-err').classList.remove('show');
-
-    err |= markUpload('d-criminal-err', 'd-criminal-zone', !hasFile('d-criminal-file'));
-    err |= markUpload('d-selfie-err',   'd-selfie-zone',   !hasFile('d-selfie-file'));
-    err |= markConsent('d-consent', 'd-consent-err', !chk('d-consent'));
-
-    if (err) {
-        showToast('Please complete all required fields correctly.', 'bad');
-        document.querySelector('#panel-driver .field-error-state, #panel-driver [style*="e74c3c"]')
-            ?.scrollIntoView({ behavior:'smooth', block:'center' });
-        return;
-    }
-
-    setBusy('d-submit','d-spin', true);
+    err |= markUpload('d-criminal-err','d-criminal-zone',!hasFile('d-criminal-file'));
+    err |= markUpload('d-selfie-err','d-selfie-zone',!hasFile('d-selfie-file'));
+    err |= markConsent('d-consent','d-consent-err',!chk('d-consent'));
+    if (err) { showToast('Please complete all required fields correctly.','bad'); return; }
+    setBusy('d-submit','d-spin',true);
     try {
-        await postToAirtable('Drivers', {
-            'Driver Name':         val('d-name'),
-            'Driver Phone (+27)':  '+27' + val('d-phone').replace(/\D/g,''),
-            'SA ID Number':        val('d-id'),
-            'Vehicle Type':        val('d-vehicle'),
-            "Driver's Licence":    isBike ? 'N/A (Bicycle)' : $el('d-licence-file').files[0].name,
-            'Criminal Clearance':  $el('d-criminal-file').files[0].name,
-            'Selfie':              $el('d-selfie-file').files[0].name,
-            'Current Status':      'Pending Review',
-            'Last Know Zone':      'TBD',
-            'Application Source':  'Website'
+        await postViaProxy('tblcomJtwIVel4Acq', {
+            'Driver Name': val('d-name'),
+            'Driver Phone (+27)': '+27'+val('d-phone').replace(/\D/g,''),
+            'SA ID Number': val('d-id'),
+            'Vehicle Type': val('d-vehicle'),
+            'Current Status': 'Pending Review',
+            'Last Know Zone': 'TBD',
         });
-        showToast('✓ Application received! We\'ll be in touch on WhatsApp.', 'ok');
+        showToast("✓ Application received! We'll be in touch on WhatsApp.",'ok');
         $el('driver-form').reset();
-        ['d-licence-zone','d-criminal-zone','d-selfie-zone'].forEach(id => {
-            $el(id).classList.remove('has-file');
-            $el(id).style.borderColor = '';
-        });
-        ['d-licence-name','d-criminal-name','d-selfie-name'].forEach(id => $el(id).classList.add('hidden'));
-        $el('d-id-status').className = 'id-status';
-    } catch {
-        showToast('Something went wrong — please WhatsApp us directly at 067 335 7429.', 'bad');
-    } finally {
-        setBusy('d-submit','d-spin', false);
-    }
+        ['d-licence-zone','d-criminal-zone','d-selfie-zone'].forEach(id=>{ $el(id).classList.remove('has-file'); $el(id).style.borderColor=''; });
+        ['d-licence-name','d-criminal-name','d-selfie-name'].forEach(id=>$el(id).classList.add('hidden'));
+        $el('d-id-status').className='id-status';
+    } catch { showToast('Something went wrong — WhatsApp us at 067 335 7429','bad'); }
+    finally { setBusy('d-submit','d-spin',false); }
 });
 
-// ─── VENDOR FORM ───────────────────────────────────────────────────────────
 $el('vendor-form').addEventListener('submit', async e => {
     e.preventDefault();
     let err = false;
-    err |= markField('v-biz',     'v-biz-err',     !val('v-biz'));
-    err |= markField('v-owner',   'v-owner-err',   !val('v-owner'));
-    err |= markField('v-phone',   'v-phone-err',   !validPhone(val('v-phone')));
-    const idOk = validateSAID(val('v-id'));
-    err |= markField('v-id',      'v-id-err',      !idOk);
-    err |= markField('v-type',    'v-type-err',    !val('v-type'));
-    err |= markField('v-address', 'v-address-err', !val('v-address'));
-    err |= markField('v-bank',    'v-bank-err',    !val('v-bank'));
-    err |= markConsent('v-consent','v-consent-err', !chk('v-consent'));
-
-    if (err) {
-        showToast('Please complete all required fields correctly.', 'bad');
-        document.querySelector('#panel-vendor .field-error-state')
-            ?.scrollIntoView({ behavior:'smooth', block:'center' });
-        return;
-    }
-
-    setBusy('v-submit','v-spin', true);
+    err |= markField('v-biz','v-biz-err',!val('v-biz'));
+    err |= markField('v-owner','v-owner-err',!val('v-owner'));
+    err |= markField('v-phone','v-phone-err',!validPhone(val('v-phone')));
+    err |= markField('v-id','v-id-err',!validateSAID(val('v-id')));
+    err |= markField('v-type','v-type-err',!val('v-type'));
+    err |= markField('v-address','v-address-err',!val('v-address'));
+    err |= markField('v-bank','v-bank-err',!val('v-bank'));
+    err |= markConsent('v-consent','v-consent-err',!chk('v-consent'));
+    if (err) { showToast('Please complete all required fields correctly.','bad'); return; }
+    setBusy('v-submit','v-spin',true);
     try {
-        await postToAirtable('Vendors', {
-            'Vendor Name':        val('v-biz'),
-            'Owner Name':         val('v-owner'),
-            'Phone (+27)':        '+27' + val('v-phone').replace(/\D/g,''),
-            'SA ID Number':       val('v-id'),
-            'Business Type':      val('v-type'),
-            'Address':            val('v-address'),
-            'Bank':               val('v-bank'),
-            'Status':             'Pending Review',
-            'Application Source': 'Website'
+        await postViaProxy('tblTU0tKt3dSGgPsE', {
+            'Vendor Name': val('v-biz'),
+            'Owner Name': val('v-owner'),
+            'Vendor Phone Number': '+27'+val('v-phone').replace(/\D/g,''),
+            'Business Type': val('v-type'),
+            'Address': val('v-address'),
+            'Bank': val('v-bank'),
+            'Status': 'Pending Review',
         });
-        showToast('✓ Vendor application received! We\'ll contact you on WhatsApp.', 'ok');
+        showToast("✓ Vendor application received! We'll contact you on WhatsApp.",'ok');
         $el('vendor-form').reset();
-        $el('v-id-status').className = 'id-status';
-    } catch {
-        showToast('Something went wrong — please WhatsApp us directly at 067 335 7429.', 'bad');
-    } finally {
-        setBusy('v-submit','v-spin', false);
-    }
+        $el('v-id-status').className='id-status';
+    } catch { showToast('Something went wrong — WhatsApp us at 067 335 7429','bad'); }
+    finally { setBusy('v-submit','v-spin',false); }
 });
 
-// ─── Tab switcher ──────────────────────────────────────────────────────────
 function switchTab(t) {
     ['driver','vendor'].forEach(k => {
         $el('panel-'+k).classList.toggle('active', k===t);
@@ -886,38 +737,25 @@ function switchTab(t) {
     });
 }
 
-// ─── Nav scroll ────────────────────────────────────────────────────────────
-const nc = $el('nav-container');
-const lt = $el('logo-text');
+const nc = $el('nav-container'), lt = $el('logo-text');
 window.addEventListener('scroll', () => {
-    const scrolled = window.scrollY > 60;
-    nc.classList.toggle('w-full', !scrolled);
-    nc.classList.toggle('h-20', !scrolled);
-    nc.classList.toggle('px-8', !scrolled);
-    nc.classList.toggle('w-[95%]', scrolled);
-    nc.classList.toggle('md:w-[900px]', scrolled);
-    nc.classList.toggle('mt-4', scrolled);
-    nc.classList.toggle('h-16', scrolled);
-    nc.classList.toggle('rounded-full', scrolled);
-    nc.classList.toggle('px-10', scrolled);
-    nc.classList.toggle('shadow-2xl', scrolled);
-    nc.classList.toggle('border', scrolled);
-    lt.classList.toggle('scale-90', scrolled);
+    const s = window.scrollY > 60;
+    nc.classList.toggle('w-full',!s); nc.classList.toggle('h-20',!s); nc.classList.toggle('px-8',!s);
+    nc.classList.toggle('w-[95%]',s); nc.classList.toggle('md:w-[900px]',s); nc.classList.toggle('mt-4',s);
+    nc.classList.toggle('h-16',s); nc.classList.toggle('rounded-full',s); nc.classList.toggle('px-10',s);
+    nc.classList.toggle('shadow-2xl',s); nc.classList.toggle('border',s); lt.classList.toggle('scale-90',s);
 });
 
-// ─── Mobile menu ───────────────────────────────────────────────────────────
-const menuBtn    = $el('menu-btn');
-const mobileMenu = $el('mobile-menu');
+const menuBtn = $el('menu-btn'), mobileMenu = $el('mobile-menu');
 menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
 mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
 
-// ─── Scroll reveal ─────────────────────────────────────────────────────────
-const ro = new IntersectionObserver(entries => {
+new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1 });
-document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+}, { threshold: 0.1 }).observe && document.querySelectorAll('.reveal').forEach(el =>
+    new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:0.1}).observe(el)
+);
 
-// ─── Lucide icons ──────────────────────────────────────────────────────────
 lucide.createIcons();
 </script>
 </body>
