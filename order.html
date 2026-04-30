@@ -395,7 +395,7 @@ async function loadMenu() {
   document.getElementById('qtySection').style.display = 'none';
   try {
     const formula = `AND({Stock Status}="In Stock",{Vendor}="${selectedVendor.name}")`;
-    const res = await atFetch(T_MENU, `filterByFormula=${encodeURIComponent(formula)}&fields[]=Item Name&fields[]=Price`);
+    const res = await atFetch(T_MENU, `filterByFormula=${encFodeURIComponent(formula)}&fields[]=Item Name&fields[]=Price`);
     list.innerHTML = '';
     if (!res.records?.length) {
       list.innerHTML = '<div class="text-center py-10 text-gray-500">No items available from this restaurant right now</div>';
@@ -526,11 +526,11 @@ async function submitOrder() {
     'ID':                              orderId,
     'Customer Name':                   document.getElementById('customerName').value.trim(),
     'Phone Number':                    document.getElementById('customerPhone').value.trim(),
-    'Delivery Address / House Number': notes ? `${address} — ${notes}` : address,
+    'Delivery Address / House Number': deliveryMode === 'Pickup from store' ? 'Pickup from store' : (notes ? `${address} — ${notes}` : address),
     'Link to Menu':                    [selectedItem.id],
     'Link to Vendor':                  [selectedVendor.id],
     'Quantity':                        quantity,
-    'Item Cost':                       [selectedItem.price],
+    'Item Cost':                       selectedItem.price,
     'Order Time':                      new Date().toISOString(),
     'Window Status':                   '🔴 Locked / Dispatching',
     'Order Status':                    'Finding Driver',
