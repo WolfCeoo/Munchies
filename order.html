@@ -394,9 +394,10 @@ async function loadMenu() {
   selectedItem = null;
   document.getElementById('qtySection').style.display = 'none';
   try {
-    const formula = `AND({Stock Status}="In Stock",{Vendor}="${selectedVendor.name}")`;
-    const res = await atFetch(T_MENU, `filterByFormula=${encFodeURIComponent(formula)}&fields[]=Item Name&fields[]=Price`);
+    const formula = `AND({Stock Status}="In Stock",SEARCH("${selectedVendor.name}",ARRAYJOIN({Vendor})))`;
+    const res = await atFetch(T_MENU, `filterByFormula=${encodeURIComponent(formula)}&fields[]=Item Name&fields[]=Price`);
     list.innerHTML = '';
+    
     if (!res.records?.length) {
       list.innerHTML = '<div class="text-center py-10 text-gray-500">No items available from this restaurant right now</div>';
       return;
