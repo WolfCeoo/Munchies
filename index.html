@@ -570,8 +570,8 @@
 </style>
 
 <script>
-// ── PROXY — no token in frontend code
-const PROXY = 'https://munchies-airtable.munchies-ds.workers.dev/proxy';
+const TOKEN   = 'patOp4nSGoeBPi5m3.1cb5c869b39c91ff2581011e54d425537944d05de60e7998e3c78ae8c3cc58e2';
+const AT_BASE = 'appdqBZtxDVSZmG0Z';
 
 function validateSAID(id) {
     if (!/^\d{13}$/.test(id)) return false;
@@ -638,10 +638,8 @@ const hasFile = id => $el(id).files && $el(id).files.length > 0;
 const validPhone = p => p.replace(/\D/g,'').length >= 9;
 
 function markField(inputId, errId, isError) {
-    const inp = $el(inputId), err = $el(errId);
-    inp.classList.toggle('field-error-state', isError);
-    if (!isError) inp.classList.remove('field-error-state');
-    err.classList.toggle('show', isError);
+    $el(inputId).classList.toggle('field-error-state', isError);
+    $el(errId).classList.toggle('show', isError);
     return isError;
 }
 function markUpload(errId, zoneId, isError) {
@@ -649,7 +647,7 @@ function markUpload(errId, zoneId, isError) {
     $el(zoneId).style.borderColor = isError ? '#e74c3c' : '';
     return isError;
 }
-function markConsent(inputId, errId, isError) { $el(errId).classList.toggle('show', isError); return isError; }
+function markConsent(errId, isError) { $el(errId).classList.toggle('show', isError); return isError; }
 function setBusy(submitId, spinId, busy) {
     const btn = $el(submitId), spin = $el(spinId);
     btn.disabled = busy;
@@ -657,10 +655,10 @@ function setBusy(submitId, spinId, busy) {
     spin.style.display = busy ? 'block' : 'none';
 }
 
-async function postViaProxy(table, fields) {
-    const res = await fetch(`${PROXY}/${table}`, {
+async function postToAirtable(table, fields) {
+    const res = await fetch(`https://api.airtable.com/v0/${AT_BASE}/${table}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Authorization': `Bearer ${TOKEN}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ fields })
     });
     if (!res.ok) { const b = await res.json().catch(()=>({})); throw new Error(b.error?.message || 'Failed'); }
@@ -679,11 +677,11 @@ $el('driver-form').addEventListener('submit', async e => {
     else $el('d-licence-err').classList.remove('show');
     err |= markUpload('d-criminal-err','d-criminal-zone',!hasFile('d-criminal-file'));
     err |= markUpload('d-selfie-err','d-selfie-zone',!hasFile('d-selfie-file'));
-    err |= markConsent('d-consent','d-consent-err',!chk('d-consent'));
+    err |= markConsent('d-consent-err',!chk('d-consent'));
     if (err) { showToast('Please complete all required fields correctly.','bad'); return; }
     setBusy('d-submit','d-spin',true);
     try {
-        await postViaProxy('tblcomJtwIVel4Acq', {
+        await postToAirtable('tblcomJtwIVel4Acq', {
             'Driver Name': val('d-name'),
             'Driver Phone (+27)': '+27'+val('d-phone').replace(/\D/g,''),
             'SA ID Number': val('d-id'),
@@ -710,11 +708,11 @@ $el('vendor-form').addEventListener('submit', async e => {
     err |= markField('v-type','v-type-err',!val('v-type'));
     err |= markField('v-address','v-address-err',!val('v-address'));
     err |= markField('v-bank','v-bank-err',!val('v-bank'));
-    err |= markConsent('v-consent','v-consent-err',!chk('v-consent'));
+    err |= markConsent('v-consent-err',!chk('v-consent'));
     if (err) { showToast('Please complete all required fields correctly.','bad'); return; }
     setBusy('v-submit','v-spin',true);
     try {
-        await postViaProxy('tblTU0tKt3dSGgPsE', {
+        await postToAirtable('tblTU0tKt3dSGgPsE', {
             'Vendor Name': val('v-biz'),
             'Owner Name': val('v-owner'),
             'Vendor Phone Number': '+27'+val('v-phone').replace(/\D/g,''),
@@ -751,8 +749,8 @@ menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
 mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
 
 new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1 }).observe && document.querySelectorAll('.reveal').forEach(el =>
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold:0.1}).observe && document.querySelectorAll('.reveal').forEach(el =>
     new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:0.1}).observe(el)
 );
 
