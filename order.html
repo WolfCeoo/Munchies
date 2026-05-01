@@ -549,7 +549,7 @@ if (gpsLat) {
     const data = await res.json();
     if (!res.ok) throw new Error(data.error?.message || 'Failed');
     document.getElementById('mainContent').classList.add('hidden');
-    document.getElementById('successId').textContent    = orderId;
+    document.getElementById('successId').textContent = data.fields?.ID || orderId;
     document.getElementById('successPhone').textContent = document.getElementById('customerPhone').value.trim();
     document.getElementById('successScreen').classList.remove('hidden');
     lucide.createIcons();
