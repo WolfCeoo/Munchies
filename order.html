@@ -523,24 +523,22 @@ async function submitOrder() {
   const orderId = 'ST-' + Math.floor(1000 + Math.random() * 9000);
   const address = document.getElementById('deliveryAddress').value.trim();
   const notes   = document.getElementById('specialNotes').value.trim();
-  const fields  = {
-    'Customer Name':                   document.getElementById('customerName').value.trim(),
-    'Phone Number':                    document.getElementById('customerPhone').value.trim(),
-    'Delivery Address / House Number': deliveryMode === 'Pickup from store' ? 'Pickup from store' : (notes ? `${address} — ${notes}` : address),
-    'Link to Menu':                    [selectedItem.id],
-    'Link to Vendor':                  [selectedVendor.id],
-    'Quantity':                        quantity,
-    'Order Time':                      new Date().toISOString(),
-    'Window Status':                   '🔴 Locked / Dispatching',
-    'Order Status':                    'Finding Driver',
-    'Delivery Mode':                   deliveryMode,
-  };
-  if (gpsLat) { 
-  fields['Customer Lat'] = gpsLat; 
+  const fields = {
+  'Link to Menu':                    [selectedItem.id],
+  'Link to Vendor':                  [selectedVendor.id],
+  'Customer Name':                   document.getElementById('customerName').value.trim(),
+  'Phone Number':                    document.getElementById('customerPhone').value.trim(),
+  'Delivery Address / House Number': deliveryMode === 'Pickup from store' 
+    ? 'Pickup from store' 
+    : (gpsLat ? `GPS: ${gpsLat.toFixed(5)}, ${gpsLng.toFixed(5)} — ${document.getElementById('deliveryAddress').value.trim()}` 
+              : document.getElementById('deliveryAddress').value.trim()),
+  'Quantity':                        quantity,
+  'Order Status':                    'Finding Driver',
+  'Delivery Mode':                   deliveryMode,
+};
+if (gpsLat) {
+  fields['Customer Lat'] = gpsLat;
   fields['Customer Long'] = gpsLng;
-  if (!fields['Delivery Address / House Number']) {
-    fields['Delivery Address / House Number'] = `GPS: ${gpsLat.toFixed(5)}, ${gpsLng.toFixed(5)}`;
-  }
 }
   try {
     const res = await fetch(`https://api.airtable.com/v0/${BASE}/${T_ORDERS}`, {
