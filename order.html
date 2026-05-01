@@ -524,7 +524,6 @@ async function submitOrder() {
   const address = document.getElementById('deliveryAddress').value.trim();
   const notes   = document.getElementById('specialNotes').value.trim();
   const fields  = {
-    'ID':                              orderId,
     'Customer Name':                   document.getElementById('customerName').value.trim(),
     'Phone Number':                    document.getElementById('customerPhone').value.trim(),
     'Delivery Address / House Number': deliveryMode === 'Pickup from store' ? 'Pickup from store' : (notes ? `${address} — ${notes}` : address),
@@ -537,7 +536,13 @@ async function submitOrder() {
     'Order Status':                    'Finding Driver',
     'Delivery Mode':                   deliveryMode,
   };
-  if (gpsLat) { fields['Customer Lat'] = gpsLat; fields['Customer Long'] = gpsLng; }
+  if (gpsLat) { 
+  fields['Customer Lat'] = gpsLat; 
+  fields['Customer Long'] = gpsLng;
+  if (!fields['Delivery Address / House Number']) {
+    fields['Delivery Address / House Number'] = `GPS: ${gpsLat.toFixed(5)}, ${gpsLng.toFixed(5)}`;
+  }
+}
   try {
     const res = await fetch(`https://api.airtable.com/v0/${BASE}/${T_ORDERS}`, {
       method: 'POST',
