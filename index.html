@@ -24,6 +24,11 @@
         }
     </script>
     <style>
+        /* Sprite icons: <use> does not inherit presentation attributes from the <defs> wrapper,
+           only real CSS properties inherited through the DOM. Without this, every icon falls
+           back to the browser default (solid black fill, no stroke) - invisible for open-path
+           icons like the hamburger, and a solid blob instead of an outline for the rest. */
+        svg use { fill: none; stroke: currentColor; stroke-width: 2.1; stroke-linecap: round; stroke-linejoin: round; }
         #nav-container { transition: all 0.5s cubic-bezier(0.4,0,0.2,1); }
         .glass { background: rgba(10,17,31,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
         @keyframes fadeUp { from{opacity:0;transform:translateY(32px)} to{opacity:1;transform:translateY(0)} }
@@ -168,6 +173,8 @@
             <a href="#about" class="hover:text-munchies-green transition-colors">About</a>
             <a href="#vendors" class="hover:text-munchies-green transition-colors">Vendors</a>
             <a href="#join" class="hover:text-munchies-green transition-colors">Join Us</a>
+            <!-- TODO: replace # with the Clerk-hosted sign-in URL once supplied -->
+            <a id="nav-signin" href="#" class="hover:text-munchies-green transition-colors">Sign In</a>
             <a href="order.html" class="bg-munchies-green text-munchies-dark px-6 py-2.5 rounded-full hover:scale-105 active:scale-95 transition-all shadow-lg shadow-munchies-green/20 flex items-center gap-2">
                 <svg class="w-3.5 h-3.5"><use href="#i-bag"/></svg> Order Now
             </a>
@@ -180,6 +187,8 @@
             <a href="#about" class="pb-4 border-b border-white/5">About</a>
             <a href="#vendors" class="pb-4 border-b border-white/5">Vendors</a>
             <a href="#join" class="pb-4 border-b border-white/5">Join Us</a>
+            <!-- TODO: replace # with the Clerk-hosted sign-in URL once supplied -->
+            <a id="nav-signin-mobile" href="#" class="pb-4 border-b border-white/5">Sign In</a>
             <a href="order.html" class="text-munchies-green text-lg font-black flex items-center justify-center gap-2">
                 <svg class="w-5 h-5"><use href="#i-bag"/></svg> Order Now
             </a>
@@ -194,7 +203,7 @@
              alt="Soshanguve Street Food" class="w-full h-full object-cover brightness-[0.28]">
         <div class="absolute inset-0 bg-gradient-to-t from-munchies-dark via-transparent to-black/30"></div>
     </div>
-    <div class="relative z-10 px-6 max-w-7xl mx-auto grid lg:grid-cols-2 gap-14 items-center w-full">
+    <div class="relative z-10 px-6 max-w-7xl mx-auto grid lg:grid-cols-2 gap-14 lg:gap-20 items-center w-full">
         <div class="text-center lg:text-left">
             <img src="assets/munchies-logo.jpg" alt="Munchies Logo"
                  class="mx-auto lg:mx-0 h-24 w-24 md:h-32 md:w-32 rounded-full border-4 border-munchies-green mb-6 shadow-2xl shadow-munchies-green/20 animate-bounce-slow h1">
@@ -214,7 +223,7 @@
         </div>
 
         <!-- LIVE TRACKING WIDGET -->
-        <div class="h5 relative mx-auto w-full max-w-sm">
+        <div class="h5 relative mx-auto w-full max-w-sm mt-16 lg:mt-0">
             <div class="absolute -inset-4 bg-munchies-green/10 blur-3xl rounded-full"></div>
             <div class="relative bg-white/[0.04] backdrop-blur-xl border border-white/15 rounded-[2rem] p-6 shadow-2xl">
                 <div class="flex items-center justify-between mb-5">
@@ -418,6 +427,19 @@
                     <h3 class="text-2xl md:text-3xl font-bold mb-3">Watch your order move, in real time</h3>
                     <p class="text-gray-400 max-w-md">A live map tracks your driver from vendor to your door using real routing, so the ETA you see is the ETA you get, not a guess.</p>
                 </div>
+                <div class="mt-6 h-20 rounded-xl bg-munchies-dark/50 border border-white/10 overflow-hidden relative">
+                    <svg viewBox="0 0 400 80" class="absolute inset-0 w-full h-full">
+                        <path d="M15,60 C110,15 190,70 385,20" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M15,60 C110,15 190,70 385,20" fill="none" stroke="#3ee879" stroke-width="3" stroke-linecap="round" stroke-dasharray="5 9">
+                            <animate attributeName="stroke-dashoffset" from="0" to="-56" dur="1.4s" repeatCount="indefinite"/>
+                        </path>
+                        <circle cx="15" cy="60" r="5" fill="#3ee879"/>
+                        <circle cx="385" cy="20" r="5" fill="white" fill-opacity="0.6"/>
+                        <circle r="6" fill="#0a111f" stroke="#3ee879" stroke-width="2.5">
+                            <animateMotion dur="2.8s" repeatCount="indefinite" path="M15,60 C110,15 190,70 385,20"/>
+                        </circle>
+                    </svg>
+                </div>
             </div>
             <div class="feature-card p-8 rounded-[2rem] bg-white/[0.03] border border-white/10 min-h-[130px]">
                 <div class="feature-icon w-12 h-12 bg-munchies-green/15 rounded-xl flex items-center justify-center mb-5">
@@ -446,6 +468,17 @@
                     </div>
                     <h3 class="text-2xl md:text-3xl font-bold mb-3">An order lands, you know immediately</h3>
                     <p class="text-gray-400 max-w-md">New orders push straight to your dashboard the moment they're paid or confirmed, with an alert loud enough to notice from across the kitchen.</p>
+                </div>
+                <div class="mt-6 flex items-center gap-4 h-20 rounded-xl bg-munchies-dark/50 border border-white/10 px-5 overflow-hidden relative">
+                    <span class="relative flex h-3 w-3 shrink-0">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-munchies-green opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-munchies-green"></span>
+                    </span>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-bold text-white truncate">New order #MU-2482 received</p>
+                        <p class="text-xs text-gray-400 truncate">2x Kota, 1x Amagwinya &middot; Paid</p>
+                    </div>
+                    <span class="text-munchies-green text-xs font-extrabold uppercase tracking-widest shrink-0">Now</span>
                 </div>
             </div>
             <div class="feature-card p-8 rounded-[2rem] bg-white/[0.03] border border-white/10 min-h-[130px]">
@@ -484,6 +517,19 @@
                     </div>
                     <h3 class="text-2xl md:text-3xl font-bold mb-3">A dashboard that finds you the job</h3>
                     <p class="text-gray-400 max-w-md">The closest available driver gets dispatched automatically when an order's ready, with a push alert and built-in navigation to pickup and drop-off.</p>
+                </div>
+                <div class="mt-6 h-20 rounded-xl bg-munchies-dark/50 border border-white/10 overflow-hidden relative">
+                    <svg viewBox="0 0 400 80" class="absolute inset-0 w-full h-full">
+                        <path d="M20,20 L140,20 L140,60 L260,60 L260,25 L380,25" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M20,20 L140,20 L140,60 L260,60 L260,25 L380,25" fill="none" stroke="#3ee879" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 10">
+                            <animate attributeName="stroke-dashoffset" from="0" to="-64" dur="1.6s" repeatCount="indefinite"/>
+                        </path>
+                        <circle cx="20" cy="20" r="5" fill="white" fill-opacity="0.6"/>
+                        <circle cx="380" cy="25" r="5" fill="#3ee879"/>
+                        <circle r="6" fill="#0a111f" stroke="#3ee879" stroke-width="2.5">
+                            <animateMotion dur="3s" repeatCount="indefinite" path="M20,20 L140,20 L140,60 L260,60 L260,25 L380,25"/>
+                        </circle>
+                    </svg>
                 </div>
             </div>
             <div class="feature-card p-8 rounded-[2rem] bg-white/[0.03] border border-white/10 min-h-[130px]">
