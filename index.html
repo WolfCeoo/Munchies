@@ -8,13 +8,16 @@
     <meta name="description" content="Munchies Delivery Service Pty Ltd (2026/103543/07). Fast local food delivery in Soshanguve.">
     <meta property="og:title" content="Munchies Delivery Service - Full of Taste">
     <meta property="og:image" content="https://images.unsplash.com/photo-1606131731446-5568d87113aa?q=80&w=1200">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0a111f">
+    <link rel="apple-touch-icon" href="assets/icon-192.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: { munchies: { green: '#2ecc71', dark: '#0a111f' } },
+                    colors: { munchies: { green: '#3ee879', dark: '#0a111f' } },
                     fontFamily: { street: ['"Archivo Black"', 'sans-serif'], sans: ['Inter', 'sans-serif'] }
                 }
             }
@@ -38,35 +41,35 @@
         .stagger > *:nth-child(3){transition-delay:.2s}
         .stagger > *:nth-child(4){transition-delay:.3s}
         .tab-btn { transition:all .3s ease; color:#9ca3af; border:1.5px solid rgba(255,255,255,0.1); }
-        .tab-btn.active { background:#2ecc71; color:#0a111f; border-color:#2ecc71; transform:scale(1.04); }
+        .tab-btn.active { background:#3ee879; color:#0a111f; border-color:#3ee879; transform:scale(1.04); }
         .munchies-input {
             width:100%; background:rgba(255,255,255,0.05); border:1.5px solid rgba(255,255,255,0.1);
             border-radius:14px; padding:14px 18px; color:#fff; font-size:.95rem; outline:none;
             transition:border-color .25s, box-shadow .25s, background .25s;
             -webkit-appearance:none; appearance:none;
         }
-        .munchies-input:focus { border-color:#2ecc71; box-shadow:0 0 0 3px rgba(46,204,113,.15); background:rgba(255,255,255,.08); }
+        .munchies-input:focus { border-color:#3ee879; box-shadow:0 0 0 3px rgba(62,232,121,.15); background:rgba(255,255,255,.08); }
         .munchies-input.field-error-state { border-color:#e74c3c; box-shadow:0 0 0 3px rgba(231,76,60,.12); }
-        .munchies-input.field-ok { border-color:#2ecc71; }
+        .munchies-input.field-ok { border-color:#3ee879; }
         .munchies-input::placeholder { color:rgba(255,255,255,.3); }
         select.munchies-input option { background:#0a111f; color:#fff; }
         .field-msg { font-size:.76rem; margin-top:5px; display:none; align-items:center; gap:4px; font-weight:700; }
         .field-msg.show { display:flex; }
         .field-msg.err { color:#e74c3c; }
-        .field-msg.ok  { color:#2ecc71; }
+        .field-msg.ok  { color:#3ee879; }
         .upload-zone {
-            border:2px dashed rgba(46,204,113,.3); border-radius:14px; padding:22px 16px;
-            text-align:center; cursor:pointer; transition:all .25s; background:rgba(46,204,113,.03);
+            border:2px dashed rgba(62,232,121,.3); border-radius:14px; padding:22px 16px;
+            text-align:center; cursor:pointer; transition:all .25s; background:rgba(62,232,121,.03);
         }
-        .upload-zone:hover,.upload-zone.drag-over { border-color:#2ecc71; background:rgba(46,204,113,.08); }
-        .upload-zone.has-file { border-color:#2ecc71; background:rgba(46,204,113,.08); border-style:solid; }
+        .upload-zone:hover,.upload-zone.drag-over { border-color:#3ee879; background:rgba(62,232,121,.08); }
+        .upload-zone.has-file { border-color:#3ee879; background:rgba(62,232,121,.08); border-style:solid; }
         .submit-btn {
-            background:#2ecc71; color:#0a111f; font-weight:800; font-family:'Archivo Black',sans-serif;
+            background:#3ee879; color:#0a111f; font-weight:800; font-family:'Archivo Black',sans-serif;
             padding:16px 32px; border-radius:999px; border:none; cursor:pointer;
             width:100%; font-size:1rem; letter-spacing:.06em;
             transition:all .3s; position:relative;
         }
-        .submit-btn:hover:not(:disabled) { transform:scale(1.02); box-shadow:0 8px 32px rgba(46,204,113,.35); }
+        .submit-btn:hover:not(:disabled) { transform:scale(1.02); box-shadow:0 8px 32px rgba(62,232,121,.35); }
         .submit-btn:active:not(:disabled) { transform:scale(.98); }
         .submit-btn:disabled { opacity:.55; cursor:not-allowed; }
         .spin { display:none; width:20px; height:20px; border:3px solid rgba(10,17,31,.25); border-top-color:#0a111f; border-radius:50%; animation:rotate .7s linear infinite; margin:0 auto; }
@@ -78,23 +81,23 @@
             white-space:nowrap; display:none;
         }
         #toast.show { transform:translateX(-50%) translateY(0); display:block; }
-        #toast.ok  { background:#2ecc71; color:#0a111f; }
+        #toast.ok  { background:#3ee879; color:#0a111f; }
         #toast.bad { background:#e74c3c; color:#fff; }
         .trust-badge {
             display:inline-flex; align-items:center; gap:7px;
-            background:rgba(46,204,113,.1); border:1px solid rgba(46,204,113,.22);
+            background:rgba(62,232,121,.1); border:1px solid rgba(62,232,121,.22);
             padding:7px 16px; border-radius:999px; font-size:.73rem;
-            font-weight:700; color:#2ecc71; letter-spacing:.08em; text-transform:uppercase;
+            font-weight:700; color:#3ee879; letter-spacing:.08em; text-transform:uppercase;
         }
         .legit-card {
             background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07);
             border-radius:20px; padding:24px; transition:all .3s;
         }
-        .legit-card:hover { border-color:rgba(46,204,113,.25); background:rgba(46,204,113,.04); transform:translateY(-3px); }
+        .legit-card:hover { border-color:rgba(62,232,121,.25); background:rgba(62,232,121,.04); transform:translateY(-3px); }
         .join-card { transition:all .4s cubic-bezier(.34,1.56,.64,1); }
         .id-status { display:none; align-items:center; gap:6px; font-size:.78rem; font-weight:700; margin-top:6px; }
         .id-status.show { display:flex; }
-        .id-status.ok  { color:#2ecc71; }
+        .id-status.ok  { color:#3ee879; }
         .id-status.bad { color:#e74c3c; }
         .penalty-banner {
             background:rgba(231,76,60,.07); border:1px solid rgba(231,76,60,.18);
@@ -103,7 +106,7 @@
         .vendor-card { transition: transform .3s ease, box-shadow .3s ease; }
         .vendor-card:hover { transform:translateY(-4px); box-shadow:0 20px 50px rgba(0,0,0,.4); }
         .feature-card { transition:transform .35s cubic-bezier(.34,1.56,.64,1), border-color .3s, box-shadow .3s; }
-        .feature-card:hover { transform:translateY(-4px); border-color:rgba(46,204,113,.35); box-shadow:0 16px 44px rgba(46,204,113,.12); }
+        .feature-card:hover { transform:translateY(-4px); border-color:rgba(62,232,121,.35); box-shadow:0 16px 44px rgba(62,232,121,.12); }
         .feature-card .feature-icon { transition:transform .35s cubic-bezier(.34,1.56,.64,1); }
         .feature-card:hover .feature-icon { transform:scale(1.12) rotate(-4deg); }
         @media (prefers-reduced-motion: reduce) {
@@ -112,7 +115,7 @@
         }
         ::-webkit-scrollbar{width:5px}
         ::-webkit-scrollbar-track{background:#0a111f}
-        ::-webkit-scrollbar-thumb{background:#2ecc71;border-radius:99px}
+        ::-webkit-scrollbar-thumb{background:#3ee879;border-radius:99px}
         .tab-panel { display:none; }
         .tab-panel.active { display:block; animation:fadeUp .4s ease; }
     </style>
@@ -122,7 +125,7 @@
 <!-- ICON SPRITE (inline, no external icon CDN, renders every time, no flash of missing icon) -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
 <defs>
-<g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+<g fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
 <symbol id="i-bag" viewBox="0 0 24 24"><path d="M6 7h12l1 14H5L6 7Z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></symbol>
 <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
 <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-11.9 7.8L4 21l1.7-5.1A8.5 8.5 0 1 1 21 11.5Z"/></symbol>
@@ -185,27 +188,89 @@
 </nav>
 
 <!-- HERO -->
-<header class="relative h-screen flex items-center justify-center text-white overflow-hidden">
+<header class="relative min-h-screen flex items-center text-white overflow-hidden py-28 lg:py-0">
     <div class="absolute inset-0">
         <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1920&auto=format&fit=crop"
              alt="Soshanguve Street Food" class="w-full h-full object-cover brightness-[0.28]">
         <div class="absolute inset-0 bg-gradient-to-t from-munchies-dark via-transparent to-black/30"></div>
     </div>
-    <div class="relative z-10 text-center px-6 max-w-5xl">
-        <img src="assets/munchies-logo.jpg" alt="Munchies Logo"
-             class="mx-auto h-24 w-24 md:h-32 md:w-32 rounded-full border-4 border-munchies-green mb-6 shadow-2xl animate-bounce-slow h1">
-        <h1 class="font-street text-5xl md:text-9xl mb-2 tracking-tighter leading-none h2">MUNCHIES</h1>
-        <div class="bg-munchies-green text-munchies-dark inline-block px-6 py-1 md:px-8 md:py-2 rotate-[-1deg] mb-10 shadow-xl h3">
-            <span class="font-street text-2xl md:text-6xl uppercase tracking-widest">Full of Taste</span>
+    <div class="relative z-10 px-6 max-w-7xl mx-auto grid lg:grid-cols-2 gap-14 items-center w-full">
+        <div class="text-center lg:text-left">
+            <img src="assets/munchies-logo.jpg" alt="Munchies Logo"
+                 class="mx-auto lg:mx-0 h-24 w-24 md:h-32 md:w-32 rounded-full border-4 border-munchies-green mb-6 shadow-2xl shadow-munchies-green/20 animate-bounce-slow h1">
+            <h1 class="font-street text-5xl md:text-8xl mb-2 tracking-tighter leading-none h2">MUNCHIES</h1>
+            <div class="bg-munchies-green text-munchies-dark inline-block px-6 py-1 md:px-8 md:py-2 rotate-[-1deg] mb-8 shadow-xl h3">
+                <span class="font-street text-2xl md:text-5xl uppercase tracking-widest">Full of Taste</span>
+            </div>
+            <p class="text-lg md:text-2xl font-medium text-gray-300 mb-10 max-w-2xl mx-auto lg:mx-0 leading-relaxed h4">Soshanguve's fastest route to local food.</p>
+            <div class="h5 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                <a href="order.html" class="bg-munchies-green text-munchies-dark text-lg md:text-xl font-extrabold px-8 py-4 md:px-10 md:py-5 rounded-2xl shadow-2xl shadow-munchies-green/25 inline-flex items-center gap-3 transition-all hover:scale-105 active:scale-95 hover:brightness-110">
+                    <svg class="w-5 h-5 md:w-6 md:h-6"><use href="#i-bag"/></svg> ORDER NOW
+                </a>
+                <a href="https://wa.me/27673357429" class="bg-white/10 border border-white/25 text-white text-base md:text-lg font-bold px-7 py-4 md:py-5 rounded-2xl inline-flex items-center gap-3 transition-all hover:bg-white/20 hover:scale-105 active:scale-95 backdrop-blur-sm">
+                    <svg class="w-5 h-5"><use href="#i-chat"/></svg> WHATSAPP US
+                </a>
+            </div>
         </div>
-        <p class="text-lg md:text-2xl font-medium text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed h4">Soshanguve's fastest route to local food.</p>
-        <div class="h5 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="order.html" class="bg-munchies-green text-munchies-dark text-lg md:text-xl font-extrabold px-8 py-4 md:px-10 md:py-5 rounded-2xl shadow-2xl shadow-munchies-green/25 inline-flex items-center gap-3 transition-all hover:scale-105 active:scale-95 hover:brightness-110">
-                <svg class="w-5 h-5 md:w-6 md:h-6"><use href="#i-bag"/></svg> ORDER NOW
-            </a>
-            <a href="https://wa.me/27673357429" class="bg-white/10 border border-white/25 text-white text-base md:text-lg font-bold px-7 py-4 md:py-5 rounded-2xl inline-flex items-center gap-3 transition-all hover:bg-white/20 hover:scale-105 active:scale-95 backdrop-blur-sm">
-                <svg class="w-5 h-5"><use href="#i-chat"/></svg> WHATSAPP US
-            </a>
+
+        <!-- LIVE TRACKING WIDGET -->
+        <div class="h5 relative mx-auto w-full max-w-sm">
+            <div class="absolute -inset-4 bg-munchies-green/10 blur-3xl rounded-full"></div>
+            <div class="relative bg-white/[0.04] backdrop-blur-xl border border-white/15 rounded-[2rem] p-6 shadow-2xl">
+                <div class="flex items-center justify-between mb-5">
+                    <span class="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-munchies-green">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-munchies-green opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-munchies-green"></span>
+                        </span>
+                        Order in progress
+                    </span>
+                    <span class="text-xs text-gray-400 font-mono">#MU-2481</span>
+                </div>
+
+                <!-- route -->
+                <div class="relative h-28 mb-5 rounded-2xl bg-munchies-dark/60 border border-white/10 overflow-hidden">
+                    <svg viewBox="0 0 300 100" class="absolute inset-0 w-full h-full">
+                        <path d="M20,75 C90,20 150,90 280,25" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="3" stroke-linecap="round"/>
+                        <path id="track-route" d="M20,75 C90,20 150,90 280,25" fill="none" stroke="#3ee879" stroke-width="3" stroke-linecap="round" stroke-dasharray="6 10">
+                            <animate attributeName="stroke-dashoffset" from="0" to="-64" dur="1.6s" repeatCount="indefinite"/>
+                        </path>
+                        <circle cx="20" cy="75" r="5" fill="#3ee879"/>
+                        <circle cx="280" cy="25" r="5" fill="white" fill-opacity="0.6"/>
+                        <g id="rider-dot">
+                            <circle cx="90" cy="42" r="7" fill="#0a111f" stroke="#3ee879" stroke-width="2.5"/>
+                            <animateMotion dur="3.2s" repeatCount="indefinite" path="M20,75 C90,20 150,90 280,25" rotate="auto"/>
+                        </g>
+                    </svg>
+                </div>
+
+                <div class="flex items-center gap-3 mb-4 pb-4 border-b border-white/10">
+                    <div class="w-9 h-9 rounded-full bg-munchies-green/15 flex items-center justify-center shrink-0">
+                        <svg class="text-munchies-green w-4 h-4"><use href="#i-bike"/></svg>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-bold text-white truncate">Thabo is on the way</p>
+                        <p class="text-xs text-gray-400 truncate">Picked up from Soshanguve Sizzle</p>
+                    </div>
+                    <span class="text-munchies-green font-extrabold text-sm whitespace-nowrap">~18 min</span>
+                </div>
+
+                <p class="text-[11px] uppercase tracking-widest text-gray-500 font-bold mb-3">Nearby right now</p>
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between text-sm">
+                        <span class="text-gray-300">Di Pitseng</span>
+                        <span class="text-gray-500 text-xs">25-40 min</span>
+                    </div>
+                    <div class="flex items-center justify-between text-sm">
+                        <span class="text-gray-300">Kwasa Grill</span>
+                        <span class="text-gray-500 text-xs">15-30 min</span>
+                    </div>
+                    <div class="flex items-center justify-between text-sm">
+                        <span class="text-gray-300">The Block H Grill</span>
+                        <span class="text-gray-500 text-xs">20-35 min</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </header>
@@ -469,43 +534,63 @@
         <div class="h-[2px] flex-grow mx-8 bg-white/10 hidden md:block"></div>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 stagger">
-        <a href="order.html?prefill_vendor=Soshanguve+Sizzle" class="reveal vendor-card group relative h-[400px] md:h-[500px] overflow-hidden rounded-[2rem] bg-munchies-dark shadow-2xl">
+        <a href="order.html?prefill_vendor=Soshanguve+Sizzle" class="reveal vendor-card group relative h-[440px] md:h-[520px] overflow-hidden rounded-[2rem] bg-munchies-dark shadow-2xl">
             <img src="https://images.unsplash.com/photo-1606131731446-5568d87113aa?q=80&w=800" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110" alt="Vendor">
-            <div class="absolute inset-0 bg-gradient-to-t from-munchies-dark via-munchies-dark/20 to-transparent"></div>
-            <div class="absolute inset-x-0 bottom-0 p-8">
-                <h3 class="text-2xl font-bold text-white mb-6">Soshanguve Sizzle</h3>
-                <div class="flex items-center text-xs font-bold text-munchies-green uppercase tracking-widest md:opacity-0 md:group-hover:opacity-100 transition-all md:translate-y-4 md:group-hover:translate-y-0">
-                    View Menu & Order <svg class="ml-2 w-4 h-4"><use href="#i-arrow"/></svg>
+            <div class="absolute inset-0 bg-gradient-to-t from-munchies-dark via-munchies-dark/25 to-black/10"></div>
+            <div class="absolute top-5 inset-x-5 flex items-start justify-between gap-2">
+                <span class="bg-black/50 backdrop-blur-sm border border-white/10 text-white text-[11px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full">Shisanyama & Grill</span>
+                <span class="bg-munchies-green/15 border border-munchies-green/40 text-munchies-green text-[11px] font-bold px-3 py-1.5 rounded-full whitespace-nowrap">20-35 min</span>
+            </div>
+            <div class="absolute inset-x-0 bottom-0 p-7">
+                <h3 class="text-2xl font-bold text-white mb-2">Soshanguve Sizzle</h3>
+                <p class="text-gray-300 text-sm mb-5 leading-snug">Char-grilled meat plates and pap, cooked fresh to order.</p>
+                <div class="inline-flex items-center gap-2 bg-munchies-green text-munchies-dark text-xs font-extrabold uppercase tracking-widest px-5 py-3 rounded-xl shadow-lg transition-transform group-hover:scale-105">
+                    Order Now <svg class="w-4 h-4"><use href="#i-arrow"/></svg>
                 </div>
             </div>
         </a>
-        <a href="order.html?prefill_vendor=The+Block+H+Grill" class="reveal vendor-card group relative h-[400px] md:h-[500px] overflow-hidden rounded-[2rem] bg-munchies-dark shadow-2xl">
+        <a href="order.html?prefill_vendor=The+Block+H+Grill" class="reveal vendor-card group relative h-[440px] md:h-[520px] overflow-hidden rounded-[2rem] bg-munchies-dark shadow-2xl">
             <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=800" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110" alt="Vendor">
-            <div class="absolute inset-0 bg-gradient-to-t from-munchies-dark via-munchies-dark/20 to-transparent"></div>
-            <div class="absolute inset-x-0 bottom-0 p-8">
-                <h3 class="text-2xl font-bold text-white mb-6">The Block H Grill</h3>
-                <div class="flex items-center text-xs font-bold text-munchies-green uppercase tracking-widest md:opacity-0 md:group-hover:opacity-100 transition-all md:translate-y-4 md:group-hover:translate-y-0">
-                    View Menu & Order <svg class="ml-2 w-4 h-4"><use href="#i-arrow"/></svg>
+            <div class="absolute inset-0 bg-gradient-to-t from-munchies-dark via-munchies-dark/25 to-black/10"></div>
+            <div class="absolute top-5 inset-x-5 flex items-start justify-between gap-2">
+                <span class="bg-black/50 backdrop-blur-sm border border-white/10 text-white text-[11px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full">Grill & Braai</span>
+                <span class="bg-munchies-green/15 border border-munchies-green/40 text-munchies-green text-[11px] font-bold px-3 py-1.5 rounded-full whitespace-nowrap">20-35 min</span>
+            </div>
+            <div class="absolute inset-x-0 bottom-0 p-7">
+                <h3 class="text-2xl font-bold text-white mb-2">The Block H Grill</h3>
+                <p class="text-gray-300 text-sm mb-5 leading-snug">Township braai favourites: boerewors, chops, and sides.</p>
+                <div class="inline-flex items-center gap-2 bg-munchies-green text-munchies-dark text-xs font-extrabold uppercase tracking-widest px-5 py-3 rounded-xl shadow-lg transition-transform group-hover:scale-105">
+                    Order Now <svg class="w-4 h-4"><use href="#i-arrow"/></svg>
                 </div>
             </div>
         </a>
-        <a href="order.html?prefill_vendor=Di+Pitseng" class="reveal vendor-card group relative h-[400px] md:h-[500px] overflow-hidden rounded-[2rem] bg-munchies-dark shadow-2xl">
+        <a href="order.html?prefill_vendor=Di+Pitseng" class="reveal vendor-card group relative h-[440px] md:h-[520px] overflow-hidden rounded-[2rem] bg-munchies-dark shadow-2xl">
             <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?q=80&w=800" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110" alt="Vendor">
-            <div class="absolute inset-0 bg-gradient-to-t from-munchies-dark via-munchies-dark/20 to-transparent"></div>
-            <div class="absolute inset-x-0 bottom-0 p-8">
-                <h3 class="text-2xl font-bold text-white mb-6">Di Pitseng</h3>
-                <div class="flex items-center text-xs font-bold text-munchies-green uppercase tracking-widest md:opacity-0 md:group-hover:opacity-100 transition-all md:translate-y-4 md:group-hover:translate-y-0">
-                    View Menu & Order <svg class="ml-2 w-4 h-4"><use href="#i-arrow"/></svg>
+            <div class="absolute inset-0 bg-gradient-to-t from-munchies-dark via-munchies-dark/25 to-black/10"></div>
+            <div class="absolute top-5 inset-x-5 flex items-start justify-between gap-2">
+                <span class="bg-black/50 backdrop-blur-sm border border-white/10 text-white text-[11px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full">Traditional Kitchen</span>
+                <span class="bg-munchies-green/15 border border-munchies-green/40 text-munchies-green text-[11px] font-bold px-3 py-1.5 rounded-full whitespace-nowrap">25-40 min</span>
+            </div>
+            <div class="absolute inset-x-0 bottom-0 p-7">
+                <h3 class="text-2xl font-bold text-white mb-2">Di Pitseng</h3>
+                <p class="text-gray-300 text-sm mb-5 leading-snug">Home-style pots, dumpling, stew and umleqwa done right.</p>
+                <div class="inline-flex items-center gap-2 bg-munchies-green text-munchies-dark text-xs font-extrabold uppercase tracking-widest px-5 py-3 rounded-xl shadow-lg transition-transform group-hover:scale-105">
+                    Order Now <svg class="w-4 h-4"><use href="#i-arrow"/></svg>
                 </div>
             </div>
         </a>
-        <a href="order.html?prefill_vendor=Kwasa+Grill" class="reveal vendor-card group relative h-[400px] md:h-[500px] overflow-hidden rounded-[2rem] bg-munchies-dark shadow-2xl">
+        <a href="order.html?prefill_vendor=Kwasa+Grill" class="reveal vendor-card group relative h-[440px] md:h-[520px] overflow-hidden rounded-[2rem] bg-munchies-dark shadow-2xl">
             <img src="https://images.unsplash.com/photo-1532635211-8ec15f2ce05c?q=80&w=800" class="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-110" alt="Vendor">
-            <div class="absolute inset-0 bg-gradient-to-t from-munchies-dark via-munchies-dark/20 to-transparent"></div>
-            <div class="absolute inset-x-0 bottom-0 p-8">
-                <h3 class="text-2xl font-bold text-white mb-6">Kwasa Grill</h3>
-                <div class="flex items-center text-xs font-bold text-munchies-green uppercase tracking-widest md:opacity-0 md:group-hover:opacity-100 transition-all md:translate-y-4 md:group-hover:translate-y-0">
-                    View Menu & Order <svg class="ml-2 w-4 h-4"><use href="#i-arrow"/></svg>
+            <div class="absolute inset-0 bg-gradient-to-t from-munchies-dark via-munchies-dark/25 to-black/10"></div>
+            <div class="absolute top-5 inset-x-5 flex items-start justify-between gap-2">
+                <span class="bg-black/50 backdrop-blur-sm border border-white/10 text-white text-[11px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full">Fast Grill</span>
+                <span class="bg-munchies-green/15 border border-munchies-green/40 text-munchies-green text-[11px] font-bold px-3 py-1.5 rounded-full whitespace-nowrap">15-30 min</span>
+            </div>
+            <div class="absolute inset-x-0 bottom-0 p-7">
+                <h3 class="text-2xl font-bold text-white mb-2">Kwasa Grill</h3>
+                <p class="text-gray-300 text-sm mb-5 leading-snug">Quick grilled plates for when you need lunch now.</p>
+                <div class="inline-flex items-center gap-2 bg-munchies-green text-munchies-dark text-xs font-extrabold uppercase tracking-widest px-5 py-3 rounded-xl shadow-lg transition-transform group-hover:scale-105">
+                    Order Now <svg class="w-4 h-4"><use href="#i-arrow"/></svg>
                 </div>
             </div>
         </a>
@@ -784,6 +869,62 @@
 </footer>
 
 <div id="toast"></div>
+
+<!-- WHATSAPP CHAT BUBBLE -->
+<a href="https://wa.me/27673357429?text=Hi%20Munchies%2C%20I%20have%20a%20question" target="_blank" rel="noopener"
+   id="wa-bubble"
+   class="fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-munchies-green text-munchies-dark rounded-full shadow-2xl shadow-munchies-green/30 pl-4 pr-5 py-4 font-bold text-sm hover:scale-105 active:scale-95 transition-transform">
+    <svg class="w-5 h-5 shrink-0"><use href="#i-chat"/></svg>
+    <span id="wa-bubble-label" class="whitespace-nowrap overflow-hidden max-w-0 opacity-0 transition-all duration-300">Need a hand? Chat on WhatsApp</span>
+</a>
+
+<!-- INSTALL PROMPT -->
+<div id="install-banner" class="fixed bottom-6 left-6 z-50 hidden items-center gap-4 bg-white/[0.06] backdrop-blur-xl border border-white/15 rounded-2xl shadow-2xl px-5 py-4 max-w-xs">
+    <img src="assets/icon-192.png" alt="Munchies" class="w-10 h-10 rounded-xl shrink-0">
+    <div class="flex-1 min-w-0">
+        <p class="text-sm font-bold text-white">Add Munchies to your home screen</p>
+        <p class="text-xs text-gray-400">Order faster next time, no browser needed.</p>
+    </div>
+    <button id="install-btn" class="shrink-0 bg-munchies-green text-munchies-dark text-xs font-extrabold uppercase px-3 py-2 rounded-lg">Add</button>
+    <button id="install-dismiss" class="shrink-0 text-gray-500 hover:text-white text-lg leading-none">&times;</button>
+</div>
+
+<script>
+    // Real WhatsApp chat, not a simulated bot: opens an actual conversation with Munchies.
+    setTimeout(() => {
+        const label = document.getElementById('wa-bubble-label');
+        if (label) { label.classList.remove('max-w-0','opacity-0'); label.classList.add('max-w-xs','opacity-100'); }
+    }, 2500);
+
+    // PWA install prompt (real beforeinstallprompt flow, not a fake button).
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js').catch(() => {});
+    }
+    let deferredInstallPrompt = null;
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredInstallPrompt = e;
+        const banner = document.getElementById('install-banner');
+        if (banner && !localStorage.getItem('munchies-install-dismissed')) {
+            banner.classList.remove('hidden');
+            banner.classList.add('flex');
+        }
+    });
+    const installBtn = document.getElementById('install-btn');
+    const installDismiss = document.getElementById('install-dismiss');
+    const installBanner = document.getElementById('install-banner');
+    if (installBtn) installBtn.addEventListener('click', async () => {
+        if (!deferredInstallPrompt) return;
+        deferredInstallPrompt.prompt();
+        await deferredInstallPrompt.userChoice;
+        deferredInstallPrompt = null;
+        installBanner.classList.add('hidden');
+    });
+    if (installDismiss) installDismiss.addEventListener('click', () => {
+        installBanner.classList.add('hidden');
+        try { localStorage.setItem('munchies-install-dismissed', '1'); } catch(e) {}
+    });
+</script>
 
 <style>
 .form-label { display:block; font-size:.72rem; font-weight:700; color:#9ca3af; text-transform:uppercase; letter-spacing:.12em; margin-bottom:8px; }
