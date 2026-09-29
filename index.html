@@ -119,6 +119,7 @@
         .feature-card:hover { transform:translateY(-4px); border-color:rgba(62,232,121,.35); box-shadow:0 16px 44px rgba(62,232,121,.12); }
         .feature-card .feature-icon { transition:transform .35s cubic-bezier(.34,1.56,.64,1); }
         .feature-card:hover .feature-icon { transform:scale(1.12) rotate(-4deg); }
+        .hero-map-dark-tiles .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(0.85) contrast(0.9) saturate(0.6); }
         .shot-frame {
             position:relative; display:block; border-radius:1.5rem; border:6px solid #1c2333;
             overflow:hidden; background:#000;
@@ -182,7 +183,7 @@
 <nav id="main-nav" class="fixed top-0 left-0 w-full z-50 flex justify-center">
     <div id="nav-container" class="w-full h-20 flex items-center justify-between px-8 glass border-b border-white/10">
         <div class="flex items-center gap-4">
-            <img src="assets/munchies-logo.jpg" alt="Logo" class="h-10 w-10 rounded-full border-2 border-munchies-green">
+            <img src="assets/munchies-icon-mark.png" alt="Munchies" class="h-10 w-10 rounded-full border-2 border-munchies-green">
             <span id="logo-text" class="font-street text-white text-2xl tracking-tighter transition-transform duration-500">MUNCHIES</span>
         </div>
         <div class="hidden md:flex items-center gap-8 text-white font-bold uppercase text-[11px] tracking-[0.2em]">
@@ -220,7 +221,7 @@
     </div>
     <div class="relative z-10 px-6 max-w-7xl mx-auto grid lg:grid-cols-2 gap-14 lg:gap-20 items-center w-full">
         <div class="text-center lg:text-left">
-            <img src="assets/munchies-logo.jpg" alt="Munchies Logo"
+            <img src="assets/munchies-icon-mark.png" alt="Munchies"
                  class="mx-auto lg:mx-0 h-24 w-24 md:h-32 md:w-32 rounded-full border-4 border-munchies-green mb-6 shadow-2xl shadow-munchies-green/20 animate-bounce-slow h1">
             <h1 class="font-street text-5xl md:text-8xl mb-2 tracking-tighter leading-none h2">MUNCHIES</h1>
             <div class="bg-munchies-green text-munchies-dark inline-block px-6 py-1 md:px-8 md:py-2 rotate-[-1deg] mb-8 shadow-xl h3">
@@ -1293,7 +1294,12 @@ async function fetchRoute(startLat, startLng, endLat, endLng) {
         if (!route) throw new Error('no route');
 
         const map = L.map(mapEl, { zoomControl: false, attributionControl: false, dragging: false, scrollWheelZoom: false, doubleClickZoom: false, boxZoom: false, keyboard: false, touchZoom: false }).fitBounds(route, { padding: [14, 14] });
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 19 }).addTo(map);
+        // CARTO's free basemap tiles started requiring an API key and returning a
+        // watermarked "API key required" tile without one. OpenStreetMap's standard
+        // tiles are genuinely free/keyless; the CSS filter below fakes a dark theme
+        // to match the site instead of depending on a third party's dark tile style.
+        mapEl.classList.add('hero-map-dark-tiles');
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
         L.polyline(route, { color: '#3ee879', weight: 3, opacity: 0.9 }).addTo(map);
         L.circleMarker(pickup, { radius: 5, color: '#3ee879', fillColor: '#3ee879', fillOpacity: 1 }).addTo(map);
         L.circleMarker(dropoff, { radius: 5, color: '#fff', fillColor: '#fff', fillOpacity: 0.7 }).addTo(map);
