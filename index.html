@@ -921,10 +921,11 @@
 
 <div id="toast"></div>
 
-<!-- WHATSAPP CHAT BUBBLE -->
+<!-- WHATSAPP CHAT BUBBLE: hidden until the hero (which already has its own
+     WhatsApp CTA) scrolls out of view, so the two never double up on screen. -->
 <a href="https://wa.me/27673357429?text=Hi%20Munchies%2C%20I%20have%20a%20question" target="_blank" rel="noopener"
    id="wa-bubble"
-   class="fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-munchies-green text-munchies-dark rounded-full shadow-2xl shadow-munchies-green/30 pl-4 pr-5 py-4 font-bold text-sm hover:scale-105 active:scale-95 transition-transform">
+   class="fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-munchies-green text-munchies-dark rounded-full shadow-2xl shadow-munchies-green/30 pl-4 pr-5 py-4 font-bold text-sm hover:scale-105 active:scale-95 transition-all duration-400 opacity-0 translate-y-3 pointer-events-none">
     <svg class="w-5 h-5 shrink-0"><use href="#i-chat"/></svg>
     <span id="wa-bubble-label" class="whitespace-nowrap overflow-hidden max-w-0 opacity-0 transition-all duration-300">Need a hand? Chat on WhatsApp</span>
 </a>
@@ -942,10 +943,30 @@
 
 <script>
     // Real WhatsApp chat, not a simulated bot: opens an actual conversation with Munchies.
-    setTimeout(() => {
-        const label = document.getElementById('wa-bubble-label');
-        if (label) { label.classList.remove('max-w-0','opacity-0'); label.classList.add('max-w-xs','opacity-100'); }
-    }, 2500);
+    // Only appears once the hero (which has its own WhatsApp button) has scrolled
+    // out of view, so the two CTAs never clutter the screen together.
+    (function () {
+        const bubble = document.getElementById('wa-bubble');
+        const hero = document.querySelector('header');
+        if (!bubble || !hero) return;
+        let revealed = false;
+        const reveal = () => {
+            if (revealed) return;
+            revealed = true;
+            bubble.classList.remove('opacity-0', 'translate-y-3', 'pointer-events-none');
+            const label = document.getElementById('wa-bubble-label');
+            setTimeout(() => { if (label) { label.classList.remove('max-w-0','opacity-0'); label.classList.add('max-w-xs','opacity-100'); } }, 400);
+        };
+        const hide = () => {
+            revealed = false;
+            bubble.classList.add('opacity-0', 'translate-y-3', 'pointer-events-none');
+            const label = document.getElementById('wa-bubble-label');
+            if (label) { label.classList.add('max-w-0','opacity-0'); label.classList.remove('max-w-xs','opacity-100'); }
+        };
+        new IntersectionObserver(entries => {
+            entries.forEach(e => e.isIntersecting ? hide() : reveal());
+        }, { threshold: 0 }).observe(hero);
+    })();
 
     // PWA install prompt (real beforeinstallprompt flow, not a fake button).
     if ('serviceWorker' in navigator) {
