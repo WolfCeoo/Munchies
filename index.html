@@ -20,7 +20,6 @@
             }
         }
     </script>
-    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         #nav-container { transition: all 0.5s cubic-bezier(0.4,0,0.2,1); }
         .glass { background: rgba(10,17,31,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
@@ -103,6 +102,14 @@
         }
         .vendor-card { transition: transform .3s ease, box-shadow .3s ease; }
         .vendor-card:hover { transform:translateY(-4px); box-shadow:0 20px 50px rgba(0,0,0,.4); }
+        .feature-card { transition:transform .35s cubic-bezier(.34,1.56,.64,1), border-color .3s, box-shadow .3s; }
+        .feature-card:hover { transform:translateY(-4px); border-color:rgba(46,204,113,.35); box-shadow:0 16px 44px rgba(46,204,113,.12); }
+        .feature-card .feature-icon { transition:transform .35s cubic-bezier(.34,1.56,.64,1); }
+        .feature-card:hover .feature-icon { transform:scale(1.12) rotate(-4deg); }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity:1 !important; transform:none !important; transition:none !important; }
+            .feature-card, .feature-card:hover, .feature-card .feature-icon, .feature-card:hover .feature-icon { transition:none !important; transform:none !important; }
+        }
         ::-webkit-scrollbar{width:5px}
         ::-webkit-scrollbar-track{background:#0a111f}
         ::-webkit-scrollbar-thumb{background:#2ecc71;border-radius:99px}
@@ -110,7 +117,35 @@
         .tab-panel.active { display:block; animation:fadeUp .4s ease; }
     </style>
 </head>
-<body class="bg-white text-slate-900 font-sans">
+<body class="bg-munchies-dark text-white font-sans">
+
+<!-- ICON SPRITE (inline, no external icon CDN, renders every time, no flash of missing icon) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+<g fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+<symbol id="i-bag" viewBox="0 0 24 24"><path d="M6 7h12l1 14H5L6 7Z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+<symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-11.9 7.8L4 21l1.7-5.1A8.5 8.5 0 1 1 21 11.5Z"/></symbol>
+<symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 3 4 14h6l-1 7 9-11h-6l1-7Z"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7-4.4-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 5c-2.5 4.6-9.5 9-9.5 9Z"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 4.6 3.3 8 8 9 4.7-1 8-4.4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></symbol>
+<symbol id="i-badge" viewBox="0 0 24 24"><path d="M9 3h6l2 4h3l-2 4 2 4h-3l-2 4H9l-2-4H4l2-4-2-4h3l2-4Z"/><path d="M12 10v5"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+<symbol id="i-msgsquare" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="m7 21 3-4H7v4Z"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.3 7-12a7 7 0 1 0-14 0c0 5.7 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.6"/><path d="M15.5 14.2c2.5.4 4.5 2.6 4.5 5.8"/></symbol>
+<symbol id="i-bike" viewBox="0 0 24 24"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M6 17 10 8h4l3 5m-9 4h9l-3-9h-3"/></symbol>
+<symbol id="i-store" viewBox="0 0 24 24"><path d="M4 9V5h16v4M4 9l1 11h14l1-11M4 9h16"/><path d="M9 20v-5h6v5"/></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4"/><circle cx="12" cy="17" r="0.6" fill="currentColor"/></symbol>
+<symbol id="i-xcircle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m9.5 9.5 5 5m0-5-5 5"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></symbol>
+<symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15V5m0 0 4 4m-4-4-4 4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></symbol>
+<symbol id="i-filecheck" viewBox="0 0 24 24"><path d="M7 3h7l4 4v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><path d="m9.5 13 2 2 4-4"/></symbol>
+<symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Z"/><circle cx="12" cy="13.5" r="3.2"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+</g>
+</defs>
+</svg>
 
 <!-- NAV -->
 <nav id="main-nav" class="fixed top-0 left-0 w-full z-50 flex justify-center">
@@ -125,10 +160,10 @@
             <a href="#vendors" class="hover:text-munchies-green transition-colors">Vendors</a>
             <a href="#join" class="hover:text-munchies-green transition-colors">Join Us</a>
             <a href="order.html" class="bg-munchies-green text-munchies-dark px-6 py-2.5 rounded-full hover:scale-105 active:scale-95 transition-all shadow-lg shadow-munchies-green/20 flex items-center gap-2">
-                <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i> Order Now
+                <svg class="w-3.5 h-3.5"><use href="#i-bag"/></svg> Order Now
             </a>
         </div>
-        <button id="menu-btn" class="md:hidden text-white"><i data-lucide="menu"></i></button>
+        <button id="menu-btn" class="md:hidden text-white"><svg class="w-5 h-5"><use href="#i-menu"/></svg></button>
     </div>
     <div id="mobile-menu" class="hidden absolute top-full left-0 w-full glass border-b border-white/10 shadow-2xl">
         <div class="flex flex-col p-8 gap-6 text-white font-bold uppercase tracking-widest text-sm text-center">
@@ -137,7 +172,7 @@
             <a href="#vendors" class="pb-4 border-b border-white/5">Vendors</a>
             <a href="#join" class="pb-4 border-b border-white/5">Join Us</a>
             <a href="order.html" class="text-munchies-green text-lg font-black flex items-center justify-center gap-2">
-                <i data-lucide="shopping-bag" class="w-5 h-5"></i> Order Now
+                <svg class="w-5 h-5"><use href="#i-bag"/></svg> Order Now
             </a>
         </div>
     </div>
@@ -160,10 +195,10 @@
         <p class="text-lg md:text-2xl font-medium text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed h4">Soshanguve's fastest route to local food.</p>
         <div class="h5 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a href="order.html" class="bg-munchies-green text-munchies-dark text-lg md:text-xl font-extrabold px-8 py-4 md:px-10 md:py-5 rounded-2xl shadow-2xl shadow-munchies-green/25 inline-flex items-center gap-3 transition-all hover:scale-105 active:scale-95 hover:brightness-110">
-                <i data-lucide="shopping-bag" class="w-5 h-5 md:w-6 md:h-6"></i> ORDER NOW
+                <svg class="w-5 h-5 md:w-6 md:h-6"><use href="#i-bag"/></svg> ORDER NOW
             </a>
             <a href="https://wa.me/27673357429" class="bg-white/10 border border-white/25 text-white text-base md:text-lg font-bold px-7 py-4 md:py-5 rounded-2xl inline-flex items-center gap-3 transition-all hover:bg-white/20 hover:scale-105 active:scale-95 backdrop-blur-sm">
-                <i data-lucide="message-circle" class="w-5 h-5"></i> WHATSAPP US
+                <svg class="w-5 h-5"><use href="#i-chat"/></svg> WHATSAPP US
             </a>
         </div>
     </div>
@@ -173,31 +208,31 @@
 <section id="about" class="py-24 md:py-32 px-6 max-w-7xl mx-auto">
     <div class="text-center mb-16 reveal">
         <h2 class="text-4xl md:text-6xl font-extrabold text-munchies-green mb-8 tracking-tight">About Us</h2>
-        <p class="text-lg md:text-xl text-gray-600 max-w-5xl mx-auto leading-relaxed font-medium">
+        <p class="text-lg md:text-xl text-gray-400 max-w-5xl mx-auto leading-relaxed font-medium">
             Founded by Andile Mathe and Kabelo Matseke, Munchies Delivery Service (Pty) Ltd is a hyper-local food delivery platform serving Soshanguve. We connect residents with authentic township vendors for fast, reliable delivery.
         </p>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 stagger">
-        <div class="reveal p-8 md:p-10 rounded-[2.5rem] bg-slate-50 border border-slate-100 hover:border-munchies-green/30 transition-all group">
+        <div class="reveal p-8 md:p-10 rounded-[2.5rem] bg-white/[0.03] border border-white/10 hover:border-munchies-green/30 transition-all group">
             <div class="w-14 h-14 bg-munchies-green/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <i data-lucide="zap" class="text-munchies-green w-7 h-7"></i>
+                <svg class="text-munchies-green w-7 h-7"><use href="#i-bolt"/></svg>
             </div>
             <h3 class="text-xl md:text-2xl font-bold mb-4">Fast Delivery</h3>
-            <p class="text-gray-600 text-sm md:text-base">Quick turnarounds because we know when you're hungry, you're hungry.</p>
+            <p class="text-gray-400 text-sm md:text-base">Quick turnarounds because we know when you're hungry, you're hungry.</p>
         </div>
-        <div class="reveal p-8 md:p-10 rounded-[2.5rem] bg-slate-50 border border-slate-100 hover:border-munchies-green/30 transition-all group">
+        <div class="reveal p-8 md:p-10 rounded-[2.5rem] bg-white/[0.03] border border-white/10 hover:border-munchies-green/30 transition-all group">
             <div class="w-14 h-14 bg-munchies-green/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <i data-lucide="heart" class="text-munchies-green w-7 h-7"></i>
+                <svg class="text-munchies-green w-7 h-7"><use href="#i-heart"/></svg>
             </div>
             <h3 class="text-xl md:text-2xl font-bold mb-4">Support Local</h3>
-            <p class="text-gray-600 text-sm md:text-base">Every order helps grow a small business right here in the township.</p>
+            <p class="text-gray-400 text-sm md:text-base">Every order helps grow a small business right here in the township.</p>
         </div>
-        <div class="reveal p-8 md:p-10 rounded-[2.5rem] bg-slate-50 border border-slate-100 hover:border-munchies-green/30 transition-all group">
+        <div class="reveal p-8 md:p-10 rounded-[2.5rem] bg-white/[0.03] border border-white/10 hover:border-munchies-green/30 transition-all group">
             <div class="w-14 h-14 bg-munchies-green/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <i data-lucide="shield-check" class="text-munchies-green w-7 h-7"></i>
+                <svg class="text-munchies-green w-7 h-7"><use href="#i-shield"/></svg>
             </div>
             <h3 class="text-xl md:text-2xl font-bold mb-4">Secure Service</h3>
-            <p class="text-gray-600 text-sm md:text-base">Registered business (2026/103543/07) providing safe, tracked deliveries.</p>
+            <p class="text-gray-400 text-sm md:text-base">Registered business (2026/103543/07) providing safe, tracked deliveries.</p>
         </div>
     </div>
 </section>
@@ -207,7 +242,7 @@
     <div class="max-w-7xl mx-auto">
         <div class="text-center mb-12 reveal">
             <div class="trust-badge mb-6 mx-auto w-fit">
-                <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Verified South African Business
+                <svg class="w-3.5 h-3.5"><use href="#i-shield"/></svg> Verified South African Business
             </div>
             <h2 class="font-street text-3xl md:text-5xl text-white tracking-tight mb-3">Fully Legitimate. Fully Local.</h2>
             <p class="text-gray-400 max-w-xl mx-auto text-sm md:text-base">Munchies operates within the full legal framework of South Africa. Here's our proof.</p>
@@ -215,7 +250,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 stagger">
             <div class="legit-card reveal">
                 <div class="w-10 h-10 bg-munchies-green/10 rounded-xl flex items-center justify-center mb-4">
-                    <i data-lucide="file-badge" class="text-munchies-green w-5 h-5"></i>
+                    <svg class="text-munchies-green w-5 h-5"><use href="#i-badge"/></svg>
                 </div>
                 <p class="text-xs text-gray-500 uppercase tracking-widest font-bold mb-1">CIPC Registered</p>
                 <p class="text-white font-bold text-sm">Munchies Delivery Service (Pty) Ltd</p>
@@ -223,7 +258,7 @@
             </div>
             <div class="legit-card reveal">
                 <div class="w-10 h-10 bg-munchies-green/10 rounded-xl flex items-center justify-center mb-4">
-                    <i data-lucide="lock" class="text-munchies-green w-5 h-5"></i>
+                    <svg class="text-munchies-green w-5 h-5"><use href="#i-lock"/></svg>
                 </div>
                 <p class="text-xs text-gray-500 uppercase tracking-widest font-bold mb-1">POPIA Compliant</p>
                 <p class="text-white font-bold text-sm">Protection of Personal Information Act</p>
@@ -231,7 +266,7 @@
             </div>
             <div class="legit-card reveal">
                 <div class="w-10 h-10 bg-munchies-green/10 rounded-xl flex items-center justify-center mb-4">
-                    <i data-lucide="message-square" class="text-munchies-green w-5 h-5"></i>
+                    <svg class="text-munchies-green w-5 h-5"><use href="#i-msgsquare"/></svg>
                 </div>
                 <p class="text-xs text-gray-500 uppercase tracking-widest font-bold mb-1">Meta Verified</p>
                 <p class="text-white font-bold text-sm">WhatsApp Business API</p>
@@ -239,12 +274,45 @@
             </div>
             <div class="legit-card reveal">
                 <div class="w-10 h-10 bg-munchies-green/10 rounded-xl flex items-center justify-center mb-4">
-                    <i data-lucide="map-pin" class="text-munchies-green w-5 h-5"></i>
+                    <svg class="text-munchies-green w-5 h-5"><use href="#i-pin"/></svg>
                 </div>
                 <p class="text-xs text-gray-500 uppercase tracking-widest font-bold mb-1">Physical Address</p>
                 <p class="text-white font-bold text-sm">64 Block H, Soshanguve</p>
                 <p class="text-gray-400 text-xs mt-1">Pretoria, 0152 · Gauteng</p>
             </div>
+        </div>
+    </div>
+</section>
+
+<!-- WHY MUNCHIES -->
+<section class="py-20 md:py-28 px-6 max-w-7xl mx-auto">
+    <div class="mb-14 reveal max-w-2xl">
+        <h2 class="font-street text-4xl md:text-6xl tracking-tighter mb-4">WHY MUNCHIES</h2>
+        <p class="text-gray-400 text-base md:text-lg">Built for how Soshanguve actually orders, not copied from an app built somewhere else.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 stagger">
+        <div class="feature-card reveal md:col-span-2 md:row-span-2 p-10 md:p-12 rounded-[2rem] bg-gradient-to-br from-munchies-green/10 to-transparent border border-white/10 flex flex-col justify-between min-h-[280px]">
+            <div>
+                <div class="feature-icon w-16 h-16 bg-munchies-green/15 rounded-2xl flex items-center justify-center mb-6">
+                    <svg class="text-munchies-green w-8 h-8"><use href="#i-badge"/></svg>
+                </div>
+                <h3 class="text-2xl md:text-3xl font-bold mb-3">QR-verified handover</h3>
+                <p class="text-gray-400 max-w-md">Every pickup and delivery is confirmed with a scannable code, so your order only changes hands with the right person. No "the driver says he delivered it" disputes.</p>
+            </div>
+        </div>
+        <div class="feature-card reveal p-8 rounded-[2rem] bg-white/[0.03] border border-white/10 min-h-[130px]">
+            <div class="feature-icon w-12 h-12 bg-munchies-green/15 rounded-xl flex items-center justify-center mb-5">
+                <svg class="text-munchies-green w-6 h-6"><use href="#i-chat"/></svg>
+            </div>
+            <h3 class="text-lg font-bold mb-2">Live WhatsApp updates</h3>
+            <p class="text-gray-400 text-sm">Order status lands straight in WhatsApp. No separate app to install or check.</p>
+        </div>
+        <div class="feature-card reveal p-8 rounded-[2rem] bg-white/[0.03] border border-white/10 min-h-[130px]">
+            <div class="feature-icon w-12 h-12 bg-munchies-green/15 rounded-xl flex items-center justify-center mb-5">
+                <svg class="text-munchies-green w-6 h-6"><use href="#i-lock"/></svg>
+            </div>
+            <h3 class="text-lg font-bold mb-2">Cash on pickup</h3>
+            <p class="text-gray-400 text-sm">Collecting your own order? Pay with cash when you get there, no card required.</p>
         </div>
     </div>
 </section>
@@ -267,7 +335,7 @@
             <h2 class="font-street text-4xl md:text-6xl italic tracking-tighter mb-4">OUR VENDORS</h2>
             <p class="text-gray-500 text-base md:text-lg">The best menus around Soshanguve curated for you.</p>
         </div>
-        <div class="h-[2px] flex-grow mx-8 bg-slate-100 hidden md:block"></div>
+        <div class="h-[2px] flex-grow mx-8 bg-white/10 hidden md:block"></div>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 stagger">
         <a href="order.html?prefill_vendor=Soshanguve+Sizzle" class="reveal vendor-card group relative h-[400px] md:h-[500px] overflow-hidden rounded-[2rem] bg-munchies-dark shadow-2xl">
@@ -276,7 +344,7 @@
             <div class="absolute inset-x-0 bottom-0 p-8">
                 <h3 class="text-2xl font-bold text-white mb-6">Soshanguve Sizzle</h3>
                 <div class="flex items-center text-xs font-bold text-munchies-green uppercase tracking-widest md:opacity-0 md:group-hover:opacity-100 transition-all md:translate-y-4 md:group-hover:translate-y-0">
-                    View Menu & Order <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                    View Menu & Order <svg class="ml-2 w-4 h-4"><use href="#i-arrow"/></svg>
                 </div>
             </div>
         </a>
@@ -286,7 +354,7 @@
             <div class="absolute inset-x-0 bottom-0 p-8">
                 <h3 class="text-2xl font-bold text-white mb-6">The Block H Grill</h3>
                 <div class="flex items-center text-xs font-bold text-munchies-green uppercase tracking-widest md:opacity-0 md:group-hover:opacity-100 transition-all md:translate-y-4 md:group-hover:translate-y-0">
-                    View Menu & Order <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                    View Menu & Order <svg class="ml-2 w-4 h-4"><use href="#i-arrow"/></svg>
                 </div>
             </div>
         </a>
@@ -296,7 +364,7 @@
             <div class="absolute inset-x-0 bottom-0 p-8">
                 <h3 class="text-2xl font-bold text-white mb-6">Di Pitseng</h3>
                 <div class="flex items-center text-xs font-bold text-munchies-green uppercase tracking-widest md:opacity-0 md:group-hover:opacity-100 transition-all md:translate-y-4 md:group-hover:translate-y-0">
-                    View Menu & Order <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                    View Menu & Order <svg class="ml-2 w-4 h-4"><use href="#i-arrow"/></svg>
                 </div>
             </div>
         </a>
@@ -306,7 +374,7 @@
             <div class="absolute inset-x-0 bottom-0 p-8">
                 <h3 class="text-2xl font-bold text-white mb-6">Kwasa Grill</h3>
                 <div class="flex items-center text-xs font-bold text-munchies-green uppercase tracking-widest md:opacity-0 md:group-hover:opacity-100 transition-all md:translate-y-4 md:group-hover:translate-y-0">
-                    View Menu & Order <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                    View Menu & Order <svg class="ml-2 w-4 h-4"><use href="#i-arrow"/></svg>
                 </div>
             </div>
         </a>
@@ -318,19 +386,19 @@
     <div class="max-w-7xl mx-auto">
         <div class="text-center mb-14 reveal">
             <div class="trust-badge mb-6 mx-auto w-fit">
-                <i data-lucide="users" class="w-3.5 h-3.5"></i> Now Recruiting
+                <svg class="w-3.5 h-3.5"><use href="#i-users"/></svg> Now Recruiting
             </div>
             <h2 class="font-street text-4xl md:text-6xl text-white tracking-tight mb-4">
                 JOIN THE <span class="text-munchies-green">MUNCHIES</span> TEAM
             </h2>
-            <p class="text-gray-400 max-w-xl mx-auto text-base">Whether you ride or cook — there's a place for you in Soshanguve's fastest growing food network.</p>
+            <p class="text-gray-400 max-w-xl mx-auto text-base">Whether you ride or cook, there's a place for you in Soshanguve's fastest growing food network.</p>
         </div>
         <div class="flex gap-3 justify-center mb-12 reveal">
             <button id="tab-driver" onclick="switchTab('driver')" class="tab-btn active flex items-center gap-2 px-7 py-3 rounded-full font-bold uppercase text-sm tracking-widest">
-                <i data-lucide="bike" class="w-4 h-4"></i> I'm a Driver
+                <svg class="w-4 h-4"><use href="#i-bike"/></svg> I'm a Driver
             </button>
             <button id="tab-vendor" onclick="switchTab('vendor')" class="tab-btn flex items-center gap-2 px-7 py-3 rounded-full font-bold uppercase text-sm tracking-widest">
-                <i data-lucide="store" class="w-4 h-4"></i> I'm a Vendor
+                <svg class="w-4 h-4"><use href="#i-store"/></svg> I'm a Vendor
             </button>
         </div>
 
@@ -353,10 +421,10 @@
                 </div>
                 <div class="penalty-banner mb-8">
                     <div class="flex items-start gap-3">
-                        <i data-lucide="alert-triangle" class="text-red-400 w-5 h-5 mt-0.5 shrink-0"></i>
+                        <svg class="text-red-400 w-5 h-5 mt-0.5 shrink-0"><use href="#i-alert"/></svg>
                         <div>
                             <p class="text-white font-bold text-sm mb-1">Delivery Commitment Policy</p>
-                            <p class="text-gray-400 text-xs leading-relaxed">You don't have to be based in Soshanguve — but you must be able to fulfil deliveries reliably. Unexplained delays or missed runs result in a <strong class="text-red-400">reduced delivery split</strong> as per our driver agreement.</p>
+                            <p class="text-gray-400 text-xs leading-relaxed">You don't have to be based in Soshanguve, but you must be able to fulfil deliveries reliably. Unexplained delays or missed runs result in a <strong class="text-red-400">reduced delivery split</strong> as per our driver agreement.</p>
                         </div>
                     </div>
                 </div>
@@ -365,7 +433,7 @@
                         <div>
                             <label class="form-label">Full Name *</label>
                             <input type="text" id="d-name" class="munchies-input" placeholder="e.g. Thabo Nkosi" autocomplete="name">
-                            <p class="field-msg err" id="d-name-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Full name is required</p>
+                            <p class="field-msg err" id="d-name-err"><svg class="w-3.5 h-3.5 shrink-0"><use href="#i-xcircle"/></svg> Full name is required</p>
                         </div>
                         <div>
                             <label class="form-label">WhatsApp Number *</label>
@@ -373,13 +441,13 @@
                                 <span class="munchies-input w-auto px-4 flex items-center text-munchies-green font-bold shrink-0 cursor-default">+27</span>
                                 <input type="tel" id="d-phone" class="munchies-input" placeholder="67 335 7429" maxlength="10">
                             </div>
-                            <p class="field-msg err" id="d-phone-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Enter a valid SA mobile number</p>
+                            <p class="field-msg err" id="d-phone-err"><svg class="w-3.5 h-3.5 shrink-0"><use href="#i-xcircle"/></svg> Enter a valid SA mobile number</p>
                         </div>
                         <div>
                             <label class="form-label">SA ID Number *</label>
                             <input type="text" id="d-id" class="munchies-input" placeholder="13-digit South African ID" maxlength="13" inputmode="numeric">
                             <div class="id-status" id="d-id-status"></div>
-                            <p class="field-msg err" id="d-id-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Please enter a valid 13-digit SA ID</p>
+                            <p class="field-msg err" id="d-id-err"><svg class="w-3.5 h-3.5 shrink-0"><use href="#i-xcircle"/></svg> Please enter a valid 13-digit SA ID</p>
                         </div>
                         <div>
                             <label class="form-label">Vehicle Type *</label>
@@ -389,46 +457,46 @@
                                 <option value="Motorbike">Motorbike</option>
                                 <option value="Car">Car</option>
                             </select>
-                            <p class="field-msg err" id="d-vehicle-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Please select a vehicle type</p>
+                            <p class="field-msg err" id="d-vehicle-err"><svg class="w-3.5 h-3.5 shrink-0"><use href="#i-xcircle"/></svg> Please select a vehicle type</p>
                         </div>
                         <div id="d-licence-wrap">
                             <label class="form-label">Driver's Licence (Upload) *</label>
                             <div class="upload-zone" id="d-licence-zone" onclick="document.getElementById('d-licence-file').click()">
                                 <input type="file" id="d-licence-file" accept="image/*,application/pdf" class="hidden">
-                                <i data-lucide="upload-cloud" class="text-munchies-green w-7 h-7 mx-auto mb-2"></i>
+                                <svg class="text-munchies-green w-7 h-7 mx-auto mb-2"><use href="#i-upload"/></svg>
                                 <p class="text-gray-300 text-sm font-semibold">Click to upload your driver's licence</p>
                                 <p class="text-gray-500 text-xs mt-1">JPG, PNG or PDF · Max 5MB</p>
                                 <p id="d-licence-name" class="text-munchies-green text-xs font-bold mt-2 hidden"></p>
                             </div>
-                            <p class="field-msg err" id="d-licence-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Please upload your driver's licence</p>
+                            <p class="field-msg err" id="d-licence-err"><svg class="w-3.5 h-3.5 shrink-0"><use href="#i-xcircle"/></svg> Please upload your driver's licence</p>
                         </div>
                         <div>
                             <label class="form-label">Criminal Record Certificate * <span class="text-gray-500 normal-case tracking-normal font-normal ml-1">(valid affidavit from SAPS)</span></label>
                             <div class="upload-zone" id="d-criminal-zone" onclick="document.getElementById('d-criminal-file').click()">
                                 <input type="file" id="d-criminal-file" accept="image/*,application/pdf" class="hidden">
-                                <i data-lucide="file-check" class="text-munchies-green w-7 h-7 mx-auto mb-2"></i>
+                                <svg class="text-munchies-green w-7 h-7 mx-auto mb-2"><use href="#i-filecheck"/></svg>
                                 <p class="text-gray-300 text-sm font-semibold">Upload your SAPS clearance / affidavit</p>
                                 <p class="text-gray-500 text-xs mt-1">JPG, PNG or PDF · Max 5MB</p>
                                 <p id="d-criminal-name" class="text-munchies-green text-xs font-bold mt-2 hidden"></p>
                             </div>
-                            <p class="field-msg err" id="d-criminal-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Criminal clearance document is required</p>
+                            <p class="field-msg err" id="d-criminal-err"><svg class="w-3.5 h-3.5 shrink-0"><use href="#i-xcircle"/></svg> Criminal clearance document is required</p>
                         </div>
                         <div>
                             <label class="form-label">Identity Selfie *</label>
                             <div class="upload-zone" id="d-selfie-zone" onclick="document.getElementById('d-selfie-file').click()">
                                 <input type="file" id="d-selfie-file" accept="image/*" capture="user" class="hidden">
-                                <i data-lucide="camera" class="text-munchies-green w-7 h-7 mx-auto mb-2"></i>
+                                <svg class="text-munchies-green w-7 h-7 mx-auto mb-2"><use href="#i-camera"/></svg>
                                 <p class="text-gray-300 text-sm font-semibold">Upload a clear selfie for identity verification</p>
                                 <p class="text-gray-500 text-xs mt-1">JPG or PNG · Max 5MB</p>
                                 <p id="d-selfie-name" class="text-munchies-green text-xs font-bold mt-2 hidden"></p>
                             </div>
-                            <p class="field-msg err" id="d-selfie-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> A selfie is required for verification</p>
+                            <p class="field-msg err" id="d-selfie-err"><svg class="w-3.5 h-3.5 shrink-0"><use href="#i-xcircle"/></svg> A selfie is required for verification</p>
                         </div>
                         <label class="flex items-start gap-3 cursor-pointer mt-2">
                             <input type="checkbox" id="d-consent" class="mt-1 accent-munchies-green w-4 h-4 shrink-0">
                             <span class="text-gray-400 text-sm leading-relaxed">I agree to the <a href="terms.html" class="text-munchies-green underline">Munchies Driver Terms</a>, the delivery commitment policy, and consent to my data being processed in line with <a href="privacy-policy.html" class="text-munchies-green underline">POPIA</a>.</span>
                         </label>
-                        <p class="field-msg err" id="d-consent-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> You must agree to continue</p>
+                        <p class="field-msg err" id="d-consent-err"><svg class="w-3.5 h-3.5 shrink-0"><use href="#i-xcircle"/></svg> You must agree to continue</p>
                         <button type="submit" id="d-submit" class="submit-btn mt-2">
                             <span class="btn-text">APPLY AS A DRIVER</span>
                             <span class="spin" id="d-spin"></span>
@@ -460,12 +528,12 @@
                         <div>
                             <label class="form-label">Business / Store Name *</label>
                             <input type="text" id="v-biz" class="munchies-input" placeholder="e.g. Mama's Kitchen">
-                            <p class="field-msg err" id="v-biz-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Business name is required</p>
+                            <p class="field-msg err" id="v-biz-err"><svg class="w-3.5 h-3.5 shrink-0"><use href="#i-xcircle"/></svg> Business name is required</p>
                         </div>
                         <div>
                             <label class="form-label">Owner's Full Name *</label>
                             <input type="text" id="v-owner" class="munchies-input" placeholder="e.g. Nomsa Dlamini">
-                            <p class="field-msg err" id="v-owner-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Owner name is required</p>
+                            <p class="field-msg err" id="v-owner-err"><svg class="w-3.5 h-3.5 shrink-0"><use href="#i-xcircle"/></svg> Owner name is required</p>
                         </div>
                         <div>
                             <label class="form-label">WhatsApp Number *</label>
@@ -473,13 +541,13 @@
                                 <span class="munchies-input w-auto px-4 flex items-center text-munchies-green font-bold shrink-0 cursor-default">+27</span>
                                 <input type="tel" id="v-phone" class="munchies-input" placeholder="67 335 7429" maxlength="10">
                             </div>
-                            <p class="field-msg err" id="v-phone-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Enter a valid SA mobile number</p>
+                            <p class="field-msg err" id="v-phone-err"><svg class="w-3.5 h-3.5 shrink-0"><use href="#i-xcircle"/></svg> Enter a valid SA mobile number</p>
                         </div>
                         <div>
                             <label class="form-label">Owner SA ID Number *</label>
                             <input type="text" id="v-id" class="munchies-input" placeholder="13-digit South African ID" maxlength="13" inputmode="numeric">
                             <div class="id-status" id="v-id-status"></div>
-                            <p class="field-msg err" id="v-id-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Please enter a valid 13-digit SA ID</p>
+                            <p class="field-msg err" id="v-id-err"><svg class="w-3.5 h-3.5 shrink-0"><use href="#i-xcircle"/></svg> Please enter a valid 13-digit SA ID</p>
                         </div>
                         <div>
                             <label class="form-label">Business Type *</label>
@@ -491,12 +559,12 @@
                                 <option>Tuck Shop</option>
                                 <option>Other</option>
                             </select>
-                            <p class="field-msg err" id="v-type-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Please select a business type</p>
+                            <p class="field-msg err" id="v-type-err"><svg class="w-3.5 h-3.5 shrink-0"><use href="#i-xcircle"/></svg> Please select a business type</p>
                         </div>
                         <div>
                             <label class="form-label">Business Address in Soshanguve *</label>
                             <input type="text" id="v-address" class="munchies-input" placeholder="e.g. Block K, Soshanguve">
-                            <p class="field-msg err" id="v-address-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Address is required</p>
+                            <p class="field-msg err" id="v-address-err"><svg class="w-3.5 h-3.5 shrink-0"><use href="#i-xcircle"/></svg> Address is required</p>
                         </div>
                         <div>
                             <label class="form-label">Bank *</label>
@@ -511,13 +579,13 @@
                                 <option>African Bank</option>
                                 <option>Other</option>
                             </select>
-                            <p class="field-msg err" id="v-bank-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> Please select your bank</p>
+                            <p class="field-msg err" id="v-bank-err"><svg class="w-3.5 h-3.5 shrink-0"><use href="#i-xcircle"/></svg> Please select your bank</p>
                         </div>
                         <label class="flex items-start gap-3 cursor-pointer mt-2">
                             <input type="checkbox" id="v-consent" class="mt-1 accent-munchies-green w-4 h-4 shrink-0">
                             <span class="text-gray-400 text-sm leading-relaxed">I agree to the <a href="terms.html" class="text-munchies-green underline">Munchies Vendor Terms</a> and consent to my data being processed in line with <a href="privacy-policy.html" class="text-munchies-green underline">POPIA</a>.</span>
                         </label>
-                        <p class="field-msg err" id="v-consent-err"><i data-lucide="x-circle" class="w-3.5 h-3.5 shrink-0"></i> You must agree to continue</p>
+                        <p class="field-msg err" id="v-consent-err"><svg class="w-3.5 h-3.5 shrink-0"><use href="#i-xcircle"/></svg> You must agree to continue</p>
                         <button type="submit" id="v-submit" class="submit-btn mt-2">
                             <span class="btn-text">REGISTER AS A VENDOR</span>
                             <span class="spin" id="v-spin"></span>
@@ -526,6 +594,27 @@
                 </form>
             </div>
         </div>
+    </div>
+</section>
+
+<!-- FEEDBACK -->
+<section class="py-20 md:py-28 px-6 border-t border-white/5">
+    <div class="max-w-2xl mx-auto text-center reveal">
+        <h2 class="font-street text-3xl md:text-5xl tracking-tighter mb-4">TELL US WHAT'S MISSING</h2>
+        <p class="text-gray-400 mb-10">Good or bad, it goes straight to WhatsApp so we actually see it.</p>
+        <form id="feedback-form" class="join-card bg-white/[0.04] border border-white/10 rounded-[2rem] p-8 md:p-10 text-left space-y-5">
+            <div>
+                <label class="form-label">Your Name (optional)</label>
+                <input type="text" id="fb-name" class="munchies-input" placeholder="e.g. Lerato">
+            </div>
+            <div>
+                <label class="form-label">What's on your mind?</label>
+                <textarea id="fb-msg" class="munchies-input" rows="4" placeholder="What's working, what isn't, what you'd love to see next"></textarea>
+            </div>
+            <button type="submit" class="submit-btn flex items-center justify-center gap-2">
+                <svg class="w-5 h-5"><use href="#i-chat"/></svg> SEND VIA WHATSAPP
+            </button>
+        </form>
     </div>
 </section>
 
@@ -609,7 +698,7 @@ function wireUpload(zoneId, fileId, nameId) {
     input.addEventListener('change', () => {
         const f = input.files[0];
         if (!f) return;
-        if (f.size > 5*1024*1024) { showToast('File too large — max 5MB','bad'); input.value=''; return; }
+        if (f.size > 5*1024*1024) { showToast('File too large, max 5MB','bad'); input.value=''; return; }
         label.textContent = '✓ ' + f.name; label.classList.remove('hidden'); zone.classList.add('has-file');
     });
     zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
@@ -694,7 +783,7 @@ $el('driver-form').addEventListener('submit', async e => {
         ['d-licence-zone','d-criminal-zone','d-selfie-zone'].forEach(id=>{ $el(id).classList.remove('has-file'); $el(id).style.borderColor=''; });
         ['d-licence-name','d-criminal-name','d-selfie-name'].forEach(id=>$el(id).classList.add('hidden'));
         $el('d-id-status').className='id-status';
-    } catch { showToast('Something went wrong — WhatsApp us at 067 335 7429','bad'); }
+    } catch { showToast('Something went wrong. WhatsApp us at 067 335 7429','bad'); }
     finally { setBusy('d-submit','d-spin',false); }
 });
 
@@ -724,7 +813,7 @@ $el('vendor-form').addEventListener('submit', async e => {
         showToast("✓ Vendor application received! We'll contact you on WhatsApp.",'ok');
         $el('vendor-form').reset();
         $el('v-id-status').className='id-status';
-    } catch { showToast('Something went wrong — WhatsApp us at 067 335 7429','bad'); }
+    } catch { showToast('Something went wrong. WhatsApp us at 067 335 7429','bad'); }
     finally { setBusy('v-submit','v-spin',false); }
 });
 
@@ -754,7 +843,19 @@ new IntersectionObserver(entries => {
     new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:0.1}).observe(el)
 );
 
-lucide.createIcons();
+const fbForm = document.getElementById('feedback-form');
+if (fbForm) {
+    fbForm.addEventListener('submit', e => {
+        e.preventDefault();
+        const name = document.getElementById('fb-name').value.trim();
+        const msg = document.getElementById('fb-msg').value.trim();
+        if (!msg) { showToast('Tell us something first.', 'bad'); return; }
+        const text = `Feedback for Munchies${name ? ' from ' + name : ''}: ${msg}`;
+        window.open('https://wa.me/27673357429?text=' + encodeURIComponent(text), '_blank');
+        fbForm.reset();
+        showToast('Opening WhatsApp to send your feedback.', 'ok');
+    });
+}
 </script>
 </body>
 </html>
