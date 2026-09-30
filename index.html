@@ -233,10 +233,20 @@
             </div>
         </div>
 
-        <!-- LIVE TRACKING WIDGET -->
-        <div class="h5 relative mx-auto w-full max-w-sm mt-24 sm:mt-28 lg:mt-0">
-            <div class="absolute -inset-4 bg-munchies-green/10 blur-3xl rounded-full"></div>
-            <div class="relative bg-white/[0.04] backdrop-blur-xl border border-white/15 rounded-[2rem] p-6 shadow-2xl">
+        <!-- LIVE TRACKING WIDGET, in an iPhone frame -->
+        <div class="h5 relative mx-auto w-full max-w-[340px] mt-24 sm:mt-28 lg:mt-0">
+            <div class="absolute -inset-8 bg-munchies-green/10 blur-3xl rounded-full"></div>
+            <!-- phone bezel -->
+            <div class="relative bg-[#050709] rounded-[3rem] p-3 shadow-2xl border border-white/10 ring-1 ring-black/50">
+                <!-- side buttons -->
+                <div class="absolute -left-[3px] top-24 w-[3px] h-8 bg-[#050709] rounded-l-sm"></div>
+                <div class="absolute -left-[3px] top-36 w-[3px] h-14 bg-[#050709] rounded-l-sm"></div>
+                <div class="absolute -right-[3px] top-32 w-[3px] h-16 bg-[#050709] rounded-r-sm"></div>
+                <!-- screen -->
+                <div class="relative bg-munchies-dark rounded-[2.5rem] overflow-hidden border border-white/5">
+                    <!-- dynamic island -->
+                    <div class="absolute top-3 left-1/2 -translate-x-1/2 w-20 h-6 bg-black rounded-full z-20"></div>
+                    <div class="relative px-5 pt-9 pb-6">
                 <div class="flex items-center justify-between mb-5">
                     <span class="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-munchies-green">
                         <span class="relative flex h-2 w-2">
@@ -293,6 +303,8 @@
                     <div class="flex items-center justify-between text-sm">
                         <span class="text-gray-300">The Block H Grill</span>
                         <span class="text-gray-500 text-xs">20-35 min</span>
+                    </div>
+                </div>
                     </div>
                 </div>
             </div>
