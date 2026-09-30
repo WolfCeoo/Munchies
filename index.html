@@ -44,6 +44,8 @@
         .h3{animation:fadeUp .7s .5s both}
         .h4{animation:fadeUp .7s .65s both}
         .h5{animation:fadeUp .7s .8s both}
+        .hphoto{animation:fadeUp .8s .2s both}
+        .hcats{animation:fadeUp .7s .75s both}
         .reveal { opacity:0; transform:translateY(36px); transition:opacity .65s ease,transform .65s ease; }
         .reveal.visible { opacity:1; transform:translateY(0); }
         .stagger > *:nth-child(1){transition-delay:0s}
@@ -216,13 +218,34 @@
     <div class="absolute inset-0 bg-munchies-dark">
         <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(62,232,121,0.08),transparent_60%)]"></div>
     </div>
-    <div class="relative z-10 px-6 max-w-7xl mx-auto grid lg:grid-cols-2 gap-14 lg:gap-20 items-center w-full">
+    <div class="relative z-10 px-6 max-w-7xl mx-auto grid lg:grid-cols-2 gap-10 lg:gap-16 items-center w-full">
         <div class="text-center lg:text-left">
-            <div class="w-full max-w-[360px] md:max-w-[540px] mx-auto lg:mx-0 mb-8 h1">
+            <div class="w-full max-w-[300px] md:max-w-[420px] mx-auto lg:mx-0 mb-6 h1">
                 <img src="assets/munchies-wordmark-dark.png" alt="Munchies - Full of taste"
                      class="w-full h-auto drop-shadow-2xl animate-bounce-slow">
             </div>
-            <p class="text-lg md:text-2xl font-medium text-gray-300 mb-10 max-w-2xl mx-auto lg:mx-0 leading-relaxed h4">Soshanguve's fastest route to local food.</p>
+            <p class="text-lg md:text-2xl font-medium text-gray-300 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed h4">Soshanguve's fastest route to local food.</p>
+
+            <!-- QUICK CATEGORY PICKS -->
+            <div class="hcats flex items-center justify-center lg:justify-start gap-3 md:gap-4 mb-8 flex-wrap">
+                <a href="/order?category=Kotas" class="flex items-center gap-2 bg-white/5 border border-white/10 hover:border-munchies-green/50 rounded-full pl-1.5 pr-4 py-1.5 transition-colors">
+                    <img src="https://images.unsplash.com/photo-1737513916865-63c7fd3b67a7?q=80&w=80&auto=format&fit=crop" class="w-8 h-8 rounded-full object-cover" alt="Kotas">
+                    <span class="text-xs font-bold text-white">Kotas</span>
+                </a>
+                <a href="/order?category=Dagwoods" class="flex items-center gap-2 bg-white/5 border border-white/10 hover:border-munchies-green/50 rounded-full pl-1.5 pr-4 py-1.5 transition-colors">
+                    <img src="https://images.unsplash.com/photo-1469648034646-7911874fe62b?q=80&w=80&auto=format&fit=crop" class="w-8 h-8 rounded-full object-cover" alt="Dagwoods">
+                    <span class="text-xs font-bold text-white">Dagwoods</span>
+                </a>
+                <a href="/order?category=Shisanyama" class="flex items-center gap-2 bg-white/5 border border-white/10 hover:border-munchies-green/50 rounded-full pl-1.5 pr-4 py-1.5 transition-colors">
+                    <img src="https://images.unsplash.com/photo-1578387498780-9c736695a275?q=80&w=80&auto=format&fit=crop" class="w-8 h-8 rounded-full object-cover" alt="Shisanyama">
+                    <span class="text-xs font-bold text-white">Shisanyama</span>
+                </a>
+                <a href="/order?category=Pap+%26+Stews" class="flex items-center gap-2 bg-white/5 border border-white/10 hover:border-munchies-green/50 rounded-full pl-1.5 pr-4 py-1.5 transition-colors">
+                    <img src="https://images.unsplash.com/photo-1708782340354-96cdbd9f70d6?q=80&w=80&auto=format&fit=crop" class="w-8 h-8 rounded-full object-cover" alt="Pap and stews">
+                    <span class="text-xs font-bold text-white">Pap & Stews</span>
+                </a>
+            </div>
+
             <div class="h5 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
                 <a href="/order" class="bg-munchies-green text-munchies-dark text-lg md:text-xl font-extrabold px-8 py-4 md:px-10 md:py-5 rounded-2xl shadow-2xl shadow-munchies-green/25 inline-flex items-center gap-3 transition-all hover:scale-105 active:scale-95 hover:brightness-110">
                     <svg class="w-5 h-5 md:w-6 md:h-6"><use href="#i-bag"/></svg> ORDER NOW
@@ -233,84 +256,106 @@
             </div>
         </div>
 
-        <!-- LIVE TRACKING WIDGET, in an iPhone frame -->
-        <div class="h5 relative mx-auto w-full max-w-[340px] mt-24 sm:mt-28 lg:mt-0">
-            <div class="absolute -inset-8 bg-munchies-green/10 blur-3xl rounded-full"></div>
-            <!-- phone bezel -->
-            <div class="relative bg-[#050709] rounded-[3rem] p-3 shadow-2xl border border-white/10 ring-1 ring-black/50">
-                <!-- side buttons -->
-                <div class="absolute -left-[3px] top-24 w-[3px] h-8 bg-[#050709] rounded-l-sm"></div>
-                <div class="absolute -left-[3px] top-36 w-[3px] h-14 bg-[#050709] rounded-l-sm"></div>
-                <div class="absolute -right-[3px] top-32 w-[3px] h-16 bg-[#050709] rounded-r-sm"></div>
-                <!-- screen -->
-                <div class="relative bg-munchies-dark rounded-[2.5rem] overflow-hidden border border-white/5">
-                    <!-- dynamic island -->
-                    <div class="absolute top-3 left-1/2 -translate-x-1/2 w-20 h-6 bg-black rounded-full z-20"></div>
-                    <div class="relative px-5 pt-9 pb-6">
-                <div class="flex items-center justify-between mb-5">
-                    <span class="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-munchies-green">
-                        <span class="relative flex h-2 w-2">
-                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-munchies-green opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-2 w-2 bg-munchies-green"></span>
+        <!-- HERO FOOD PHOTO -->
+        <div class="hphoto relative mx-auto w-full max-w-[380px] md:max-w-[440px] aspect-square mt-4 lg:mt-0">
+            <div class="absolute inset-0 bg-munchies-green/20 rounded-full blur-3xl scale-90"></div>
+            <div class="absolute inset-[4%] rounded-full bg-gradient-to-br from-munchies-green/30 via-munchies-dark to-munchies-dark overflow-hidden border-4 border-white/10 shadow-2xl">
+                <img src="https://images.unsplash.com/photo-1578387498780-9c736695a275?q=80&w=1000&auto=format&fit=crop"
+                     alt="Fresh off the grill" class="w-full h-full object-cover">
+            </div>
+            <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 md:left-2 md:translate-x-0 bg-white/[0.06] backdrop-blur-xl border border-white/15 rounded-2xl px-5 py-3 shadow-xl flex items-center gap-3 whitespace-nowrap">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-munchies-green opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-munchies-green"></span>
+                </span>
+                <span class="text-xs font-bold text-white uppercase tracking-widest">Fresh &middot; Fast &middot; Local</span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- LIVE TRACKING -->
+<section class="py-24 md:py-28 px-6 max-w-7xl mx-auto grid lg:grid-cols-2 gap-14 lg:gap-20 items-center">
+    <div class="order-2 lg:order-1 relative mx-auto w-full max-w-[340px]">
+        <div class="absolute -inset-8 bg-munchies-green/10 blur-3xl rounded-full"></div>
+        <!-- phone bezel -->
+        <div class="relative bg-[#050709] rounded-[3rem] p-3 shadow-2xl border border-white/10 ring-1 ring-black/50">
+            <!-- side buttons -->
+            <div class="absolute -left-[3px] top-24 w-[3px] h-8 bg-[#050709] rounded-l-sm"></div>
+            <div class="absolute -left-[3px] top-36 w-[3px] h-14 bg-[#050709] rounded-l-sm"></div>
+            <div class="absolute -right-[3px] top-32 w-[3px] h-16 bg-[#050709] rounded-r-sm"></div>
+            <!-- screen -->
+            <div class="relative bg-munchies-dark rounded-[2.5rem] overflow-hidden border border-white/5">
+                <!-- dynamic island -->
+                <div class="absolute top-3 left-1/2 -translate-x-1/2 w-20 h-6 bg-black rounded-full z-20"></div>
+                <div class="relative px-5 pt-9 pb-6">
+                    <div class="flex items-center justify-between mb-5">
+                        <span class="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-munchies-green">
+                            <span class="relative flex h-2 w-2">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-munchies-green opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2 w-2 bg-munchies-green"></span>
+                            </span>
+                            Order in progress
                         </span>
-                        Order in progress
-                    </span>
-                    <span class="text-xs text-gray-400 font-mono">#MU-2481</span>
-                </div>
+                        <span class="text-xs text-gray-400 font-mono">#MU-2481</span>
+                    </div>
 
-                <!-- route: a real OSRM road route rendered on a real OpenStreetMap tile
-                     layer, same free/open-source stack (Leaflet + OSRM) the order-tracking
-                     app itself uses. Falls back to a simple animated line if the map or the
-                     route fetch can't load (offline, ad-blocker, OSRM's public demo server
-                     unavailable), never a fake screenshot pretending to be live. -->
-                <div id="hero-map" class="relative h-28 mb-5 rounded-2xl bg-munchies-dark/60 border border-white/10 overflow-hidden"></div>
-                <div id="hero-map-fallback" class="hidden relative h-28 mb-5 rounded-2xl bg-munchies-dark/60 border border-white/10 overflow-hidden">
-                    <svg viewBox="0 0 300 100" class="absolute inset-0 w-full h-full">
-                        <path d="M20,75 C90,20 150,90 280,25" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="3" stroke-linecap="round"/>
-                        <path d="M20,75 C90,20 150,90 280,25" fill="none" stroke="#3ee879" stroke-width="3" stroke-linecap="round" stroke-dasharray="6 10">
-                            <animate attributeName="stroke-dashoffset" from="0" to="-64" dur="1.6s" repeatCount="indefinite"/>
-                        </path>
-                        <circle cx="20" cy="75" r="5" fill="#3ee879"/>
-                        <circle cx="280" cy="25" r="5" fill="white" fill-opacity="0.6"/>
-                        <g id="rider-dot">
-                            <circle cx="90" cy="42" r="7" fill="#0a111f" stroke="#3ee879" stroke-width="2.5"/>
-                            <animateMotion dur="3.2s" repeatCount="indefinite" path="M20,75 C90,20 150,90 280,25" rotate="auto"/>
-                        </g>
-                    </svg>
-                </div>
+                    <!-- route: a real OSRM road route rendered on a real OpenStreetMap tile
+                         layer, same free/open-source stack (Leaflet + OSRM) the order-tracking
+                         app itself uses. Falls back to a simple animated line if the map or the
+                         route fetch can't load (offline, ad-blocker, OSRM's public demo server
+                         unavailable), never a fake screenshot pretending to be live. -->
+                    <div id="hero-map" class="relative h-28 mb-5 rounded-2xl bg-munchies-dark/60 border border-white/10 overflow-hidden"></div>
+                    <div id="hero-map-fallback" class="hidden relative h-28 mb-5 rounded-2xl bg-munchies-dark/60 border border-white/10 overflow-hidden">
+                        <svg viewBox="0 0 300 100" class="absolute inset-0 w-full h-full">
+                            <path d="M20,75 C90,20 150,90 280,25" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="3" stroke-linecap="round"/>
+                            <path d="M20,75 C90,20 150,90 280,25" fill="none" stroke="#3ee879" stroke-width="3" stroke-linecap="round" stroke-dasharray="6 10">
+                                <animate attributeName="stroke-dashoffset" from="0" to="-64" dur="1.6s" repeatCount="indefinite"/>
+                            </path>
+                            <circle cx="20" cy="75" r="5" fill="#3ee879"/>
+                            <circle cx="280" cy="25" r="5" fill="white" fill-opacity="0.6"/>
+                            <g id="rider-dot">
+                                <circle cx="90" cy="42" r="7" fill="#0a111f" stroke="#3ee879" stroke-width="2.5"/>
+                                <animateMotion dur="3.2s" repeatCount="indefinite" path="M20,75 C90,20 150,90 280,25" rotate="auto"/>
+                            </g>
+                        </svg>
+                    </div>
 
-                <div class="flex items-center gap-3 mb-4 pb-4 border-b border-white/10">
-                    <div class="w-9 h-9 rounded-full bg-munchies-green/15 flex items-center justify-center shrink-0">
-                        <svg class="text-munchies-green w-4 h-4"><use href="#i-bike"/></svg>
+                    <div class="flex items-center gap-3 mb-4 pb-4 border-b border-white/10">
+                        <div class="w-9 h-9 rounded-full bg-munchies-green/15 flex items-center justify-center shrink-0">
+                            <svg class="text-munchies-green w-4 h-4"><use href="#i-bike"/></svg>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm font-bold text-white truncate">Thabo is on the way</p>
+                            <p class="text-xs text-gray-400 truncate">Picked up from Soshanguve Sizzle</p>
+                        </div>
+                        <span class="text-munchies-green font-extrabold text-sm whitespace-nowrap">~18 min</span>
                     </div>
-                    <div class="flex-1 min-w-0">
-                        <p class="text-sm font-bold text-white truncate">Thabo is on the way</p>
-                        <p class="text-xs text-gray-400 truncate">Picked up from Soshanguve Sizzle</p>
-                    </div>
-                    <span class="text-munchies-green font-extrabold text-sm whitespace-nowrap">~18 min</span>
-                </div>
 
-                <p class="text-[11px] uppercase tracking-widest text-gray-500 font-bold mb-3">Nearby right now</p>
-                <div class="space-y-2">
-                    <div class="flex items-center justify-between text-sm">
-                        <span class="text-gray-300">Di Pitseng</span>
-                        <span class="text-gray-500 text-xs">25-40 min</span>
-                    </div>
-                    <div class="flex items-center justify-between text-sm">
-                        <span class="text-gray-300">Kwasa Grill</span>
-                        <span class="text-gray-500 text-xs">15-30 min</span>
-                    </div>
-                    <div class="flex items-center justify-between text-sm">
-                        <span class="text-gray-300">The Block H Grill</span>
-                        <span class="text-gray-500 text-xs">20-35 min</span>
-                    </div>
-                </div>
+                    <p class="text-[11px] uppercase tracking-widest text-gray-500 font-bold mb-3">Nearby right now</p>
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-gray-300">Di Pitseng</span>
+                            <span class="text-gray-500 text-xs">25-40 min</span>
+                        </div>
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-gray-300">Kwasa Grill</span>
+                            <span class="text-gray-500 text-xs">15-30 min</span>
+                        </div>
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-gray-300">The Block H Grill</span>
+                            <span class="text-gray-500 text-xs">20-35 min</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</header>
+    <div class="order-1 lg:order-2 text-center lg:text-left reveal">
+        <h2 class="font-street text-4xl md:text-6xl italic tracking-tighter mb-4">TRACK EVERY ORDER, LIVE</h2>
+        <p class="text-gray-400 text-base md:text-lg max-w-md mx-auto lg:mx-0 leading-relaxed">Real GPS, real routes &mdash; watch your rider move from the vendor's door to yours, no guessing games about "20-30 minutes."</p>
+    </div>
+</section>
 
 <!-- STATS / DIFFERENTIATORS -->
 <section class="border-y border-white/10 bg-white/[0.02]">
