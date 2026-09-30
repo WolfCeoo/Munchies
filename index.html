@@ -123,15 +123,23 @@
         .feature-card:hover .feature-icon { transform:scale(1.12) rotate(-4deg); }
         .hero-map-dark-tiles .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(0.85) contrast(0.9) saturate(0.6); }
         .shot-frame {
-            position:relative; display:block; border-radius:1.5rem; border:6px solid #1c2333;
-            overflow:hidden; background:#000;
-            box-shadow:0 30px 60px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.06);
+            position:relative; display:block; border-radius:1.8rem; padding:4px;
+            background:linear-gradient(135deg,#6b6b70 0%,#3b3b3f 18%,#2a2a2d 45%,#46464b 70%,#232326 100%);
+            box-shadow:0 30px 60px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.18);
         }
-        .shot-frame img { display:block; width:100%; height:auto; }
+        .shot-frame img { display:block; width:100%; height:auto; border-radius:1.5rem; }
         .shot-frame .shot-fade {
-            position:absolute; left:0; right:0; bottom:0; height:22%;
+            position:absolute; left:4px; right:4px; bottom:4px; height:22%;
+            border-radius:0 0 1.5rem 1.5rem;
             background:linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,.55)); pointer-events:none;
         }
+        /* decorative side buttons on the shot-frame bezel, entirely outside the screenshot itself */
+        .shot-frame::before, .shot-frame::after {
+            content:''; position:absolute; width:4px; border-radius:2px;
+            background:linear-gradient(90deg,#2a2a2d,#5a5a5f 60%,#3a3a3e); pointer-events:none;
+        }
+        .shot-frame::before { left:-4px; top:17%; height:8%; }
+        .shot-frame::after { right:-4px; top:23%; height:12%; background:linear-gradient(270deg,#2a2a2d,#5a5a5f 60%,#3a3a3e); }
         @keyframes subtle-bounce-2 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
         .animate-bounce-slow-delay { animation: subtle-bounce-2 3.6s .5s infinite ease-in-out; }
         @media (prefers-reduced-motion: reduce) {
@@ -249,19 +257,30 @@
 
 <!-- LIVE TRACKING -->
 <section class="py-24 md:py-28 px-6 max-w-7xl mx-auto grid lg:grid-cols-2 gap-14 lg:gap-20 items-center">
-    <div class="order-2 lg:order-1 relative mx-auto w-full max-w-[340px]">
+    <div class="order-2 lg:order-1 relative mx-auto w-full max-w-[300px]" style="filter:drop-shadow(0 28px 42px rgba(0,0,0,.45)) drop-shadow(0 6px 11px rgba(0,0,0,.3))">
         <div class="absolute -inset-8 bg-munchies-green/10 blur-3xl rounded-full"></div>
-        <!-- phone bezel -->
-        <div class="relative bg-[#050709] rounded-[3rem] p-3 shadow-2xl border border-white/10 ring-1 ring-black/50">
-            <!-- side buttons -->
-            <div class="absolute -left-[3px] top-24 w-[3px] h-8 bg-[#050709] rounded-l-sm"></div>
-            <div class="absolute -left-[3px] top-36 w-[3px] h-14 bg-[#050709] rounded-l-sm"></div>
-            <div class="absolute -right-[3px] top-32 w-[3px] h-16 bg-[#050709] rounded-r-sm"></div>
-            <!-- screen -->
-            <div class="relative bg-munchies-dark rounded-[2.5rem] overflow-hidden border border-white/5">
-                <!-- dynamic island -->
-                <div class="absolute top-3 left-1/2 -translate-x-1/2 w-20 h-6 bg-black rounded-full z-20"></div>
-                <div class="relative px-5 pt-9 pb-6">
+        <!-- side buttons -->
+        <div class="absolute -left-[3px] top-[17%] w-[4px] h-[3.6%] rounded-l" style="background:linear-gradient(90deg,#2a2a2d,#5a5a5f 60%,#3a3a3e)"></div>
+        <div class="absolute -left-[3px] top-[24.5%] w-[4px] h-[7%] rounded-l" style="background:linear-gradient(90deg,#2a2a2d,#5a5a5f 60%,#3a3a3e)"></div>
+        <div class="absolute -left-[3px] top-[33%] w-[4px] h-[7%] rounded-l" style="background:linear-gradient(90deg,#2a2a2d,#5a5a5f 60%,#3a3a3e)"></div>
+        <div class="absolute -right-[3px] top-[27%] w-[4px] h-[11.4%] rounded-r" style="background:linear-gradient(270deg,#2a2a2d,#5a5a5f 60%,#3a3a3e)"></div>
+        <!-- metal bezel -->
+        <div class="relative rounded-[2.7rem] p-[3px]" style="background:linear-gradient(135deg,#6b6b70 0%,#3b3b3f 18%,#2a2a2d 45%,#46464b 70%,#232326 100%); box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)">
+            <div class="rounded-[2.6rem] p-[2px] bg-[#050505]" style="box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)">
+                <!-- screen -->
+                <div class="relative bg-munchies-dark rounded-[2.4rem] overflow-hidden">
+                    <!-- status bar -->
+                    <div class="flex items-center justify-between px-8 pt-2.5 pb-1">
+                        <span class="text-white font-semibold text-[13px] tracking-tight">9:41</span>
+                        <div class="flex items-center gap-1.5">
+                            <svg width="15" height="10" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="#fff"/><rect x="5" y="5.5" width="3" height="6.5" rx="1" fill="#fff"/><rect x="10" y="3" width="3" height="9" rx="1" fill="#fff"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#fff"/></svg>
+                            <svg width="13" height="10" viewBox="0 0 16 12"><path d="M8 11.5l2.3-2.6a3.3 3.3 0 00-4.6 0z M3.4 6.6a6.6 6.6 0 019.2 0l1.5-1.7a8.9 8.9 0 00-12.2 0z M1.1 4a9.9 9.9 0 0113.8 0L16 2.5a12 12 0 00-16 0z" fill="#fff"/></svg>
+                            <svg width="22" height="11" viewBox="0 0 27 13"><rect x=".5" y=".5" width="23" height="12" rx="3.8" fill="none" stroke="rgba(255,255,255,.4)"/><rect x="2.5" y="2.5" width="19" height="8" rx="2.2" fill="#fff"/><path d="M25 4.5v4a2 2 0 000-4z" fill="rgba(255,255,255,.45)"/></svg>
+                        </div>
+                    </div>
+                    <!-- dynamic island -->
+                    <div class="absolute top-2 left-1/2 -translate-x-1/2 w-[88px] h-[26px] bg-black rounded-full z-20"></div>
+                    <div class="relative px-5 pt-3 pb-6">
                     <div class="flex items-center justify-between mb-5">
                         <span class="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-munchies-green">
                             <span class="relative flex h-2 w-2">
@@ -320,8 +339,11 @@
                             <span class="text-gray-500 text-xs">20-35 min</span>
                         </div>
                     </div>
+                    <!-- home indicator -->
+                    <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-[92px] h-[4px] bg-white/70 rounded-full"></div>
                 </div>
             </div>
+        </div>
         </div>
     </div>
     <div class="order-1 lg:order-2 text-center lg:text-left reveal">
