@@ -107,6 +107,7 @@
         }
         .legit-card:hover { border-color:rgba(62,232,121,.25); background:rgba(62,232,121,.04); transform:translateY(-3px); }
         .join-card { transition:all .4s cubic-bezier(.34,1.56,.64,1); }
+        .join-card:hover { border-color:rgba(62,232,121,.3); }
         .id-status { display:none; align-items:center; gap:6px; font-size:.78rem; font-weight:700; margin-top:6px; }
         .id-status.show { display:flex; }
         .id-status.ok  { color:#3ee879; }
@@ -186,6 +187,7 @@
 <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></symbol>
 <symbol id="i-qr" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v3M14 20h3M20 20v.01"/></symbol>
 <symbol id="i-star" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M12 2.5l2.85 6.28 6.9.63-5.2 4.6 1.58 6.79L12 17.3l-6.13 3.5 1.58-6.79-5.2-4.6 6.9-.63z"/></symbol>
+<symbol id="i-share" viewBox="0 0 24 24"><path d="M12 3v12m0-12 3.5 3.5M12 3 8.5 6.5"/><path d="M5 11v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></symbol>
 </g>
 </defs>
 </svg>
@@ -894,14 +896,17 @@
             <div class="join-card bg-white/[0.04] border border-white/10 rounded-[2rem] p-8 md:p-12">
                 <div class="grid grid-cols-3 gap-3 mb-8">
                     <div class="text-center p-4 rounded-2xl bg-munchies-green/10 border border-munchies-green/15">
+                        <svg class="text-munchies-green w-5 h-5 mx-auto mb-2"><use href="#i-cash"/></svg>
                         <p class="text-munchies-green font-street text-lg mb-1">100%</p>
                         <p class="text-gray-400 text-xs font-bold uppercase tracking-wide">Your Earnings</p>
                     </div>
                     <div class="text-center p-4 rounded-2xl bg-munchies-green/10 border border-munchies-green/15">
+                        <svg class="text-munchies-green w-5 h-5 mx-auto mb-2"><use href="#i-clock"/></svg>
                         <p class="text-munchies-green font-street text-lg mb-1">Flex</p>
                         <p class="text-gray-400 text-xs font-bold uppercase tracking-wide">Your Hours</p>
                     </div>
                     <div class="text-center p-4 rounded-2xl bg-munchies-green/10 border border-munchies-green/15">
+                        <svg class="text-munchies-green w-5 h-5 mx-auto mb-2"><use href="#i-badge"/></svg>
                         <p class="text-munchies-green font-street text-lg mb-1">R0</p>
                         <p class="text-gray-400 text-xs font-bold uppercase tracking-wide">Sign-up Fee</p>
                     </div>
@@ -950,7 +955,9 @@
                             <label class="form-label">Driver's Licence (Upload) *</label>
                             <div class="upload-zone" id="d-licence-zone" onclick="document.getElementById('d-licence-file').click()">
                                 <input type="file" id="d-licence-file" accept="image/*,application/pdf" class="hidden">
-                                <svg class="text-munchies-green w-7 h-7 mx-auto mb-2"><use href="#i-upload"/></svg>
+                                <div class="w-11 h-11 bg-munchies-green/15 rounded-xl flex items-center justify-center mx-auto mb-3">
+                                    <svg class="text-munchies-green w-5 h-5"><use href="#i-upload"/></svg>
+                                </div>
                                 <p class="text-gray-300 text-sm font-semibold">Click to upload your driver's licence</p>
                                 <p class="text-gray-500 text-xs mt-1">JPG, PNG or PDF · Max 5MB</p>
                                 <p id="d-licence-name" class="text-munchies-green text-xs font-bold mt-2 hidden"></p>
@@ -961,7 +968,9 @@
                             <label class="form-label">Criminal Record Certificate * <span class="text-gray-500 normal-case tracking-normal font-normal ml-1">(valid affidavit from SAPS)</span></label>
                             <div class="upload-zone" id="d-criminal-zone" onclick="document.getElementById('d-criminal-file').click()">
                                 <input type="file" id="d-criminal-file" accept="image/*,application/pdf" class="hidden">
-                                <svg class="text-munchies-green w-7 h-7 mx-auto mb-2"><use href="#i-filecheck"/></svg>
+                                <div class="w-11 h-11 bg-munchies-green/15 rounded-xl flex items-center justify-center mx-auto mb-3">
+                                    <svg class="text-munchies-green w-5 h-5"><use href="#i-filecheck"/></svg>
+                                </div>
                                 <p class="text-gray-300 text-sm font-semibold">Upload your SAPS clearance / affidavit</p>
                                 <p class="text-gray-500 text-xs mt-1">JPG, PNG or PDF · Max 5MB</p>
                                 <p id="d-criminal-name" class="text-munchies-green text-xs font-bold mt-2 hidden"></p>
@@ -972,7 +981,9 @@
                             <label class="form-label">Identity Selfie *</label>
                             <div class="upload-zone" id="d-selfie-zone" onclick="document.getElementById('d-selfie-file').click()">
                                 <input type="file" id="d-selfie-file" accept="image/*" capture="user" class="hidden">
-                                <svg class="text-munchies-green w-7 h-7 mx-auto mb-2"><use href="#i-camera"/></svg>
+                                <div class="w-11 h-11 bg-munchies-green/15 rounded-xl flex items-center justify-center mx-auto mb-3">
+                                    <svg class="text-munchies-green w-5 h-5"><use href="#i-camera"/></svg>
+                                </div>
                                 <p class="text-gray-300 text-sm font-semibold">Upload a clear selfie for identity verification</p>
                                 <p class="text-gray-500 text-xs mt-1">JPG or PNG · Max 5MB</p>
                                 <p id="d-selfie-name" class="text-munchies-green text-xs font-bold mt-2 hidden"></p>
@@ -998,14 +1009,17 @@
             <div class="join-card bg-white/[0.04] border border-white/10 rounded-[2rem] p-8 md:p-12">
                 <div class="grid grid-cols-3 gap-3 mb-8">
                     <div class="text-center p-4 rounded-2xl bg-munchies-green/10 border border-munchies-green/15">
+                        <svg class="text-munchies-green w-5 h-5 mx-auto mb-2"><use href="#i-cash"/></svg>
                         <p class="text-munchies-green font-street text-lg mb-1">R0</p>
                         <p class="text-gray-400 text-xs font-bold uppercase tracking-wide">Food Fees</p>
                     </div>
                     <div class="text-center p-4 rounded-2xl bg-munchies-green/10 border border-munchies-green/15">
+                        <svg class="text-munchies-green w-5 h-5 mx-auto mb-2"><use href="#i-compass"/></svg>
                         <p class="text-munchies-green font-street text-lg mb-1">Live</p>
                         <p class="text-gray-400 text-xs font-bold uppercase tracking-wide">Order Tracking</p>
                     </div>
                     <div class="text-center p-4 rounded-2xl bg-munchies-green/10 border border-munchies-green/15">
+                        <svg class="text-munchies-green w-5 h-5 mx-auto mb-2"><use href="#i-bike"/></svg>
                         <p class="text-munchies-green font-street text-lg mb-1">Your</p>
                         <p class="text-gray-400 text-xs font-bold uppercase tracking-wide">Own Bikers</p>
                     </div>
@@ -1106,36 +1120,67 @@
 </section>
 
 <!-- FOOTER -->
-<footer class="bg-munchies-dark text-white py-16 md:py-24 px-6 border-t border-white/5">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
-        <div>
-            <h3 class="text-3xl font-street mb-6">MUNCHIES</h3>
-            <div class="space-y-2 text-gray-400">
-                <p class="font-bold text-white">Munchies Delivery Service (Pty) Ltd</p>
-                <p>Reg: 2026/103543/07</p>
-                <p class="text-xs uppercase tracking-widest pt-4">Soshanguve, Pretoria</p>
+<footer class="relative bg-munchies-dark text-white pt-20 pb-10 px-6 border-t border-white/10 overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(62,232,121,0.08),transparent_55%)] pointer-events-none"></div>
+    <div class="relative max-w-7xl mx-auto">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 pb-14 mb-14 border-b border-white/10">
+            <div class="text-center lg:text-left">
+                <img src="assets/munchies-wordmark-dark.png" alt="Munchies - Full of taste" class="h-12 w-auto mx-auto lg:mx-0 mb-4">
+                <p class="text-gray-400 max-w-sm mx-auto lg:mx-0 text-sm md:text-base">Soshanguve's fastest route to local food &mdash; real township vendors, real GPS tracking.</p>
+            </div>
+            <div class="flex flex-col sm:flex-row items-center gap-3 shrink-0">
+                <a href="/order" class="w-full sm:w-auto justify-center bg-munchies-green text-munchies-dark font-extrabold px-7 py-3.5 rounded-xl inline-flex items-center gap-2 hover:scale-105 active:scale-95 transition-all shadow-lg shadow-munchies-green/20">
+                    <svg class="w-4 h-4"><use href="#i-bag"/></svg> ORDER NOW
+                </a>
+                <a href="https://wa.me/27673357429" class="w-full sm:w-auto justify-center bg-white/10 border border-white/15 text-white font-bold px-7 py-3.5 rounded-xl inline-flex items-center gap-2 hover:bg-white/20 transition-all">
+                    <svg class="w-4 h-4"><use href="#i-chat"/></svg> WHATSAPP US
+                </a>
             </div>
         </div>
-        <div>
-            <h4 class="text-xl font-bold mb-6 text-munchies-green underline decoration-2 underline-offset-8">Location</h4>
-            <div class="space-y-4 text-gray-400">
-                <p>Soshanguve, Pretoria</p>
-                <div class="pt-2">
-                    <p class="text-white font-bold">Contact:</p>
-                    <p>067 335 7429</p>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-10 mb-14">
+            <div>
+                <p class="text-munchies-green text-xs font-bold uppercase tracking-widest mb-5">Company</p>
+                <div class="space-y-2 text-sm text-gray-400">
+                    <p class="text-white font-bold">Munchies Delivery Service (Pty) Ltd</p>
+                    <p>Reg: 2026/103543/07</p>
+                </div>
+            </div>
+            <div>
+                <p class="text-munchies-green text-xs font-bold uppercase tracking-widest mb-5">Explore</p>
+                <div class="flex flex-col gap-3 text-sm text-gray-400">
+                    <a href="#" class="hover:text-munchies-green transition-colors w-fit">Home</a>
+                    <a href="#about" class="hover:text-munchies-green transition-colors w-fit">About</a>
+                    <a href="#vendors" class="hover:text-munchies-green transition-colors w-fit">Vendors</a>
+                    <a href="#join" class="hover:text-munchies-green transition-colors w-fit">Join Us</a>
+                </div>
+            </div>
+            <div>
+                <p class="text-munchies-green text-xs font-bold uppercase tracking-widest mb-5">Legal</p>
+                <div class="flex flex-col gap-3 text-sm text-gray-400">
+                    <a href="privacy-policy.html" class="hover:text-munchies-green transition-colors w-fit">Privacy Policy</a>
+                    <a href="terms.html" class="hover:text-munchies-green transition-colors w-fit">Terms of Service</a>
+                </div>
+            </div>
+            <div>
+                <p class="text-munchies-green text-xs font-bold uppercase tracking-widest mb-5">Contact</p>
+                <div class="space-y-3 text-sm text-gray-400">
+                    <a href="https://wa.me/27673357429" class="flex items-center gap-2 hover:text-munchies-green transition-colors w-fit">
+                        <svg class="w-4 h-4 shrink-0"><use href="#i-chat"/></svg> 067 335 7429
+                    </a>
+                    <p class="flex items-center gap-2">
+                        <svg class="w-4 h-4 shrink-0"><use href="#i-pin"/></svg> Soshanguve, Pretoria
+                    </p>
                 </div>
             </div>
         </div>
-        <div>
-            <h4 class="text-xl font-bold mb-6">Legal</h4>
-            <div class="flex flex-col gap-4 text-sm">
-                <a href="privacy-policy.html" class="text-gray-400 hover:text-munchies-green transition-colors">Privacy Policy</a>
-                <a href="terms.html" class="text-gray-400 hover:text-munchies-green transition-colors">Terms of Service</a>
+
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-white/10 text-gray-500 text-xs md:text-sm text-center sm:text-left">
+            <p>&copy; 2026 Munchies Delivery Service. Built for the Township.</p>
+            <div class="flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5 text-munchies-green"><use href="#i-shield"/></svg> Verified South African Business
             </div>
         </div>
-    </div>
-    <div class="max-w-7xl mx-auto pt-12 mt-12 border-t border-white/5 text-center text-gray-500 text-xs md:text-sm">
-        © 2026 Munchies Delivery Service. Built for the Township.
     </div>
 </footer>
 
@@ -1150,12 +1195,15 @@
     <span id="wa-bubble-label" class="whitespace-nowrap overflow-hidden max-w-0 opacity-0 transition-all duration-300">Need a hand? Chat on WhatsApp</span>
 </a>
 
-<!-- INSTALL PROMPT -->
-<div id="install-banner" class="fixed bottom-6 left-6 z-50 hidden items-center gap-4 bg-white/[0.06] backdrop-blur-xl border border-white/15 rounded-2xl shadow-2xl px-5 py-4 max-w-xs">
+<!-- INSTALL PROMPT: Chrome/Android gets the real beforeinstallprompt flow below.
+     iOS Safari never fires that event (Apple doesn't support it), so for iOS this
+     banner is switched to manual "tap Share, then Add to Home Screen" instructions
+     instead of silently never appearing. -->
+<div id="install-banner" class="fixed bottom-6 left-6 right-6 sm:right-auto z-50 hidden items-center gap-4 bg-white/[0.06] backdrop-blur-xl border border-white/15 rounded-2xl shadow-2xl px-5 py-4 sm:max-w-xs">
     <img src="assets/icon-192.png" alt="Munchies" class="w-10 h-10 rounded-xl shrink-0">
     <div class="flex-1 min-w-0">
-        <p class="text-sm font-bold text-white">Add Munchies to your home screen</p>
-        <p class="text-xs text-gray-400">Order faster next time, no browser needed.</p>
+        <p id="install-banner-title" class="text-sm font-bold text-white">Add Munchies to your home screen</p>
+        <p id="install-banner-sub" class="text-xs text-gray-400">Order faster next time, no browser needed.</p>
     </div>
     <button id="install-btn" class="shrink-0 bg-munchies-green text-munchies-dark text-xs font-extrabold uppercase px-3 py-2 rounded-lg">Add</button>
     <button id="install-dismiss" class="shrink-0 text-gray-500 hover:text-white text-lg leading-none">&times;</button>
@@ -1188,23 +1236,56 @@
         }, { threshold: 0 }).observe(hero);
     })();
 
-    // PWA install prompt (real beforeinstallprompt flow, not a fake button).
+    // PWA install prompt. Chrome/Android/desktop support a real native
+    // beforeinstallprompt flow. iOS Safari (and in-app browsers like the
+    // Facebook/Instagram webview) never fire that event at all -- there is no
+    // API for it -- so the banner silently never showed there before. Those
+    // get manual "tap Share, then Add to Home Screen" instructions instead.
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('sw.js').catch(() => {});
     }
+    const installBanner = document.getElementById('install-banner');
+    const installBtn = document.getElementById('install-btn');
+    const installDismiss = document.getElementById('install-dismiss');
+    const installTitle = document.getElementById('install-banner-title');
+    const installSub = document.getElementById('install-banner-sub');
+    const alreadyDismissed = () => { try { return !!localStorage.getItem('munchies-install-dismissed'); } catch(e) { return false; } };
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+    const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
+    const inUnsupportedInAppBrowser = /FBAN|FBAV|Instagram|Line\//i.test(navigator.userAgent);
+
     let deferredInstallPrompt = null;
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredInstallPrompt = e;
-        const banner = document.getElementById('install-banner');
-        if (banner && !localStorage.getItem('munchies-install-dismissed')) {
-            banner.classList.remove('hidden');
-            banner.classList.add('flex');
+        if (installBanner && !alreadyDismissed()) {
+            installBanner.classList.remove('hidden');
+            installBanner.classList.add('flex');
         }
     });
-    const installBtn = document.getElementById('install-btn');
-    const installDismiss = document.getElementById('install-dismiss');
-    const installBanner = document.getElementById('install-banner');
+
+    if (isIOS && !isStandalone && !alreadyDismissed() && installBanner) {
+        if (installTitle) installTitle.textContent = 'Add Munchies to your Home Screen';
+        if (installSub) installSub.innerHTML = 'Tap <svg class="inline w-3.5 h-3.5 -mt-0.5"><use href="#i-share"/></svg> Share, then "Add to Home Screen".';
+        if (installBtn) installBtn.remove();
+        setTimeout(() => {
+            if (alreadyDismissed()) return;
+            installBanner.classList.remove('hidden');
+            installBanner.classList.add('flex');
+        }, 2500);
+    } else if (inUnsupportedInAppBrowser && !isStandalone && !alreadyDismissed() && installBanner) {
+        // Facebook/Instagram/Line in-app browsers block PWA install entirely --
+        // the fix is opening the link in the real browser, not a home-screen tip.
+        if (installTitle) installTitle.textContent = 'Open in your browser to install';
+        if (installSub) installSub.textContent = 'Tap the menu (⋮ or •••) above and choose "Open in Browser" first.';
+        if (installBtn) installBtn.remove();
+        setTimeout(() => {
+            if (alreadyDismissed()) return;
+            installBanner.classList.remove('hidden');
+            installBanner.classList.add('flex');
+        }, 2500);
+    }
+
     if (installBtn) installBtn.addEventListener('click', async () => {
         if (!deferredInstallPrompt) return;
         deferredInstallPrompt.prompt();
