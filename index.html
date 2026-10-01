@@ -995,7 +995,7 @@
                         </div>
                         <label class="flex items-start gap-3 cursor-pointer mt-2">
                             <input type="checkbox" id="d-consent" class="mt-1 accent-munchies-green w-4 h-4 shrink-0">
-                            <span class="text-gray-400 text-sm leading-relaxed">I agree to the <a href="terms.html" class="text-munchies-green underline">Munchies Driver Terms</a>, the delivery commitment policy, and consent to my data being processed in line with <a href="privacy-policy.html" class="text-munchies-green underline">POPIA</a>.</span>
+                            <span class="text-gray-400 text-sm leading-relaxed">I agree to the <a href="/terms" class="text-munchies-green underline">Munchies Driver Terms</a>, the delivery commitment policy, and consent to my data being processed in line with <a href="privacy-policy.html" class="text-munchies-green underline">POPIA</a>.</span>
                         </label>
                         <p class="field-msg err" id="d-consent-err"><svg class="w-3.5 h-3.5 shrink-0"><use href="#i-xcircle"/></svg> You must agree to continue</p>
                         <button type="submit" id="d-submit" class="submit-btn mt-2">
@@ -1097,7 +1097,7 @@
                         </div>
                         <label class="flex items-start gap-3 cursor-pointer mt-2">
                             <input type="checkbox" id="v-consent" class="mt-1 accent-munchies-green w-4 h-4 shrink-0">
-                            <span class="text-gray-400 text-sm leading-relaxed">I agree to the <a href="terms.html" class="text-munchies-green underline">Munchies Vendor Terms</a> and consent to my data being processed in line with <a href="privacy-policy.html" class="text-munchies-green underline">POPIA</a>.</span>
+                            <span class="text-gray-400 text-sm leading-relaxed">I agree to the <a href="/terms" class="text-munchies-green underline">Munchies Vendor Terms</a> and consent to my data being processed in line with <a href="privacy-policy.html" class="text-munchies-green underline">POPIA</a>.</span>
                         </label>
                         <p class="field-msg err" id="v-consent-err"><svg class="w-3.5 h-3.5 shrink-0"><use href="#i-xcircle"/></svg> You must agree to continue</p>
                         <button type="submit" id="v-submit" class="submit-btn mt-2">
@@ -1172,7 +1172,7 @@
                 <p class="text-munchies-green text-xs font-bold uppercase tracking-widest mb-5">Legal</p>
                 <div class="flex flex-col gap-3 text-sm text-gray-400">
                     <a href="privacy-policy.html" class="hover:text-munchies-green transition-colors w-fit">Privacy Policy</a>
-                    <a href="terms.html" class="hover:text-munchies-green transition-colors w-fit">Terms of Service</a>
+                    <a href="/terms" class="hover:text-munchies-green transition-colors w-fit">Terms of Service</a>
                 </div>
             </div>
             <div>
@@ -1211,14 +1211,16 @@
 <!-- INSTALL PROMPT: Chrome/Android gets the real beforeinstallprompt flow below.
      iOS Safari never fires that event (Apple doesn't support it), so for iOS this
      banner is switched to manual "tap Share, then Add to Home Screen" instructions
-     instead of silently never appearing. -->
-<div id="install-banner" class="fixed bottom-6 left-6 right-6 sm:right-auto z-50 hidden items-center gap-4 bg-white/[0.06] backdrop-blur-xl border border-white/15 rounded-2xl shadow-2xl px-5 py-4 sm:max-w-xs">
-    <img src="assets/icon-192.png" alt="Munchies" class="w-10 h-10 rounded-xl shrink-0">
+     instead of silently never appearing. Kept as a small toast (not a big card),
+     bottom-centered and well clear of the WhatsApp bubble, so it never dominates
+     the screen or blocks content underneath. -->
+<div id="install-banner" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 hidden items-center gap-2.5 bg-[#131b2e]/95 backdrop-blur-xl border border-white/15 rounded-2xl shadow-2xl pl-3 pr-3 py-2.5 max-w-[260px] sm:max-w-xs">
+    <img src="assets/icon-192.png" alt="Munchies" class="w-8 h-8 rounded-lg shrink-0">
     <div class="flex-1 min-w-0">
-        <p id="install-banner-title" class="text-sm font-bold text-white">Add Munchies to your home screen</p>
-        <p id="install-banner-sub" class="text-xs text-gray-400">Order faster next time, no browser needed.</p>
+        <p id="install-banner-title" class="text-xs font-bold text-white leading-tight">Add Munchies to your Home Screen</p>
+        <p id="install-banner-sub" class="text-[11px] text-gray-400 leading-tight mt-0.5">Order faster, no browser needed.</p>
     </div>
-    <button id="install-btn" class="shrink-0 bg-munchies-green text-munchies-dark text-xs font-extrabold uppercase px-3 py-2 rounded-lg">Add</button>
+    <button id="install-btn" class="shrink-0 bg-munchies-green text-munchies-dark text-[11px] font-extrabold uppercase px-2.5 py-1.5 rounded-lg">Add</button>
     <button id="install-dismiss" class="shrink-0 text-gray-500 hover:text-white text-lg leading-none">&times;</button>
 </div>
 
