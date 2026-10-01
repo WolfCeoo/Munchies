@@ -106,8 +106,10 @@
             border-radius:20px; padding:24px; transition:all .3s;
         }
         .legit-card:hover { border-color:rgba(62,232,121,.25); background:rgba(62,232,121,.04); transform:translateY(-3px); }
-        .join-card { transition:all .4s cubic-bezier(.34,1.56,.64,1); }
+        .join-card { position:relative; overflow:hidden; transition:all .4s cubic-bezier(.34,1.56,.64,1); }
         .join-card:hover { border-color:rgba(62,232,121,.3); }
+        .join-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,transparent,#3ee879,transparent); }
+        .form-group-label { font-size:.7rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#3ee879; padding-bottom:10px; margin-bottom:6px; border-bottom:1px solid rgba(255,255,255,.08); }
         .id-status { display:none; align-items:center; gap:6px; font-size:.78rem; font-weight:700; margin-top:6px; }
         .id-status.show { display:flex; }
         .id-status.ok  { color:#3ee879; }
@@ -894,21 +896,20 @@
         <!-- DRIVER PANEL -->
         <div id="panel-driver" class="tab-panel active max-w-2xl mx-auto">
             <div class="join-card bg-white/[0.04] border border-white/10 rounded-[2rem] p-8 md:p-12">
-                <div class="grid grid-cols-3 gap-3 mb-8">
-                    <div class="text-center p-4 rounded-2xl bg-munchies-green/10 border border-munchies-green/15">
-                        <svg class="text-munchies-green w-5 h-5 mx-auto mb-2"><use href="#i-cash"/></svg>
-                        <p class="text-munchies-green font-street text-lg mb-1">100%</p>
-                        <p class="text-gray-400 text-xs font-bold uppercase tracking-wide">Your Earnings</p>
+                <div class="flex items-stretch rounded-2xl bg-munchies-green/10 border border-munchies-green/15 mb-8 overflow-hidden">
+                    <div class="flex-[1.4] text-center p-4 md:p-5">
+                        <p class="text-munchies-green font-street text-2xl md:text-3xl mb-1">100%</p>
+                        <p class="text-gray-400 text-[11px] font-bold uppercase tracking-wide">Your Earnings</p>
                     </div>
-                    <div class="text-center p-4 rounded-2xl bg-munchies-green/10 border border-munchies-green/15">
-                        <svg class="text-munchies-green w-5 h-5 mx-auto mb-2"><use href="#i-clock"/></svg>
-                        <p class="text-munchies-green font-street text-lg mb-1">Flex</p>
-                        <p class="text-gray-400 text-xs font-bold uppercase tracking-wide">Your Hours</p>
+                    <div class="w-px bg-munchies-green/15 my-3"></div>
+                    <div class="flex-1 text-center p-4 md:p-5">
+                        <p class="text-munchies-green font-street text-base md:text-lg mb-1">Flex</p>
+                        <p class="text-gray-400 text-[11px] font-bold uppercase tracking-wide">Your Hours</p>
                     </div>
-                    <div class="text-center p-4 rounded-2xl bg-munchies-green/10 border border-munchies-green/15">
-                        <svg class="text-munchies-green w-5 h-5 mx-auto mb-2"><use href="#i-badge"/></svg>
-                        <p class="text-munchies-green font-street text-lg mb-1">R0</p>
-                        <p class="text-gray-400 text-xs font-bold uppercase tracking-wide">Sign-up Fee</p>
+                    <div class="w-px bg-munchies-green/15 my-3"></div>
+                    <div class="flex-1 text-center p-4 md:p-5">
+                        <p class="text-munchies-green font-street text-base md:text-lg mb-1">R0</p>
+                        <p class="text-gray-400 text-[11px] font-bold uppercase tracking-wide">Sign-up Fee</p>
                     </div>
                 </div>
                 <div class="penalty-banner mb-8">
@@ -922,6 +923,7 @@
                 </div>
                 <form id="driver-form" novalidate>
                     <div class="space-y-5">
+                        <p class="form-group-label">Your Details</p>
                         <div>
                             <label class="form-label">Full Name *</label>
                             <input type="text" id="d-name" class="munchies-input" placeholder="e.g. Thabo Nkosi" autocomplete="name">
@@ -951,6 +953,7 @@
                             </select>
                             <p class="field-msg err" id="d-vehicle-err"><svg class="w-3.5 h-3.5 shrink-0"><use href="#i-xcircle"/></svg> Please select a vehicle type</p>
                         </div>
+                        <p class="form-group-label mt-2">Verification Documents</p>
                         <div id="d-licence-wrap">
                             <label class="form-label">Driver's Licence (Upload) *</label>
                             <div class="upload-zone" id="d-licence-zone" onclick="document.getElementById('d-licence-file').click()">
@@ -1007,25 +1010,34 @@
         <!-- VENDOR PANEL -->
         <div id="panel-vendor" class="tab-panel max-w-2xl mx-auto">
             <div class="join-card bg-white/[0.04] border border-white/10 rounded-[2rem] p-8 md:p-12">
-                <div class="grid grid-cols-3 gap-3 mb-8">
-                    <div class="text-center p-4 rounded-2xl bg-munchies-green/10 border border-munchies-green/15">
-                        <svg class="text-munchies-green w-5 h-5 mx-auto mb-2"><use href="#i-cash"/></svg>
-                        <p class="text-munchies-green font-street text-lg mb-1">R0</p>
-                        <p class="text-gray-400 text-xs font-bold uppercase tracking-wide">Food Fees</p>
+                <div class="flex items-stretch rounded-2xl bg-munchies-green/10 border border-munchies-green/15 mb-8 overflow-hidden">
+                    <div class="flex-[1.4] text-center p-4 md:p-5">
+                        <p class="text-munchies-green font-street text-2xl md:text-3xl mb-1">4%</p>
+                        <p class="text-gray-400 text-[11px] font-bold uppercase tracking-wide">Commission, All In</p>
                     </div>
-                    <div class="text-center p-4 rounded-2xl bg-munchies-green/10 border border-munchies-green/15">
-                        <svg class="text-munchies-green w-5 h-5 mx-auto mb-2"><use href="#i-compass"/></svg>
-                        <p class="text-munchies-green font-street text-lg mb-1">Live</p>
-                        <p class="text-gray-400 text-xs font-bold uppercase tracking-wide">Order Tracking</p>
+                    <div class="w-px bg-munchies-green/15 my-3"></div>
+                    <div class="flex-1 text-center p-4 md:p-5">
+                        <p class="text-munchies-green font-street text-base md:text-lg mb-1">Live</p>
+                        <p class="text-gray-400 text-[11px] font-bold uppercase tracking-wide">Order Tracking</p>
                     </div>
-                    <div class="text-center p-4 rounded-2xl bg-munchies-green/10 border border-munchies-green/15">
-                        <svg class="text-munchies-green w-5 h-5 mx-auto mb-2"><use href="#i-bike"/></svg>
-                        <p class="text-munchies-green font-street text-lg mb-1">Your</p>
-                        <p class="text-gray-400 text-xs font-bold uppercase tracking-wide">Own Bikers</p>
+                    <div class="w-px bg-munchies-green/15 my-3"></div>
+                    <div class="flex-1 text-center p-4 md:p-5">
+                        <p class="text-munchies-green font-street text-base md:text-lg mb-1">Your</p>
+                        <p class="text-gray-400 text-[11px] font-bold uppercase tracking-wide">Own Bikers</p>
+                    </div>
+                </div>
+                <div class="bg-munchies-green/10 border border-munchies-green/20 rounded-2xl p-4 mb-8">
+                    <div class="flex items-start gap-3">
+                        <svg class="text-munchies-green w-5 h-5 mt-0.5 shrink-0"><use href="#i-cash"/></svg>
+                        <div>
+                            <p class="text-white font-bold text-sm mb-1">How Payouts Work</p>
+                            <p class="text-gray-400 text-xs leading-relaxed">Just 4% commission per order, built into your listed price. No monthly fees and no sign-up cost. Use your own delivery riders or ours, your choice.</p>
+                        </div>
                     </div>
                 </div>
                 <form id="vendor-form" novalidate>
                     <div class="space-y-5">
+                        <p class="form-group-label">Business Details</p>
                         <div>
                             <label class="form-label">Business / Store Name *</label>
                             <input type="text" id="v-biz" class="munchies-input" placeholder="e.g. Mama's Kitchen">
@@ -1067,6 +1079,7 @@
                             <input type="text" id="v-address" class="munchies-input" placeholder="e.g. Block K, Soshanguve">
                             <p class="field-msg err" id="v-address-err"><svg class="w-3.5 h-3.5 shrink-0"><use href="#i-xcircle"/></svg> Address is required</p>
                         </div>
+                        <p class="form-group-label mt-2">Payouts</p>
                         <div>
                             <label class="form-label">Bank *</label>
                             <select id="v-bank" class="munchies-input">
