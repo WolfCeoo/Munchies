@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Page Not Found | Munchies Delivery Service</title>
+    <meta name="description" content="This page doesn't exist. Head back to Munchies Delivery Service for food delivery in Soshanguve.">
+    <meta name="robots" content="noindex">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0a111f">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+    <link rel="apple-touch-icon" href="assets/icon-192.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { munchies: { green: '#3ee879', dark: '#0a111f' } },
+                    fontFamily: { street: ['"Archivo Black"', 'sans-serif'], sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        svg use { fill: none; stroke: currentColor; stroke-width: 2.1; stroke-linecap: round; stroke-linejoin: round; }
+        #nav-container { transition: all 0.5s cubic-bezier(0.4,0,0.2,1); }
+        .glass { background: rgba(10,17,31,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+        @keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+        .f1{animation:fadeUp .7s .1s both}
+        .f2{animation:fadeUp .7s .3s both}
+        .f3{animation:fadeUp .7s .5s both}
+        .trust-badge {
+            display:inline-flex; align-items:center; gap:7px;
+            background:rgba(62,232,121,.1); border:1px solid rgba(62,232,121,.22);
+            padding:7px 16px; border-radius:999px; font-size:.73rem;
+            font-weight:700; color:#3ee879; letter-spacing:.08em; text-transform:uppercase;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .f1,.f2,.f3 { animation:none; opacity:1; transform:none; }
+            #lost-dot { animation:none !important; }
+        }
+    </style>
+</head>
+<body class="bg-munchies-dark text-white font-sans antialiased overflow-x-hidden">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+<symbol id="i-bag" viewBox="0 0 24 24"><path d="M6 7h12l1 14H5L6 7Z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+<symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-11.9 7.8L4 21l1.7-5.1A8.5 8.5 0 1 1 21 11.5Z"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 4.6 3.3 8 8 9 4.7-1 8-4.4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.3 7-12a7 7 0 1 0-14 0c0 5.7 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></symbol>
+<symbol id="i-bike" viewBox="0 0 24 24"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M6 17 10 8h4l3 5m-9 4h9l-3-9h-3"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+</defs>
+</svg>
+
+<!-- NAV -->
+<nav id="main-nav" class="fixed top-0 left-0 w-full z-50 flex justify-center">
+    <div id="nav-container" class="w-full h-20 flex items-center justify-between px-8 glass border-b border-white/10">
+        <div class="flex items-center gap-4">
+            <a href="/"><img id="logo-text" src="assets/munchies-wordmark-dark.png" alt="Munchies - Full of taste" class="h-11 w-auto transition-transform duration-500"></a>
+        </div>
+        <div class="hidden md:flex items-center gap-8 text-white font-bold uppercase text-[11px] tracking-[0.2em]">
+            <a href="/" class="hover:text-munchies-green transition-colors">Home</a>
+            <a href="/#about" class="hover:text-munchies-green transition-colors">About</a>
+            <a href="/#vendors" class="hover:text-munchies-green transition-colors">Vendors</a>
+            <a href="/#join" class="hover:text-munchies-green transition-colors">Join Us</a>
+            <a href="/order" class="bg-munchies-green text-munchies-dark px-6 py-2.5 rounded-full hover:scale-105 active:scale-95 transition-all shadow-lg shadow-munchies-green/20 flex items-center gap-2">
+                <svg class="w-3.5 h-3.5"><use href="#i-bag"/></svg> Order Now
+            </a>
+        </div>
+        <button id="menu-btn" class="md:hidden text-white"><svg class="w-5 h-5"><use href="#i-menu"/></svg></button>
+    </div>
+    <div id="mobile-menu" class="hidden absolute top-full left-0 w-full glass border-b border-white/10 shadow-2xl">
+        <div class="flex flex-col p-8 gap-6 text-white font-bold uppercase tracking-widest text-sm text-center">
+            <a href="/" class="pb-4 border-b border-white/5">Home</a>
+            <a href="/#about" class="pb-4 border-b border-white/5">About</a>
+            <a href="/#vendors" class="pb-4 border-b border-white/5">Vendors</a>
+            <a href="/#join" class="pb-4 border-b border-white/5">Join Us</a>
+            <a href="/order" class="text-munchies-green text-lg font-black flex items-center justify-center gap-2">
+                <svg class="w-5 h-5"><use href="#i-bag"/></svg> Order Now
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- 404 -->
+<main class="min-h-screen flex items-center px-6 pt-32 pb-20">
+    <div class="max-w-2xl mx-auto w-full text-center">
+        <div class="f1 trust-badge mb-8">
+            <svg class="w-3.5 h-3.5"><use href="#i-pin"/></svg> Off The Delivery Route
+        </div>
+
+        <h1 class="f1 font-street text-7xl md:text-8xl text-munchies-green tracking-tighter mb-4">404</h1>
+        <h2 class="f2 font-street text-2xl md:text-4xl tracking-tight mb-5">THIS PAGE ISN'T ON OUR ROUTE</h2>
+        <p class="f2 text-gray-400 text-base md:text-lg max-w-md mx-auto mb-10 leading-relaxed">The link that brought you here is broken or has moved. Even our drivers can't deliver to a page that doesn't exist.</p>
+
+        <!-- a route that just stops, instead of a generic illustration -->
+        <div class="f3 relative h-28 md:h-32 mb-10 rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden">
+            <svg viewBox="0 0 400 100" class="absolute inset-0 w-full h-full">
+                <path d="M15,60 C90,20 160,80 230,45" fill="none" stroke="#3ee879" stroke-width="3" stroke-linecap="round"/>
+                <path d="M230,45 C270,28 310,42 340,38" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 8"/>
+                <circle cx="15" cy="60" r="5" fill="#3ee879"/>
+                <circle id="lost-dot" cx="230" cy="45" r="7" fill="#0a111f" stroke="#3ee879" stroke-width="2.5"/>
+                <circle cx="340" cy="38" r="5" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="2" stroke-dasharray="3 3"/>
+            </svg>
+            <p class="absolute bottom-3 left-1/2 -translate-x-1/2 text-[11px] uppercase tracking-widest text-gray-500 font-bold">Route ends here</p>
+        </div>
+
+        <div class="f3 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="/order" class="w-full sm:w-auto justify-center bg-munchies-green text-munchies-dark text-base font-extrabold px-8 py-4 rounded-2xl shadow-2xl shadow-munchies-green/25 inline-flex items-center gap-2 transition-all hover:scale-105 active:scale-95 hover:brightness-110">
+                <svg class="w-5 h-5"><use href="#i-bag"/></svg> ORDER NOW
+            </a>
+            <a href="/" class="w-full sm:w-auto justify-center bg-white/10 border border-white/25 text-white text-base font-bold px-8 py-4 rounded-2xl inline-flex items-center gap-2 transition-all hover:bg-white/20 hover:scale-105 active:scale-95">
+                <svg class="w-5 h-5"><use href="#i-arrow"/></svg> Back to Home
+            </a>
+        </div>
+    </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="relative bg-munchies-dark text-white pt-16 pb-10 px-6 border-t border-white/10 overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(62,232,121,0.08),transparent_55%)] pointer-events-none"></div>
+    <div class="relative max-w-7xl mx-auto">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-gray-500 text-xs md:text-sm text-center sm:text-left">
+            <p>&copy; 2026 Munchies Delivery Service. Built for the Township.</p>
+            <div class="flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5 text-munchies-green"><use href="#i-shield"/></svg> Verified South African Business
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+const $el = id => document.getElementById(id);
+const nc = $el('nav-container'), lt = $el('logo-text');
+window.addEventListener('scroll', () => {
+    const s = window.scrollY > 60;
+    nc.classList.toggle('w-full',!s); nc.classList.toggle('h-20',!s); nc.classList.toggle('px-8',!s);
+    nc.classList.toggle('w-[95%]',s); nc.classList.toggle('md:w-[900px]',s); nc.classList.toggle('mt-4',s);
+    nc.classList.toggle('h-16',s); nc.classList.toggle('rounded-full',s); nc.classList.toggle('px-10',s);
+    nc.classList.toggle('shadow-2xl',s); nc.classList.toggle('border',s); lt.classList.toggle('scale-90',s);
+});
+const menuBtn = $el('menu-btn'), mobileMenu = $el('mobile-menu');
+menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+</script>
+
+</body>
+</html>
